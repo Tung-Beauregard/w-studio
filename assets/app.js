@@ -1,0 +1,139 @@
+(() => {
+  'use strict';
+  const data = window.SITE_DATA;
+  if (!data) return;
+  const $ = (s, parent = document) => parent.querySelector(s);
+  const $$ = (s, parent = document) => [...parent.querySelectorAll(s)];
+  const escape = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safeUrl = (value) => { try { const u = new URL(value); return ['http:', 'https:'].includes(u.protocol) ? u.href : ''; } catch { return ''; } };
+  const paths = {
+    arrow: '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+    github: '<path d="M9 19c-4.3 1.3-4.3-2.5-6-3m12 6v-3.8c0-1 .1-1.6-.5-2.2 3-.3 6.1-1.5 6.1-6.8a5.3 5.3 0 0 0-1.4-3.7A5 5 0 0 0 19 1.9s-1.1-.4-3.8 1.4a13 13 0 0 0-6.8 0C5.7 1.5 4.6 1.9 4.6 1.9a5 5 0 0 0-.2 3.6A5.3 5.3 0 0 0 3 9.2c0 5.3 3.2 6.5 6.2 6.8-.5.5-.7 1.2-.7 2.2V22"/>',
+    flask: '<path d="M9 3h6m-5 0v7l-5.6 8.5A2 2 0 0 0 6 22h12a2 2 0 0 0 1.6-3.5L14 10V3M7 16h10"/><path d="m9 19 .01 0m5-1 .01 0"/>',
+    language: '<path d="M3 5h12M9 3v2M5 5c0 6 4 10 8 12M13 5c0 6-4 10-9 12m10 4 4-11 4 11m-7-3h6"/>',
+    code: '<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',
+    download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+    play: '<path d="m8 4 12 8-12 8Z"/>',
+    pause: '<path d="M8 5v14M16 5v14"/>',
+    plus: '<path d="M12 4v16M4 12h16"/>',
+    close: '<path d="m6 6 12 12M6 18 18 6"/>',
+    search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+    lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/>',
+    menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    folder: '<path d="M3 6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
+    spark: '<path d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7ZM20 2v4m-2-2h4"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
+    check: '<path d="m5 12 4 4L19 6"/>',
+    chart: '<path d="M3 3v18h18M6 15l4-5 4 3 6-8"/>',
+    book: '<path d="M12 5v16M3 3h5a4 4 0 0 1 4 2 4 4 0 0 1 4-2h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3Z"/>',
+    pencil: '<path d="m15 4 5 5M3 21l5-1L21 7a2 2 0 0 0 0-3l-1-1a2 2 0 0 0-3 0L4 16Z"/>',
+  };
+  const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.globe}</svg>`;
+  function fillIcons(parent = document) { $$('[data-icon]', parent).forEach(el => el.innerHTML = icon(el.dataset.icon)); }
+  fillIcons();
+  const labVisual = `<div class="visual-label"><i></i> ORGANIZE. SIMPLIFY. FOCUS.</div><span class="visual-note">功能概念示意</span><div class="mini-lab" aria-hidden="true"><div class="mini-top"><span>● ● ●</span><span>SFPLAB / workspace</span><span>↗</span></div><div class="mini-layout"><div class="mini-sidebar"><strong>SFPLAB</strong><span>⌂ 總覽</span><span>⚗ 藥品清單</span><span>▧ 儀器使用</span><span>✓ 待辦事項</span><span>⌁ 圖譜分析</span></div><div class="mini-dashboard"><b>專注研究，日常交給系統。</b><p>YOUR LAB, ALL IN ONE PLACE.</p><div class="mini-metrics"><span><b>⚗</b>藥品與試材</span><span><b>▧</b>儀器登記</span><span><b>✓</b>工作待辦</span></div><div class="mini-table"><span>實驗室日常<i>集中管理</i></span><span>儀器使用記錄<i>使用登記</i></span><span>工作與值週事項<i>一目了然</i></span></div></div></div></div><div class="mini-float">${icon('check')} 讓研究，多一點從容。</div>`;
+  const languageVisual = `<div class="visual-label"><i></i> A NEW LANGUAGE. A NEW WORLD.</div><span class="visual-note">功能概念示意</span><div class="language-cards" aria-hidden="true"><div class="flash-card"><small>01 / THAI</small><strong lang="th">ก</strong><span lang="th">สวัสดี</span><em>從字母開始，一點一點進步</em></div><div class="language-exchange">⇄</div><div class="flash-card"><small>02 / CHINESE</small><strong>你</strong><span>你好</span><em>從一句問候，認識另一種文化</em></div></div><div class="mini-float">${icon('language')} 兩種語言，更多可能。</div>`;
+  $('#project-grid').innerHTML = data.projects.map(p => `<article class="project-card" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${p.id === 'lab' ? labVisual : languageVisual}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions"><a href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer" aria-label="開啟 ${escape(p.name)}">開啟專案 <span>↗</span></a><button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button><a href="${escape(safeUrl(p.repo))}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.name)} GitHub 原始碼">${icon('github')} 原始碼</a></div><p class="project-access">${escape(p.note)}</p></div></article>`).join('');
+  function renderTools() {
+    const tools = Array.isArray(data.tools) ? data.tools : [];
+    if (!tools.length) {
+      $('#tools-list').innerHTML = `<div class="tools-empty"><span class="tools-empty-icon">${icon('folder')}</span><div><span class="eyebrow">A FEW USEFUL THINGS, COMING SOON.</span><h3>小工具，準備中。</h3><p>正在整理一些讓日常更省力的本機工具。<br>正式上架後，這裡會提供介紹、支援系統與下載。</p></div><span class="outline-label">敬請期待</span></div>`;
+      return;
+    }
+    $('#tools-list').innerHTML = tools.map(t => {
+      const file = window.W_STUDIO_DOWNLOADS.resolveDownload(t);
+      const demoId = t.demoId || t.id;
+      const intro = Object.hasOwn(demos, demoId) ? `<button class="demo-link" data-demo="${escape(demoId)}">${icon('play')} 看介紹</button>` : '';
+      const action = file ? `<a class="button button-outline" href="${escape(file.href)}"${file.local ? ` download="${escape(file.fileName)}"` : ' target="_blank" rel="noopener noreferrer"'} aria-label="下載 ${escape(t.title)}：${escape(file.fileName)}">${icon('download')} 下載檔案</a>` : '<span class="download-pending">尚未開放下載</span>';
+      return `<article class="tool-row"><span class="tool-icon">${icon(t.icon)}</span><div class="tool-copy"><div class="tool-title-line"><h3>${escape(t.title)}</h3>${t.type ? `<span class="tool-type">${escape(t.type)}</span>` : ''}</div><p>${escape(t.description || '')}</p>${t.requirements ? `<p class="requirements">${escape(t.requirements)}</p>` : ''}${file ? `<p class="tool-file">${escape(file.fileName)}</p>` : ''}</div><div class="tool-actions">${intro}${action}</div></article>`;
+    }).join('');
+  }
+  $('.filter-button[data-filter="all"] span').textContent = String(data.projects.length).padStart(2,'0');
+  $$('.filter-button').forEach(button => button.addEventListener('click', () => {
+    $$('.filter-button').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', b === button ? 'true' : 'false'); });
+    $$('.project-card').forEach(card => card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter);
+  }));
+  const menu = $('.menu-button');
+  function closeMenu() { menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', '開啟選單'); $('#mobile-nav').hidden = true; }
+  menu.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', open ? '關閉選單' : '開啟選單'); $('#mobile-nav').hidden = !open; });
+  $$('#mobile-nav a').forEach(a => a.addEventListener('click', closeMenu));
+  window.matchMedia('(min-width: 701px)').addEventListener('change', e => { if(e.matches) closeMenu(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMenu(); });
+  const sectionObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) $$('.main-nav a').forEach(a => a.classList.toggle('active', a.hash === '#' + entry.target.id)); }); }, {rootMargin:'-10% 0px -65% 0px',threshold:0});
+  $$('main section[id]').forEach(s => sectionObserver.observe(s));
+  $('#year').textContent = new Date().getFullYear();
+
+  // Custom shortcuts live only on this browser. No backend or external requests.
+  const storageKey = 'tung-studio-shortcuts-v1';
+  const cloneDefaults = () => data.shortcuts.map(s => ({...s}));
+  let shortcuts = cloneDefaults();
+  try { const stored = JSON.parse(localStorage.getItem(storageKey)); if(Array.isArray(stored)) shortcuts = stored.filter(s => s && typeof s.name === 'string' && typeof s.id === 'string' && safeUrl(s.url)).map(s => ({...s, url:safeUrl(s.url)})); } catch { /* Defaults remain usable if storage is unavailable. */ }
+  let toastTimer;
+  function toast(message) { const t=$('#toast'); t.textContent=message; t.classList.add('visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('visible'),3500); }
+  function saveShortcuts() { try { localStorage.setItem(storageKey,JSON.stringify(shortcuts)); return true; } catch { toast('瀏覽器無法儲存，這次變更僅在目前頁面有效。'); return false; } }
+  function renderShortcuts() {
+    const term = $('#shortcut-search').value.trim().toLocaleLowerCase();
+    const shown = shortcuts.filter(s => [s.name,s.description || '',s.url].join(' ').toLocaleLowerCase().includes(term));
+    $('#shortcuts-grid').innerHTML = shown.map(s => `<article class="shortcut"><a href="${escape(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer"><span class="shortcut-icon ${['mint','blue','purple','amber'].includes(s.color)?s.color:'mint'}">${icon(s.icon)}</span><div class="shortcut-text"><h3>${escape(s.name)}</h3><p>${escape(s.description || new URL(s.url).hostname)}</p></div><span class="shortcut-arrow">↗</span></a><button class="remove-shortcut" data-remove="${escape(s.id)}" aria-label="移除 ${escape(s.name)}">${icon('close')}</button></article>`).join('');
+    $('#links-empty').hidden = shown.length !== 0;
+    $('#links-empty').textContent = shortcuts.length ? '找不到符合的網站，試試其他關鍵字。' : '還沒有網站，點選「新增網站」建立第一個入口。';
+    $$('.remove-shortcut').forEach(button => button.addEventListener('click', () => {
+      const removed = shortcuts.find(s => s.id === button.dataset.remove); shortcuts = shortcuts.filter(s => s.id !== button.dataset.remove);
+      const saved = saveShortcuts(); renderShortcuts(); $('#add-shortcut').focus(); if(saved) toast(`已移除「${removed.name}」`);
+    }));
+  }
+  renderShortcuts();
+  $('#shortcut-search').addEventListener('input', renderShortcuts);
+  document.addEventListener('keydown', e => { if(e.key === '/' && !e.ctrlKey && !e.metaKey && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName) && !document.activeElement.isContentEditable && !document.querySelector('dialog[open]')) { e.preventDefault(); $('#links').scrollIntoView(); $('#shortcut-search').focus({preventScroll:true}); } });
+  $$('dialog').forEach(dialog => { $$('.close-dialog',dialog).forEach(b => b.addEventListener('click',()=>dialog.close())); dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}}); });
+  $('#add-shortcut').addEventListener('click',()=>{ $('#shortcut-form').reset(); $('#form-error').textContent=''; $('#shortcut-dialog').showModal(); });
+  $('#shortcut-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=$('#shortcut-name').value.trim(); const url=safeUrl($('#shortcut-url').value.trim());
+    if(!name || !url) { $('#form-error').textContent='請填寫網站名稱，並使用 http:// 或 https:// 網址。'; return; }
+    if(shortcuts.some(s=>s.url===url)) { $('#form-error').textContent='這個網址已經在你的入口清單裡。'; return; }
+    shortcuts.push({id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),name,url,description:new URL(url).hostname,icon:'globe',color:'mint'});
+    const saved=saveShortcuts(); $('#shortcut-search').value=''; renderShortcuts(); $('#shortcut-dialog').close(); if(saved)toast('已新增網站，下次打開也會保留。');
+  });
+  $('#reset-shortcuts').addEventListener('click',()=>$('#confirm-dialog').showModal());
+  $('#confirm-reset').addEventListener('click',()=>{shortcuts=cloneDefaults();const saved=saveShortcuts();$('#shortcut-search').value='';renderShortcuts();$('#confirm-dialog').close();if(saved)toast('已還原預設網站。');});
+
+  // The walkthrough is an illustrative storyboard, not a recording of either app.
+  const demos = {
+    overview: {title:'一個入口，探索我的數位世界。',description:'從作品認識我，再把好用的工具和網站帶進你的日常。',url:data.profile.github,steps:[['探索作品','從需求，走到作品。','實驗室管理與語言學習，是我正在探索的方向。','code',['實驗室工作流程','雙向語言學習']],['找到工具','替日常，多省一點力。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['建立日常入口','把常用網站放在一起。','新增你常去的網址，用搜尋快速找到下個目的地。','globe',['新增個人常用網站','在此瀏覽器保存']] ]},
+    lab: {title:'SFPLAB 實驗室管理系統',description:'把實驗室裡分散的日常工作，整理到共同的管理入口。線上使用需要實驗室帳號。',url:data.projects.find(p=>p.id==='lab')?.url,steps:[['集中管理','清單，井然有序。','整合藥品、試材與樣品清單，方便查找管理。','flask',['藥品與試材清單','樣品資料管理']],['安排工作','日常，更有條理。','從儀器使用登記到工作待辦，集中查看與安排。','check',['儀器使用登記','待辦與值週事項']],['分析與記錄','回到研究本身。','透過圖譜分析與使用步驟入口，銜接實驗室工作。','chart',['圖譜分析入口','儀器使用步驟']] ]},
+    language: {title:'泰語 × 繁體中文學習',description:'選擇你的學習方向，從字母和漢字開始，練習寫、打、說。資源載入與口說功能需要網路。',url:data.projects.find(p=>p.id==='language')?.url,steps:[['選擇方向','สวัสดี，也可以是你好。','用繁體中文學泰語，或用泰語學繁體中文。','language',['中文 → 泰語','泰語 → 繁體中文']],['動手練習','讓學習，留下筆跡。','跟著課程練習字母或漢字，也能試試手寫評分與打字。','pencil',['字母與漢字課程','手寫與打字練習']],['帶進日常','下一句，就用得上。','從旅遊、聊天短語到測驗，累積自己的語言能力。','book',['旅遊與聊天短語','測驗與瀏覽器進度保存']] ]},
+  };
+  renderTools();
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let motionPaused = motionPreference.matches;
+  try { const saved = localStorage.getItem('tung-studio-motion'); if(saved !== null) motionPaused = saved === 'paused' || motionPreference.matches; } catch {}
+  let demoTimer=null, activeDemo=null, stepIndex=0, demoPlaying=false;
+  const demoDialog=$('#demo-dialog');
+  function syncMotion() { document.documentElement.classList.toggle('motion-paused',motionPaused); $('#motion-toggle').setAttribute('aria-pressed',String(motionPaused)); $('#motion-toggle').innerHTML=icon(motionPaused?'play':'pause')+(motionPaused?'播放動畫':'暫停動畫'); }
+  function stopDemoTimer(){clearInterval(demoTimer);demoTimer=null;}
+  function syncDemoControls(){demoDialog.classList.toggle('demo-paused',!demoPlaying);$('#demo-play').innerHTML=icon(demoPlaying?'pause':'play')+(demoPlaying?'暫停':'播放');}
+  function showScene(index){
+    stepIndex=index;
+    const s=activeDemo.steps[index];
+    $('#demo-stage').innerHTML=`<div class="scene-board scene-enter"><div class="scene-label">STEP 0${index+1} / 03</div><div class="scene-icon">${icon(s[3])}</div><h3>${escape(s[1])}</h3><p>${escape(s[2])}</p><div class="scene-lines">${s[4].map(line=>`<span>${escape(line)}</span>`).join('')}</div><div class="scene-progress"><i></i></div></div><div class="scene-caption" aria-hidden="true">SMALL STEPS. REAL POSSIBILITIES.</div>`;
+    $$('.demo-step').forEach((b,i)=>{b.classList.toggle('active',i===index);b.setAttribute('aria-current',i===index?'step':'false');});
+  }
+  function startDemoTimer(){stopDemoTimer();if(demoPlaying && !document.hidden)demoTimer=setInterval(()=>showScene((stepIndex+1)%3),4000);}
+  function openDemo(id){
+    activeDemo=demos[id]; if(!activeDemo)return;
+    $('#demo-title').textContent=activeDemo.title;$('#demo-description').textContent=activeDemo.description;
+    $('#demo-visit').href=safeUrl(activeDemo.url);$('#demo-visit').textContent=id==='overview'?'看看我的 GitHub ↗':'前往網站 ↗';
+    $('#demo-steps').innerHTML=activeDemo.steps.map((s,i)=>`<li><button class="demo-step" data-step="${i}"><span>0${i+1}</span>${escape(s[0])}</button></li>`).join('');
+    $$('.demo-step').forEach(b=>b.addEventListener('click',()=>{showScene(Number(b.dataset.step));startDemoTimer();}));
+    demoPlaying=!motionPaused;syncDemoControls();showScene(0);demoDialog.showModal();document.body.style.overflow='hidden';startDemoTimer();
+  }
+  $$('[data-demo]').forEach(b=>b.addEventListener('click',()=>openDemo(b.dataset.demo)));
+  $('#demo-play').addEventListener('click',()=>{demoPlaying=!demoPlaying;syncDemoControls();if(demoPlaying){showScene(stepIndex);startDemoTimer();}else stopDemoTimer();});
+  demoDialog.addEventListener('close',()=>{stopDemoTimer();demoPlaying=false;document.body.style.overflow='';});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopDemoTimer();else if(demoDialog.open)startDemoTimer();});
+  $('#motion-toggle').addEventListener('click',()=>{motionPaused=!motionPaused;try{localStorage.setItem('tung-studio-motion',motionPaused?'paused':'playing');}catch{}syncMotion();});
+  motionPreference.addEventListener('change',e=>{motionPaused=e.matches;syncMotion();if(motionPaused&&demoDialog.open){demoPlaying=false;syncDemoControls();stopDemoTimer();}});
+  syncMotion();
+})();
