@@ -11,6 +11,7 @@
     github: '<path d="M9 19c-4.3 1.3-4.3-2.5-6-3m12 6v-3.8c0-1 .1-1.6-.5-2.2 3-.3 6.1-1.5 6.1-6.8a5.3 5.3 0 0 0-1.4-3.7A5 5 0 0 0 19 1.9s-1.1-.4-3.8 1.4a13 13 0 0 0-6.8 0C5.7 1.5 4.6 1.9 4.6 1.9a5 5 0 0 0-.2 3.6A5.3 5.3 0 0 0 3 9.2c0 5.3 3.2 6.5 6.2 6.8-.5.5-.7 1.2-.7 2.2V22"/>',
     flask: '<path d="M9 3h6m-5 0v7l-5.6 8.5A2 2 0 0 0 6 22h12a2 2 0 0 0 1.6-3.5L14 10V3M7 16h10"/><path d="m9 19 .01 0m5-1 .01 0"/>',
     language: '<path d="M3 5h12M9 3v2M5 5c0 6 4 10 8 12M13 5c0 6-4 10-9 12m10 4 4-11 4 11m-7-3h6"/>',
+    chat: '<path d="M5 3h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-8l-6 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M7 8h10M7 12h7"/>',
     code: '<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/>',
     download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
     play: '<path d="m8 4 12 8-12 8Z"/>',
@@ -34,11 +35,13 @@
   fillIcons();
   const languageVisual = `<div class="visual-label"><i></i> A NEW LANGUAGE. A NEW WORLD.</div><span class="visual-note">功能概念示意</span><div class="language-cards" aria-hidden="true"><div class="flash-card"><small>01 / THAI</small><strong lang="th">ก</strong><span lang="th">สวัสดี</span><em>從字母開始，一點一點進步</em></div><div class="language-exchange">⇄</div><div class="flash-card"><small>02 / CHINESE</small><strong>你</strong><span>你好</span><em>從一句問候，認識另一種文化</em></div></div><div class="mini-float">${icon('language')} 兩種語言，更多可能。</div>`;
   const astralVisual = `<div class="visual-label"><i></i> YOUR PERSONAL COSMOS.</div><span class="visual-note">功能概念示意</span><div class="astral-chart" aria-hidden="true"><svg viewBox="0 0 260 260" fill="none"><circle cx="130" cy="130" r="112"/><circle cx="130" cy="130" r="88"/><circle cx="130" cy="130" r="49"/><path class="astral-rays" d="M130 18v24M130 218v24M18 130h24M218 130h24M74 33l12 21M174 206l12 21M33 74l21 12M206 174l21 12M33 186l21-12M206 86l21-12M74 227l12-21M174 54l12-21"/><g class="astral-constellation"><path d="m80 56 128 93-149 32 71-137 65 151-115-139"/><circle cx="80" cy="56" r="4"/><circle cx="208" cy="149" r="4"/><circle cx="59" cy="181" r="4"/><circle cx="130" cy="44" r="4"/><circle cx="195" cy="195" r="4"/></g><path class="astral-center" d="m130 112 5 13 13 5-13 5-5 13-5-13-13-5 13-5Z"/></svg><span class="astral-sign sign-one">✦</span><span class="astral-sign sign-two">✧</span></div><div class="astral-caption" aria-hidden="true"><strong>星語</strong><span>ASTRAL NOTES</span><small>本命盤 / 雙人合盤 / 白話解讀</small></div>`;
-  const projectVisuals = { language: languageVisual, astral: astralVisual };
+  const botVisual = (id, languages, greeting, translation) => `<div class="visual-label"><i></i> W STUDIO / TRANSLATE</div><span class="visual-note">品牌頭像 · 對話示意</span><div class="line-bot-art"><img class="line-bot-avatar" src="./assets/${id}-avatar.png" alt="W Studio ${escape(languages)}翻譯機器人品牌頭像" loading="lazy" width="1024" height="1024"><div class="line-chat-preview" aria-hidden="true"><span class="line-chat-message outgoing">${escape(greeting)}</span><span class="line-chat-message incoming">${escape(translation)}</span></div></div><div class="line-bot-caption">${icon('chat')} <span>${escape(languages)}</span></div>`;
+  const projectVisuals = { language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요') };
   $('#project-grid').innerHTML = data.projects.map(p => {
     const repo = safeUrl(p.repo);
+    const qrButton = p.qr ? `<button class="demo-link qr-link" data-qr="${escape(p.id)}" aria-label="掃碼加入 ${escape(p.name)}">⊞ 掃碼加入</button>` : '';
     const sourceLink = repo ? `<a href="${escape(repo)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.name)} GitHub 原始碼">${icon('github')} 原始碼</a>` : '';
-    return `<article class="project-card project-card-wide" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions"><a href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer" aria-label="開啟 ${escape(p.name)}">開啟專案 <span>↗</span></a><button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button>${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
+    return `<article class="project-card project-card-wide" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions"><a href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.linkLabel || '開啟')} ${escape(p.name)}">${escape(p.linkLabel || '開啟專案')} <span>↗</span></a>${qrButton}<button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button>${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
   }).join('');
   function renderTools() {
     const tools = Array.isArray(data.tools) ? data.tools : [];
@@ -76,7 +79,7 @@
   try {
     const raw = JSON.parse(localStorage.getItem(storageKey));
     const legacy = Array.isArray(raw);
-    const stored = legacy ? raw : raw?.version === 2 && Array.isArray(raw.items) ? raw.items : null;
+    const stored = legacy ? raw : [2,3].includes(raw?.version) && Array.isArray(raw.items) ? raw.items : null;
     if (stored) {
       shortcuts = stored.filter(s => s && s.id !== 'lab' && typeof s.name === 'string' && typeof s.id === 'string' && safeUrl(s.url)).map(s => ({...s, url:safeUrl(s.url)}));
       // Add the new launch entry once, while preserving saved links and removals.
@@ -84,15 +87,21 @@
         const astral = data.shortcuts.find(s => s.id === 'astral');
         if (astral && !shortcuts.some(s => s.id === astral.id || s.url === safeUrl(astral.url))) shortcuts.push({...astral});
       }
+      // Introduce the two requested LINE entries once; keep removals on later visits.
+      if (legacy || raw.version === 2) {
+        data.shortcuts.filter(s => ['line-zh-th','line-zh-en-ko'].includes(s.id)).forEach(entry => {
+          if (!shortcuts.some(s => s.id === entry.id || s.url === safeUrl(entry.url))) shortcuts.push({...entry});
+        });
+      }
       // Retired default entries also disappear from previously saved lists.
-      if (legacy || shortcuts.length !== stored.length) {
-        localStorage.setItem(storageKey, JSON.stringify({version:2, items:shortcuts}));
+      if (legacy || raw.version === 2 || shortcuts.length !== stored.length) {
+        localStorage.setItem(storageKey, JSON.stringify({version:3, items:shortcuts}));
       }
     }
   } catch { /* Defaults or loaded links remain usable if storage is unavailable. */ }
   let toastTimer;
   function toast(message) { const t=$('#toast'); t.textContent=message; t.classList.add('visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('visible'),3500); }
-  function saveShortcuts() { try { localStorage.setItem(storageKey,JSON.stringify({version:2, items:shortcuts})); return true; } catch { toast('瀏覽器無法儲存，這次變更僅在目前頁面有效。'); return false; } }
+  function saveShortcuts() { try { localStorage.setItem(storageKey,JSON.stringify({version:3, items:shortcuts})); return true; } catch { toast('瀏覽器無法儲存，這次變更僅在目前頁面有效。'); return false; } }
   function renderShortcuts() {
     const term = $('#shortcut-search').value.trim().toLocaleLowerCase();
     const shown = shortcuts.filter(s => [s.name,s.description || '',s.url].join(' ').toLocaleLowerCase().includes(term));
@@ -108,6 +117,16 @@
   $('#shortcut-search').addEventListener('input', renderShortcuts);
   document.addEventListener('keydown', e => { if(e.key === '/' && !e.ctrlKey && !e.metaKey && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName) && !document.activeElement.isContentEditable && !document.querySelector('dialog[open]')) { e.preventDefault(); $('#links').scrollIntoView(); $('#shortcut-search').focus({preventScroll:true}); } });
   $$('dialog').forEach(dialog => { $$('.close-dialog',dialog).forEach(b => b.addEventListener('click',()=>dialog.close())); dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}}); });
+  $$('[data-qr]').forEach(button => button.addEventListener('click', () => {
+    const project = data.projects.find(p => p.id === button.dataset.qr && p.qr);
+    if (!project) return;
+    $('#line-qr-title').textContent = project.name;
+    $('#line-qr-id').textContent = project.lineId;
+    $('#line-qr-image').src = project.qr;
+    $('#line-qr-image').alt = `${project.name} ${project.lineId} LINE 官方加入好友 QR Code`;
+    $('#line-qr-visit').href = safeUrl(project.url);
+    $('#line-qr-dialog').showModal();
+  }));
   $('#add-shortcut').addEventListener('click',()=>{ $('#shortcut-form').reset(); $('#form-error').textContent=''; $('#shortcut-dialog').showModal(); });
   $('#shortcut-form').addEventListener('submit',e=>{
     e.preventDefault();
@@ -122,9 +141,11 @@
 
   // The walkthroughs are illustrative storyboards, not recordings of the apps.
   const demos = {
-    overview: {title:'一個入口，探索我的數位世界。',description:'從作品認識我，再把好用的工具和網站帶進你的日常。',url:data.profile.github,steps:[['探索作品','從需求，走到作品。','從語言學習到星語命盤探索，讓好奇心成為作品。','code',['雙向語言學習','Astral Notes 星語']],['找到工具','替日常，多省一點力。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['建立日常入口','把常用網站放在一起。','新增你常去的網址，用搜尋快速找到下個目的地。','globe',['新增個人常用網站','在此瀏覽器保存']] ]},
+    overview: {title:'一個入口，探索我的數位世界。',description:'從作品認識我，再把好用的工具和網站帶進你的日常。',url:data.profile.github,steps:[['探索作品','從需求，走到作品。','從語言學習、LINE 翻譯到星語命盤探索，讓好奇心成為作品。','code',['語言學習與 LINE 翻譯','Astral Notes 星語']],['找到工具','替日常，多省一點力。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['建立日常入口','把常用網站放在一起。','新增你常去的網址，用搜尋快速找到下個目的地。','globe',['新增個人常用網站','在此瀏覽器保存']] ]},
     astral: {title:'Astral Notes 星語',description:'西洋占星、紫微斗數與生辰八字，從自己的命盤到兩個人的連結。命理解讀供自我探索參考。',url:data.projects.find(p=>p.id==='astral')?.url,steps:[['建立命盤','從你的出生時刻開始。','選擇出生日期、時間與城市，展開三套本命盤。','spark',['西洋占星 / 紫微斗數 / 八字','出生資料在裝置上計算']],['讀懂星圖','把星象，讀成白話。','從星體位置與命盤解讀，找到自我探索的另一個角度。','book',['白話命盤解讀','每月星象']],['探索連結','看看彼此，如何交會。','切換雙人合盤，探索兩個命盤之間的相位與連結。','globe',['雙人合盤','計算規則可查看']] ]},
     language: {title:'泰語 × 繁體中文學習',description:'選擇你的學習方向，從字母和漢字開始，練習寫、打、說。資源載入與口說功能需要網路。',url:data.projects.find(p=>p.id==='language')?.url,steps:[['選擇方向','สวัสดี，也可以是你好。','用繁體中文學泰語，或用泰語學繁體中文。','language',['中文 → 泰語','泰語 → 繁體中文']],['動手練習','讓學習，留下筆跡。','跟著課程練習字母或漢字，也能試試手寫評分與打字。','pencil',['字母與漢字課程','手寫與打字練習']],['帶進日常','下一句，就用得上。','從旅遊、聊天短語到測驗，累積自己的語言能力。','book',['旅遊與聊天短語','測驗與瀏覽器進度保存']] ]},
+    'line-zh-th': {title:'中泰翻譯 LINE 機器人',description:'中文與泰文的翻譯入口。以下為使用概念示意；實際操作請依 LINE 機器人的說明。',url:data.projects.find(p=>p.id==='line-zh-th')?.url,visitLabel:'加入 LINE ↗',steps:[['加入好友','先把翻譯入口加進 LINE。','點選加入好友連結，或以手機掃描 LINE 頁面的行動條碼。','chat',['LINE ID：@441rouxg','中文 × 泰文']],['開啟對話','在熟悉的對話裡開始。','加入後開啟聊天室，查看機器人的翻譯功能與使用方式。','language',['中文 / ไทย','依機器人訊息提示操作']],['連結語言','從一句問候，開始溝通。','讓中文與泰文的日常交流，多一個方便的翻譯入口。','globe',['你好 / สวัสดี','W Studio 翻譯系列']] ]},
+    'line-zh-en-ko': {title:'中英韓翻譯 LINE 機器人',description:'中文、英文與韓文的翻譯入口。以下為使用概念示意；實際操作請依 LINE 機器人的說明。',url:data.projects.find(p=>p.id==='line-zh-en-ko')?.url,visitLabel:'加入 LINE ↗',steps:[['加入好友','三種語言，一個對話入口。','點選加入好友連結，或以手機掃描 LINE 頁面的行動條碼。','chat',['LINE ID：@492xqnyt','中文 × English × 한국어']],['開啟對話','從 LINE 聊天室開始。','加入後查看機器人的翻譯功能與使用方式，再開始跨語言對話。','language',['中文 / 英文 / 韓文','依機器人訊息提示操作']],['連結語言','讓每一句話，走得更遠。','把熟悉的問候，變成認識另一種語言的起點。','globe',['你好 / Hello / 안녕하세요','W Studio 翻譯系列']] ]},
   };
   renderTools();
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -145,7 +166,7 @@
   function openDemo(id){
     activeDemo=demos[id]; if(!activeDemo)return;
     $('#demo-title').textContent=activeDemo.title;$('#demo-description').textContent=activeDemo.description;
-    $('#demo-visit').href=safeUrl(activeDemo.url);$('#demo-visit').textContent=id==='overview'?'看看我的 GitHub ↗':'前往網站 ↗';
+    $('#demo-visit').href=safeUrl(activeDemo.url);$('#demo-visit').textContent=activeDemo.visitLabel || (id==='overview'?'看看我的 GitHub ↗':'前往網站 ↗');
     $('#demo-steps').innerHTML=activeDemo.steps.map((s,i)=>`<li><button class="demo-step" data-step="${i}"><span>0${i+1}</span>${escape(s[0])}</button></li>`).join('');
     $$('.demo-step').forEach(b=>b.addEventListener('click',()=>{showScene(Number(b.dataset.step));startDemoTimer();}));
     demoPlaying=!motionPaused;syncDemoControls();showScene(0);demoDialog.showModal();document.body.style.overflow='hidden';startDemoTimer();
