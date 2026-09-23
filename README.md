@@ -50,7 +50,7 @@ assets/
 
 品牌、姓名、首頁標語與頁尾文字在 `index.html`；視覺樣式在 `assets/styles.css`，互動功能在 `assets/app.js`。新增圖片等資源可放進 `assets/`。
 
-新增專案時，請同步在 `assets/app.js` 的 `demos` 增加相同 `id` 的三步驟介紹，並依需要調整專案示意圖。工具也可依實際功能補上相同 `id` 的介紹動畫。現有三個專案已具備介紹內容；未提供原始碼網址的專案不會顯示原始碼按鈕。
+新增專案時，請同步在 `assets/app.js` 的 `demos` 增加相同 `id` 的三步驟介紹，並依需要調整專案示意圖。工具也可依實際功能補上相同 `id` 的介紹動畫。現有兩個專案已具備介紹內容；未提供原始碼網址的專案不會顯示原始碼按鈕。
 
 ## 品牌識別
 
@@ -64,9 +64,10 @@ assets/
 
 本次加入 Astral Notes 星語時，舊版已儲存的清單會一次補入新捷徑，保留自訂網站、原有順序及先前移除的其他預設網站。清單已有相同網址時不會重複加入；之後移除星語也不會在重新整理後補回。此更新依賴瀏覽器允許儲存網站資料；無法儲存時，變更只能保留於目前頁面。
 
+已停用的預設入口不再顯示，舊版瀏覽器儲存的清單也會套用此調整。
+
 ## 專案介紹
 
-- **LabManagement SFP**：[線上系統](https://tung-beauregard.github.io/LabManagement_SFP/)需要實驗室帳號登入；[GitHub 專案](https://github.com/Tung-Beauregard/LabManagement_SFP)提供公開原始碼。
 - **泰語 × 繁體中文學習**：[線上學習](https://tung-beauregard.github.io/Thai_TraditionalChinese_learing_W/)包含課程、手寫、打字、口說與測驗；[GitHub 專案](https://github.com/Tung-Beauregard/Thai_TraditionalChinese_learing_W)提供專案文件與原始碼。學習網站透過 CDN 載入部分程式，並非完全離線；口說需要麥克風與網路，專案 README 建議使用電腦版 Chrome／Edge。
 - **Astral Notes 星語**：[官方網站](https://astral-notes.w-tw.chatgpt.site/)提供西洋占星、紫微斗數與生辰八字的本命盤探索、白話解讀與雙人合盤。命理解讀供自我探索參考。
 
