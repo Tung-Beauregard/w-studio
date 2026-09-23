@@ -6,6 +6,27 @@ window.SITE_DATA = {
     { id: 'astral', category: 'exploration', number: '02', eyebrow: 'ASTRAL NOTES / SELF EXPLORATION', title: '在星光之間，認識自己。', name: 'Astral Notes 星語', description: '整合西洋占星、紫微斗數與生辰八字，從本命盤到雙人合盤，用白話解讀探索自己與彼此的連結。', tags: ['命盤探索', '雙人合盤', 'Web App'], url: 'https://astral-notes.w-tw.chatgpt.site/', note: '出生資料在裝置上計算 · 命理解讀供探索參考', icon: 'spark' },
     { id: 'line-zh-th', category: 'translation', number: '03', eyebrow: 'W TRANSLATE / CHINESE × THAI', title: '中文與泰文，在對話中相遇。', name: '中泰翻譯 LINE 機器人', description: '把中文與泰文翻譯的入口，放進熟悉的 LINE。從日常問候到跨語言聊天，讓溝通多一點方便。', tags: ['中文 / ไทย', 'LINE 機器人', '語言翻譯'], url: 'https://line.me/R/ti/p/%40441rouxg', linkLabel: '加入 LINE', lineId: '@441rouxg', qr: './assets/line-zh-th-qr.png', note: 'LINE ID：@441rouxg · 掃碼加入，或直接開啟 LINE', icon: 'chat' },
     { id: 'line-zh-en-ko', category: 'translation', number: '04', eyebrow: 'W TRANSLATE / CHINESE × ENGLISH × KOREAN', title: '三種語言，讓對話更靠近。', name: '中英韓翻譯 LINE 機器人', description: '中文、英文與韓文的翻譯入口，集中在 LINE 對話裡。加入機器人，探索跨語言溝通的更多可能。', tags: ['中文 / English / 한국어', 'LINE 機器人', '語言翻譯'], url: 'https://line.me/R/ti/p/%40492xqnyt', linkLabel: '加入 LINE', lineId: '@492xqnyt', qr: './assets/line-zh-en-ko-qr.png', note: 'LINE ID：@492xqnyt · 掃碼加入，或直接開啟 LINE', icon: 'chat' }
+    ,{
+      id: 'agent-hub', category: 'ai-development', number: '05',
+      eyebrow: 'MYCELINT / AI DEVELOPMENT', name: 'Mycelint', brand: 'by W Studio',
+      position: 'AI 協作開發工作臺', title: '讓想法，長成可用的工具。',
+      description: 'Mycelint 是正在研發的 AI 協作開發工作臺，目標是串起任務規劃、程式修改、測試、獨立審查與交付。讓每次開發都有可追蹤的結果，減少在人與模型之間反覆整理、複製與傳話。',
+      tags: ['AI 協作', '開發流程', '可追蹤成果'], status: '研發中',
+      note: '研發中／尚未開放使用', icon: 'code',
+      details: {
+        why: '使用不同 AI 協助開發時，人經常需要整理進度、搬運程式與錯誤訊息，再把審查意見帶回另一個工具。Mycelint 希望把這些步驟接成可追蹤的工作流程，讓人把時間留給目標、取捨與必要決策。',
+        workflow: ['設定目標與範圍', '執行修改', '測試與驗收', '獨立審查', '交付成果'],
+        feedback: '審查或測試發現問題時，回到修改階段；需要新的權限或人工決策時，再交由使用者處理。',
+        naming: 'Mycelint 的名稱結合 Mycelium（菌絲體）與 Intelligence（智慧）。這是品牌命名構想，不是既有英文單字的正式字義。',
+        growth: [
+          ['菌絲體', '持續完善的開發核心'],
+          ['分枝與連接', '代理之間的分工協作'],
+          ['長出的子實體', '最後交付的軟體與工具']
+        ],
+        vision: '專案希望從一個可重複使用的核心開始，逐步建立更多實用作品。',
+        progress: '目前為研發原型，持續整合受限執行、測試與獨立審查流程，尚未開放使用。'
+      }
+    }
   ],
   // 只加入你指定要公開的小工具，不會從 GitHub 專案自動產生下載。
   // published === true、fileName 與有效 downloadUrl 齊備，才出現下載按鈕。

@@ -36,12 +36,36 @@
   const languageVisual = `<div class="visual-label"><i></i> A NEW LANGUAGE. A NEW WORLD.</div><span class="visual-note">功能概念示意</span><div class="language-cards" aria-hidden="true"><div class="flash-card"><small>01 / THAI</small><strong lang="th">ก</strong><span lang="th">สวัสดี</span><em>從字母開始，一點一點進步</em></div><div class="language-exchange">⇄</div><div class="flash-card"><small>02 / CHINESE</small><strong>你</strong><span>你好</span><em>從一句問候，認識另一種文化</em></div></div><div class="mini-float">${icon('language')} 兩種語言，更多可能。</div>`;
   const astralVisual = `<div class="visual-label"><i></i> YOUR PERSONAL COSMOS.</div><span class="visual-note">功能概念示意</span><div class="astral-chart" aria-hidden="true"><svg viewBox="0 0 260 260" fill="none"><circle cx="130" cy="130" r="112"/><circle cx="130" cy="130" r="88"/><circle cx="130" cy="130" r="49"/><path class="astral-rays" d="M130 18v24M130 218v24M18 130h24M218 130h24M74 33l12 21M174 206l12 21M33 74l21 12M206 174l21 12M33 186l21-12M206 86l21-12M74 227l12-21M174 54l12-21"/><g class="astral-constellation"><path d="m80 56 128 93-149 32 71-137 65 151-115-139"/><circle cx="80" cy="56" r="4"/><circle cx="208" cy="149" r="4"/><circle cx="59" cy="181" r="4"/><circle cx="130" cy="44" r="4"/><circle cx="195" cy="195" r="4"/></g><path class="astral-center" d="m130 112 5 13 13 5-13 5-5 13-5-13-13-5 13-5Z"/></svg><span class="astral-sign sign-one">✦</span><span class="astral-sign sign-two">✧</span></div><div class="astral-caption" aria-hidden="true"><strong>星語</strong><span>ASTRAL NOTES</span><small>本命盤 / 雙人合盤 / 白話解讀</small></div>`;
   const botVisual = (id, languages, greeting, translation) => `<div class="visual-label"><i></i> W STUDIO / TRANSLATE</div><span class="visual-note">品牌頭像 · 對話示意</span><div class="line-bot-art"><img class="line-bot-avatar" src="./assets/${id}-avatar.png?v=dialogue-1" alt="W Studio ${escape(languages)}翻譯機器人品牌頭像" loading="lazy" width="1024" height="1024"><div class="line-chat-preview" aria-hidden="true"><span class="line-chat-message outgoing">${escape(greeting)}</span><span class="line-chat-message incoming">${escape(translation)}</span></div></div><div class="line-bot-caption">${icon('chat')} <span>${escape(languages)}</span></div>`;
-  const projectVisuals = { language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요') };
+  const mycelintVisual = `<div class="visual-label">MYCELINT / by W Studio</div><span class="visual-note">概念示意</span>
+    <svg class="mycelint-network" viewBox="0 0 460 320" fill="none" role="img" aria-label="菌絲意象：從一個開發核心分枝連接，長出不同工具節點">
+      <g class="mycelint-branches" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path pathLength="1" d="M225 168C182 168 180 109 140 109S104 84 90 74"/>
+        <path pathLength="1" d="M225 168C256 165 251 108 286 108S315 77 330 64"/>
+        <path pathLength="1" d="M225 168C289 168 285 204 333 204S375 180 388 180"/>
+        <path pathLength="1" d="M225 168C190 179 215 230 172 230S133 252 118 266"/>
+        <path class="mycelint-twig" pathLength="1" d="M171 137Q161 156 137 153M277 110Q283 139 311 138M301 194Q306 169 321 159M190 227Q216 246 231 248"/>
+      </g>
+      <g class="mycelint-core"><circle cx="225" cy="168" r="41" stroke="currentColor" stroke-opacity=".16"/><circle cx="225" cy="168" r="29" fill="#19392d" stroke="currentColor"/><path d="m205 155 8 27 12-20 12 20 8-27" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></g>
+      <g class="mycelint-nodes" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <g><rect x="69" y="53" width="42" height="42" rx="12"/><path d="m84 67-7 7 7 7m12-14 7 7-7 7m-5-16-3 18"/></g>
+        <g><rect x="309" y="43" width="42" height="42" rx="12"/><rect x="319" y="54" width="22" height="20" rx="2"/><path d="M319 60h22m-14 0v14"/></g>
+        <g><rect x="367" y="159" width="42" height="42" rx="12"/><path d="M378 173h20m-20 7h14m-14 7h18"/></g>
+        <g><rect x="97" y="245" width="42" height="42" rx="12"/><path d="M108 273v-13l10-6 10 6v13l-10 6Zm0-13 10 6 10-6m-10 6v13"/></g>
+      </g>
+    </svg><div class="mycelint-caption"><strong>Mycelint</strong><span>AI 協作開發工作臺</span><small>從一個核心，長出更多可能。</small></div>`;
+  const projectVisuals = { language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요'), 'agent-hub': mycelintVisual };
   $('#project-grid').innerHTML = data.projects.map(p => {
     const repo = safeUrl(p.repo);
     const qrButton = p.qr ? `<button class="demo-link qr-link" data-qr="${escape(p.id)}" aria-label="掃碼加入 ${escape(p.name)}">⊞ 掃碼加入</button>` : '';
     const sourceLink = repo ? `<a href="${escape(repo)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.name)} GitHub 原始碼">${icon('github')} 原始碼</a>` : '';
-    return `<article class="project-card project-card-wide" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions"><a href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.linkLabel || '開啟')} ${escape(p.name)}">${escape(p.linkLabel || '開啟專案')} <span>↗</span></a>${qrButton}<button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button>${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
+    const url = safeUrl(p.url);
+    const entrance = url ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.linkLabel || '開啟')} ${escape(p.name)}">${escape(p.linkLabel || '開啟專案')} <span>↗</span></a>` : '';
+    const introduction = p.details
+      ? `<button class="project-detail-link" data-project-detail="${escape(p.id)}" aria-haspopup="dialog" aria-controls="project-detail-dialog" aria-label="了解專案 ${escape(p.name)}">了解專案 <span aria-hidden="true">↗</span></button>`
+      : `<button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button>`;
+    const status = p.status ? `<span class="project-status">${escape(p.status)}</span>` : '';
+    const brand = p.brand ? ` <span class="project-brand">${escape(p.brand)}</span>` : '';
+    return `<article class="project-card project-card-wide" data-project="${escape(p.id)}" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div>${status}<h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}${brand}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions">${entrance}${qrButton}${introduction}${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
   }).join('');
   function renderTools() {
     const tools = Array.isArray(data.tools) ? data.tools : [];
@@ -117,6 +141,42 @@
   $('#shortcut-search').addEventListener('input', renderShortcuts);
   document.addEventListener('keydown', e => { if(e.key === '/' && !e.ctrlKey && !e.metaKey && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName) && !document.activeElement.isContentEditable && !document.querySelector('dialog[open]')) { e.preventDefault(); $('#links').scrollIntoView(); $('#shortcut-search').focus({preventScroll:true}); } });
   $$('dialog').forEach(dialog => { $$('.close-dialog',dialog).forEach(b => b.addEventListener('click',()=>dialog.close())); dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}}); });
+  const projectDetailDialog = $('#project-detail-dialog');
+  let projectDetailOpener = null, previousBodyOverflow = '';
+  $$('[data-project-detail]').forEach(button => button.addEventListener('click', () => {
+    const project = data.projects.find(p => p.id === button.dataset.projectDetail);
+    if (!project?.details || !projectDetailDialog) return;
+    const detail = project.details;
+    $('#project-detail-body').innerHTML = `
+      <div class="project-detail-intro"><span class="project-status">${escape(project.note)}</span><h2 id="project-detail-title" tabindex="-1">${escape(project.name)} <small>${escape(project.brand)}</small></h2><p id="project-detail-position">${escape(project.position)}</p><p class="project-detail-tagline">${escape(project.title)}</p></div>
+      <section class="project-detail-section"><h3>為什麼做這個專案</h3><p>${escape(detail.why)}</p></section>
+      <section class="project-detail-section"><h3>希望如何運作</h3><p class="workflow-label">預期工作流程</p><p class="workflow-disclaimer">以下是設計方向，尚未全面實現。</p><ol class="project-workflow">${detail.workflow.map((step,i)=>`<li><span class="workflow-number" aria-hidden="true">0${i+1}</span><span>${escape(step)}</span></li>`).join('')}</ol><p class="workflow-return"><span aria-hidden="true">↶</span> 測試或審查發現問題 → 回到執行修改</p><p>${escape(detail.feedback)}</p></section>
+      <section class="project-detail-section"><h3>名稱與生長意象</h3><p>${escape(detail.naming)}</p><dl class="project-growth">${detail.growth.map(([name,meaning])=>`<div><dt>${escape(name)}</dt><dd>${escape(meaning)}</dd></div>`).join('')}</dl><p>${escape(detail.vision)}</p></section>
+      <section class="project-detail-section project-progress"><h3>目前進度</h3><p>${escape(detail.progress)}</p></section>`;
+    projectDetailOpener = button;
+    previousBodyOverflow = document.body.style.overflow;
+    projectDetailDialog.showModal();
+    document.body.style.overflow = 'hidden';
+    projectDetailDialog.scrollTop = 0;
+    $('#project-detail-title').focus({preventScroll:true});
+  }));
+  projectDetailDialog?.addEventListener('close', () => {
+    document.body.style.overflow = previousBodyOverflow;
+    projectDetailOpener?.focus({preventScroll:true});
+    projectDetailOpener = null;
+  });
+  projectDetailDialog?.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const buttons = $$('button:not([disabled])', projectDetailDialog);
+    const first = buttons[0], last = buttons[buttons.length - 1];
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === $('#project-detail-title'))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
   $$('[data-qr]').forEach(button => button.addEventListener('click', () => {
     const project = data.projects.find(p => p.id === button.dataset.qr && p.qr);
     if (!project) return;

@@ -69,3 +69,40 @@ dialog{padding:0;border:1px solid #425448;border-radius:15px;background:#131e17;
 .line-qr-dialog .line-qr-id{margin:0 0 18px}
 .line-qr-dialog .line-qr-frame{width:min(100%,264px)}
 .line-qr-dialog .line-qr-help{margin:16px 0!important}
+
+/* Mycelint: an illustrative growing network, never a live execution display. */
+.project-visual.agent-hub{padding:44px 24px 25px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 45%,#31584630,transparent 68%),#0e1915}
+.mycelint-network{width:min(100%,400px);height:auto;flex-shrink:1;color:var(--mint);overflow:visible}
+.mycelint-core{animation:mycelint-core 8s ease-in-out infinite;transform-origin:225px 168px}
+.mycelint-branches path{stroke-dasharray:1;stroke-dashoffset:0;animation:mycelint-connect 8s ease-in-out infinite;opacity:.7}
+.mycelint-branches .mycelint-twig{opacity:.3}
+.mycelint-nodes{animation:mycelint-grow 8s ease-in-out infinite}
+.mycelint-nodes rect{fill:#152a21;stroke:#81b49b}
+.mycelint-caption{text-align:center;position:relative;margin-top:-5px;display:grid;gap:2px}
+.mycelint-caption strong{font-size:28px;letter-spacing:-.04em;font-weight:550;color:#ddf4e5}
+.mycelint-caption>span{font-size:11px;color:#b3d2c1}.mycelint-caption small{font-size:10px;color:#8eac9b;margin-top:5px}
+.project-status{display:inline-flex;font-size:10px;line-height:1.6;color:#d8c388;border:1px solid #685d3d;border-radius:5px;padding:4px 9px;margin-bottom:12px;background:#3a322520}
+.project-brand{margin-left:6px;color:#95b1a1;font:10px var(--mono)}
+.project-detail-link{display:inline-flex;align-items:center;gap:12px;color:var(--mint);background:transparent;padding:5px 0;font-size:12px}.project-detail-link:hover{text-decoration:underline;text-underline-offset:4px}
+.project-detail-dialog{width:860px;max-width:calc(100% - 32px);background:#101b16;overscroll-behavior:contain}
+.project-detail-dialog .dialog-header{position:sticky;top:0;z-index:2;background:#101b16;border-bottom-color:#304234}
+.project-detail-body{padding:30px 36px 0;overflow-wrap:anywhere}
+.project-detail-intro{padding-bottom:27px}.project-detail-intro h2{font-size:38px;letter-spacing:-.045em;line-height:1.4}.project-detail-intro h2:focus{outline:none}
+.project-detail-intro h2 small{display:inline-block;font:10px var(--mono);letter-spacing:0;color:#a0bba9;margin-left:12px;vertical-align:middle}
+#project-detail-position{font-size:13px;color:#a6c7b5;margin-top:7px}.project-detail-tagline{font-size:18px;color:#d6e9de;margin-top:16px}
+.project-detail-section{border-top:1px solid #2e4235;padding:26px 0}.project-detail-section h3{font-size:17px;font-weight:550;margin-bottom:12px;color:#e0ede5}
+.project-detail-section p{font-size:13px;line-height:2;color:#aebeb5}.project-detail-section .workflow-label{display:inline-block;font-size:11px;color:var(--mint);border:1px solid #3b5a46;padding:3px 10px;border-radius:5px;margin-bottom:7px}
+.project-detail-section .workflow-disclaimer{font-size:11px;color:#a2b6a8}
+.project-workflow{list-style:none;margin:20px 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}
+.project-workflow li{position:relative;display:flex;flex-direction:column;gap:8px;border:1px solid #3b5747;border-radius:8px;padding:14px 10px;background:#17291f;font-size:12px;color:#d5e7dc}
+.workflow-number{font:10px var(--mono);color:#85b29a}.project-workflow li:not(:last-child):after{content:'→';position:absolute;right:-17px;top:calc(50% - 13px);font-size:16px;color:#81a990}
+.project-detail-section .workflow-return{padding:10px 13px;border-left:2px solid #719f80;background:#243a2a50;color:#c0d6c8;font-size:12px;margin-bottom:14px}.workflow-return>span{margin-right:5px}
+.project-growth{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:18px 0}.project-growth>div{padding:14px 12px;border:1px solid #344a3c;border-radius:8px}.project-growth dt{font-size:12px;color:var(--mint);margin-bottom:6px}.project-growth dd{margin:0;font-size:12px;line-height:1.8;color:#a9beb0}
+.project-progress p{color:#d5cba6}.project-detail-footer{padding:0 36px 30px;display:flex;justify-content:flex-end}
+@keyframes mycelint-core{0%{opacity:.4;transform:scale(.85)}12%,90%{opacity:1;transform:scale(1)}100%{opacity:.4;transform:scale(.85)}}
+@keyframes mycelint-connect{0%,12%{stroke-dashoffset:1}45%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@keyframes mycelint-grow{0%,38%{opacity:0}55%,90%{opacity:1}100%{opacity:0}}
+@media(max-width:700px){.project-card-wide .project-visual.agent-hub{height:355px;min-height:355px;padding:37px 20px 22px}.mycelint-network{max-height:225px;flex-shrink:0}.mycelint-caption strong{font-size:25px}.project-detail-body{padding:24px 21px 0}.project-detail-intro h2{font-size:32px}.project-detail-intro h2 small{display:block;margin:4px 0 0}.project-detail-tagline{font-size:17px}.project-workflow{grid-template-columns:1fr;gap:22px}.project-workflow li{flex-direction:row;align-items:center;gap:14px;padding:12px 15px}.project-workflow li:not(:last-child):after{content:'↓';right:auto;left:22px;top:auto;bottom:-25px}.project-growth{grid-template-columns:1fr;gap:9px}.project-growth>div{padding:12px 14px}.project-detail-footer{padding:0 21px 25px}.project-detail-footer .button{width:100%}}
+.motion-paused .mycelint-core,.motion-paused .mycelint-branches path,.motion-paused .mycelint-nodes{animation:none;opacity:1;transform:none;stroke-dashoffset:0}
+@media(prefers-reduced-motion:reduce){.mycelint-core,.mycelint-branches path,.mycelint-nodes{animation:none!important;opacity:1;transform:none;stroke-dashoffset:0}}
+@media(max-width:700px){.shortcuts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shortcut{min-width:0}}
