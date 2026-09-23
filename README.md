@@ -1,6 +1,6 @@
 # W Studio｜專案與工具入口
 
-可放在 GitHub Pages 的繁體中文個人網站，整合 GitHub 介紹、公開專案、指定小工具下載、功能介紹動畫與常用網站。
+可放在 GitHub Pages 的繁體中文個人網站，整合 GitHub 介紹、公開專案、指定小工具下載與功能介紹動畫。
 
 本站使用純 HTML、CSS、JavaScript，不需 npm、不需編譯，也不依賴 API。直接開啟 `index.html` 即可預覽。
 
@@ -44,7 +44,6 @@ assets/
 | `profile` | 首頁介紹動畫的 GitHub 入口 |
 | `projects` | 專案名稱、介紹與連結 |
 | `tools` | 由你指定的工具介紹、檔名與下載連結；預設為空 |
-| `shortcuts` | 網站預設提供的常用連結 |
 
 照現有資料格式修改文字與網址，儲存後重新整理即可預覽。更新完成後提交到 GitHub 的 `main`，Pages 會自動重新發布。網站不會自動從 GitHub 抓取新專案或版本，相關文案和連結需在這個檔案更新。
 
@@ -62,16 +61,6 @@ Mycelint（by W Studio）定位為 AI 協作開發工作臺，列於「AI 開發
 
 品牌 SVG、色碼與使用建議請見 `brand-guide.md`；`brand.html` 提供品牌示意板。
 
-## 常用網站
-
-頁面內新增或刪除的常用網站，只會保存在當前瀏覽器的 `localStorage`，不會寫回 GitHub，也不會同步給其他人或其他裝置。清除網站資料後，個人修改可能消失；本機預覽與上線網址也會各自保存資料。
-
-若要調整所有訪客初次看到的預設連結，請編輯 `assets/site-data.js` 的 `shortcuts` 並重新發布。
-
-本次加入 Astral Notes 星語時，舊版已儲存的清單會一次補入新捷徑，保留自訂網站、原有順序及先前移除的其他預設網站。清單已有相同網址時不會重複加入；之後移除星語也不會在重新整理後補回。此更新依賴瀏覽器允許儲存網站資料；無法儲存時，變更只能保留於目前頁面。
-
-已停用的預設入口不再顯示，舊版瀏覽器儲存的清單也會套用此調整。
-
 ## 專案介紹
 
 - **泰語 × 繁體中文學習**：[線上學習](https://tung-beauregard.github.io/Thai_TraditionalChinese_learing_W/)包含課程、手寫、打字、口說與測驗；[GitHub 專案](https://github.com/Tung-Beauregard/Thai_TraditionalChinese_learing_W)提供專案文件與原始碼。學習網站透過 CDN 載入部分程式，並非完全離線；口說需要麥克風與網路，專案 README 建議使用電腦版 Chrome／Edge。
@@ -81,8 +70,6 @@ Mycelint（by W Studio）定位為 AI 協作開發工作臺，列於「AI 開發
 - **中英韓翻譯 LINE 機器人**：[@492xqnyt](https://line.me/R/ti/p/%40492xqnyt)，依使用者提供的語言對應加入介紹。
 
 兩個 LINE 專案都有品牌頭像、概念介紹、直接加入好友連結與「掃碼加入」彈窗。QR Code 取自各自 LINE 官方加入好友頁的圖片，原樣保存在 assets；未疊加頭像或改寫 QR Code。公開加入好友頁可開啟，但未顯示可核對的帳號名稱。網站頭像為 W Studio 品牌設計，LINE 帳號本身的頭像需在其管理後台另外設定。
-
-兩個 LINE 捷徑會一次補入舊版已保存的瀏覽器清單；保留自訂網站與既有順序，升級後移除的 LINE 捷徑不會再自動補回。
 
 這些專案保留介紹與線上入口，不會自動加入工具下載區，也不會把專案原始碼 ZIP 當成小工具安裝包。
 

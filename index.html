@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1111">
-  <meta name="description" content="W Studio 數位工作室：探索語言學習、LINE 翻譯、Astral Notes 星語與 Mycelint AI 協作開發工作臺，收藏實用工具與常用網站。">
+  <meta name="description" content="W Studio 數位工作室：探索語言學習、LINE 翻譯、Astral Notes 星語與 Mycelint AI 協作開發工作臺，介紹開發專案與實用工具。">
   <meta property="og:title" content="W Studio — 把想法，變成好用的工具。">
-  <meta property="og:description" content="語言學習、LINE 翻譯、星語命盤探索與研發中的 Mycelint。我的專案與你的日常捷徑，都在這裡。">
+  <meta property="og:description" content="語言學習、LINE 翻譯、星語命盤探索與研發中的 Mycelint。查看專案介紹、使用連結與工具下載。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tung-beauregard.github.io/w-studio/">
   <link rel="canonical" href="https://tung-beauregard.github.io/w-studio/">
@@ -22,18 +22,18 @@
   <header class="site-header">
     <div class="header-inner wrap">
       <a class="brand" href="#about" aria-label="W Studio 首頁"><span class="brand-emblem"><svg class="w-monogram" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M7 22H23L35 61L46 34H57L68 61L80 22L96 16L77 82H62L51 55L40 82H26Z"/></svg></span><span class="brand-wordmark">STUDIO<small>BUILD USEFUL THINGS</small></span></a>
-      <nav class="main-nav" aria-label="主要導覽"><a class="active" href="#about">關於</a><a href="#projects">精選專案</a><a href="#tools">工具下載</a><a href="#links">常用網站</a></nav>
+      <nav class="main-nav" aria-label="主要導覽"><a class="active" href="#about">關於</a><a href="#projects">精選專案</a><a href="#tools">工具下載</a></nav>
       <a class="header-github external" href="https://github.com/Tung-Beauregard" target="_blank" rel="noopener noreferrer"><span data-icon="github"></span><span>GitHub</span><span class="tiny-arrow">↗</span></a>
       <button class="menu-button icon-button" aria-label="開啟選單" aria-expanded="false" aria-controls="mobile-nav"><span data-icon="menu"></span></button>
     </div>
-    <nav id="mobile-nav" class="mobile-nav" aria-label="行動版導覽" hidden><a href="#about">關於</a><a href="#projects">精選專案</a><a href="#tools">工具下載</a><a href="#links">常用網站</a></nav>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="行動版導覽" hidden><a href="#about">關於</a><a href="#projects">精選專案</a><a href="#tools">工具下載</a></nav>
   </header>
   <main id="main">
     <section class="hero wrap" id="about" aria-labelledby="hero-title">
       <div class="hero-copy">
         <div class="eyebrow"><span class="status-dot"></span> A LITTLE CODE. A LITTLE POSSIBILITY.</div>
         <h1 id="hero-title">把想法，<br>變成<span class="accent">好用的工具</span><span class="accent period">。</span></h1>
-        <p class="hero-description">從日常學習的小需求，到自我探索的新發現。<br class="desktop-br">這裡收集我的開發專案、實用工具，以及值得常常打開的網站。</p>
+        <p class="hero-description">從日常學習的小需求，到自我探索的新發現。<br class="desktop-br">這裡收集我的開發專案與實用工具。</p>
         <div class="hero-actions"><a class="button button-primary" href="#projects">探索我的專案 <span data-icon="arrow"></span></a><button class="button button-quiet" data-demo="overview"><span class="play-small">▶</span> 看看這裡有什麼</button></div>
         <div class="hero-tags"><span><i></i> 實用優先</span><span><i></i> 持續探索</span><span><i></i> 分享創作</span></div>
       </div>
@@ -55,7 +55,6 @@
       <div class="project-grid" id="project-grid"></div>
     </section>
     <section class="tools-band" id="tools" aria-labelledby="tools-title"><div class="section wrap"><div class="section-heading"><div><p class="eyebrow section-kicker">02 — THE TOOLBOX</p><h2 id="tools-title">好用的工具，<span>帶著走。</span></h2><p class="section-description">為日常工作做一點減法，收藏簡單實用的本機小工具。</p></div><span class="outline-label"><span data-icon="download"></span> 本機實用工具</span></div><div class="tools-list" id="tools-list"></div><p class="download-note"><span data-icon="info"></span> 工具將於正式發布後提供下載；使用前請參考各工具說明。</p></div></section>
-    <section class="section wrap links-section" id="links" aria-labelledby="links-title"><div class="section-heading"><div><p class="eyebrow section-kicker">03 — DAILY LAUNCHPAD</p><h2 id="links-title">常用入口，<span>一步就到。</span></h2><p class="section-description">為每天留一點方便。把你的常用網站，也放在這裡。</p></div><button id="add-shortcut" class="button button-outline"><span data-icon="plus"></span> 新增網站</button></div><div class="links-toolbar"><label class="search-box"><span data-icon="search"></span><input id="shortcut-search" type="search" placeholder="搜尋網站名稱或網址…" aria-label="搜尋常用網站"><kbd>/</kbd></label><span class="local-note"><span data-icon="lock"></span> 自訂內容儲存在此瀏覽器</span></div><div id="shortcuts-grid" class="shortcuts-grid"></div><p id="links-empty" class="empty-state" hidden>找不到符合的網站，試試其他關鍵字。</p><div class="links-bottom"><span>一個首頁，連起工作與生活。</span><button id="reset-shortcuts" class="subtle-button">還原預設網站</button></div></section>
     <section class="closing wrap"><div class="closing-mark" aria-hidden="true"><svg class="w-monogram" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M7 22H23L35 61L46 34H57L68 61L80 22L96 16L77 82H62L51 55L40 82H26Z"/></svg></div><div><p class="eyebrow">ALWAYS A WORK IN PROGRESS</p><h2>下一個好點子，正在路上。</h2><p>到 GitHub 看看我的最新探索，也歡迎留下你的想法。</p></div><a class="button button-primary" href="https://github.com/Tung-Beauregard" target="_blank" rel="noopener noreferrer"><span data-icon="github"></span> 在 GitHub 找到我 <span>↗</span></a></section>
   </main>
   <footer class="wrap site-footer"><a class="brand footer-brand" href="#about" aria-label="W Studio 首頁"><span class="brand-emblem"><svg class="w-monogram" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M7 22H23L35 61L46 34H57L68 61L80 22L96 16L77 82H62L51 55L40 82H26Z"/></svg></span><span class="brand-wordmark">STUDIO<small>BUILD USEFUL THINGS</small></span></a><span>© <span id="year">2026</span> W Studio · Crafted with curiosity.</span><button id="motion-toggle" class="subtle-button" aria-pressed="false"><span data-icon="pause"></span> 暫停動畫</button><a href="#about" class="back-top" aria-label="回到頂端">↑</a></footer>
@@ -66,9 +65,6 @@
     <div class="project-detail-footer"><button class="button button-outline close-dialog">返回專案</button></div>
   </dialog>
   <dialog id="line-qr-dialog" class="form-dialog line-qr-dialog" aria-labelledby="line-qr-title"><div class="dialog-header"><span class="eyebrow">SCAN TO CONNECT</span><button class="icon-button close-dialog" aria-label="關閉 QR Code"><span data-icon="close"></span></button></div><h2 id="line-qr-title">加入 LINE 翻譯機器人</h2><p class="line-qr-id" id="line-qr-id"></p><div class="line-qr-frame"><img id="line-qr-image" width="360" height="360" alt="LINE 官方加入好友 QR Code"></div><p class="line-qr-help">用手機開啟 LINE，掃描 QR Code 加入好友。<br>在手機上瀏覽？也可以直接點下方按鈕。</p><a id="line-qr-visit" class="button button-primary" target="_blank" rel="noopener noreferrer">直接加入 LINE ↗</a></dialog>
-  <dialog id="shortcut-dialog" class="form-dialog" aria-labelledby="shortcut-dialog-title"><div class="dialog-header"><h2 id="shortcut-dialog-title">加入常用網站</h2><button class="icon-button close-dialog" aria-label="關閉新增網站"><span data-icon="close"></span></button></div><form id="shortcut-form"><label for="shortcut-name">網站名稱</label><input id="shortcut-name" name="name" required maxlength="40" placeholder="例如：我的筆記"><label for="shortcut-url">網站網址</label><input id="shortcut-url" name="url" type="url" required placeholder="https://example.com"><p id="form-error" class="form-error" role="alert"></p><p class="form-note">僅保存在目前瀏覽器，不會同步或公開給其他人。</p><button type="submit" class="button button-primary">新增到我的入口 <span>↗</span></button></form></dialog>
-  <dialog id="confirm-dialog" class="form-dialog" aria-labelledby="confirm-title"><div class="dialog-header"><h2 id="confirm-title">還原預設網站？</h2><button class="icon-button close-dialog" aria-label="取消還原"><span data-icon="close"></span></button></div><p>這會移除此瀏覽器新增的網站，並恢復原本的入口清單。</p><div class="confirm-actions"><button class="button button-outline close-dialog">取消</button><button id="confirm-reset" class="button button-primary">還原預設</button></div></dialog>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript><div class="noscript-note">請啟用 JavaScript 以查看互動內容。你也可以直接<a href="https://github.com/Tung-Beauregard">前往我的 GitHub</a>。</div></noscript>
 </body>
 </html>
