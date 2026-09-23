@@ -41,15 +41,5 @@ window.SITE_DATA = {
       published: false
     }
     */
-  ],
-  shortcuts: [
-    { id: 'github', name: '我的 GitHub', description: '程式碼與開發紀錄', url: 'https://github.com/Tung-Beauregard', icon: 'github', color: 'mint' },
-    { id: 'language', name: '語言練習', description: '泰語 × 繁體中文', url: 'https://tung-beauregard.github.io/Thai_TraditionalChinese_learing_W/', icon: 'language', color: 'purple' },
-    { id: 'astral', name: 'Astral Notes 星語', description: '本命盤與雙人合盤探索', url: 'https://astral-notes.w-tw.chatgpt.site/', icon: 'spark', color: 'amber' },
-    { id: 'line-zh-th', name: '中泰翻譯 LINE', description: '中文 / ไทย · @441rouxg', url: 'https://line.me/R/ti/p/%40441rouxg', icon: 'chat', color: 'amber' },
-    { id: 'line-zh-en-ko', name: '中英韓翻譯 LINE', description: '中文 / English / 한국어 · @492xqnyt', url: 'https://line.me/R/ti/p/%40492xqnyt', icon: 'chat', color: 'purple' },
-    { id: 'mdn', name: 'MDN Web Docs', description: '開發文件與參考', url: 'https://developer.mozilla.org/zh-TW/', icon: 'code', color: 'mint' },
-    { id: 'chatgpt', name: 'ChatGPT', description: '讓想法再往前一步', url: 'https://chatgpt.com/', icon: 'spark', color: 'amber' },
-    { id: 'drive', name: 'Google Drive', description: '檔案與協作空間', url: 'https://drive.google.com/', icon: 'folder', color: 'blue' }
   ]
 };

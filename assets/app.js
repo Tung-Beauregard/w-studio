@@ -16,10 +16,7 @@
     download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
     play: '<path d="m8 4 12 8-12 8Z"/>',
     pause: '<path d="M8 5v14M16 5v14"/>',
-    plus: '<path d="M12 4v16M4 12h16"/>',
     close: '<path d="m6 6 12 12M6 18 18 6"/>',
-    search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
-    lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/>',
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/>',
     menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
     folder: '<path d="M3 6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
@@ -96,50 +93,6 @@
   $$('main section[id]').forEach(s => sectionObserver.observe(s));
   $('#year').textContent = new Date().getFullYear();
 
-  // Custom shortcuts live only on this browser. No backend or external requests.
-  const storageKey = 'tung-studio-shortcuts-v1';
-  const cloneDefaults = () => data.shortcuts.map(s => ({...s}));
-  let shortcuts = cloneDefaults();
-  try {
-    const raw = JSON.parse(localStorage.getItem(storageKey));
-    const legacy = Array.isArray(raw);
-    const stored = legacy ? raw : [2,3].includes(raw?.version) && Array.isArray(raw.items) ? raw.items : null;
-    if (stored) {
-      shortcuts = stored.filter(s => s && s.id !== 'lab' && typeof s.name === 'string' && typeof s.id === 'string' && safeUrl(s.url)).map(s => ({...s, url:safeUrl(s.url)}));
-      // Add the new launch entry once, while preserving saved links and removals.
-      if (legacy) {
-        const astral = data.shortcuts.find(s => s.id === 'astral');
-        if (astral && !shortcuts.some(s => s.id === astral.id || s.url === safeUrl(astral.url))) shortcuts.push({...astral});
-      }
-      // Introduce the two requested LINE entries once; keep removals on later visits.
-      if (legacy || raw.version === 2) {
-        data.shortcuts.filter(s => ['line-zh-th','line-zh-en-ko'].includes(s.id)).forEach(entry => {
-          if (!shortcuts.some(s => s.id === entry.id || s.url === safeUrl(entry.url))) shortcuts.push({...entry});
-        });
-      }
-      // Retired default entries also disappear from previously saved lists.
-      if (legacy || raw.version === 2 || shortcuts.length !== stored.length) {
-        localStorage.setItem(storageKey, JSON.stringify({version:3, items:shortcuts}));
-      }
-    }
-  } catch { /* Defaults or loaded links remain usable if storage is unavailable. */ }
-  let toastTimer;
-  function toast(message) { const t=$('#toast'); t.textContent=message; t.classList.add('visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('visible'),3500); }
-  function saveShortcuts() { try { localStorage.setItem(storageKey,JSON.stringify({version:3, items:shortcuts})); return true; } catch { toast('瀏覽器無法儲存，這次變更僅在目前頁面有效。'); return false; } }
-  function renderShortcuts() {
-    const term = $('#shortcut-search').value.trim().toLocaleLowerCase();
-    const shown = shortcuts.filter(s => [s.name,s.description || '',s.url].join(' ').toLocaleLowerCase().includes(term));
-    $('#shortcuts-grid').innerHTML = shown.map(s => `<article class="shortcut"><a href="${escape(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer"><span class="shortcut-icon ${['mint','blue','purple','amber'].includes(s.color)?s.color:'mint'}">${icon(s.icon)}</span><div class="shortcut-text"><h3>${escape(s.name)}</h3><p>${escape(s.description || new URL(s.url).hostname)}</p></div><span class="shortcut-arrow">↗</span></a><button class="remove-shortcut" data-remove="${escape(s.id)}" aria-label="移除 ${escape(s.name)}">${icon('close')}</button></article>`).join('');
-    $('#links-empty').hidden = shown.length !== 0;
-    $('#links-empty').textContent = shortcuts.length ? '找不到符合的網站，試試其他關鍵字。' : '還沒有網站，點選「新增網站」建立第一個入口。';
-    $$('.remove-shortcut').forEach(button => button.addEventListener('click', () => {
-      const removed = shortcuts.find(s => s.id === button.dataset.remove); shortcuts = shortcuts.filter(s => s.id !== button.dataset.remove);
-      const saved = saveShortcuts(); renderShortcuts(); $('#add-shortcut').focus(); if(saved) toast(`已移除「${removed.name}」`);
-    }));
-  }
-  renderShortcuts();
-  $('#shortcut-search').addEventListener('input', renderShortcuts);
-  document.addEventListener('keydown', e => { if(e.key === '/' && !e.ctrlKey && !e.metaKey && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName) && !document.activeElement.isContentEditable && !document.querySelector('dialog[open]')) { e.preventDefault(); $('#links').scrollIntoView(); $('#shortcut-search').focus({preventScroll:true}); } });
   $$('dialog').forEach(dialog => { $$('.close-dialog',dialog).forEach(b => b.addEventListener('click',()=>dialog.close())); dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}}); });
   const projectDetailDialog = $('#project-detail-dialog');
   let projectDetailOpener = null, previousBodyOverflow = '';
@@ -187,21 +140,9 @@
     $('#line-qr-visit').href = safeUrl(project.url);
     $('#line-qr-dialog').showModal();
   }));
-  $('#add-shortcut').addEventListener('click',()=>{ $('#shortcut-form').reset(); $('#form-error').textContent=''; $('#shortcut-dialog').showModal(); });
-  $('#shortcut-form').addEventListener('submit',e=>{
-    e.preventDefault();
-    const name=$('#shortcut-name').value.trim(); const url=safeUrl($('#shortcut-url').value.trim());
-    if(!name || !url) { $('#form-error').textContent='請填寫網站名稱，並使用 http:// 或 https:// 網址。'; return; }
-    if(shortcuts.some(s=>s.url===url)) { $('#form-error').textContent='這個網址已經在你的入口清單裡。'; return; }
-    shortcuts.push({id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),name,url,description:new URL(url).hostname,icon:'globe',color:'mint'});
-    const saved=saveShortcuts(); $('#shortcut-search').value=''; renderShortcuts(); $('#shortcut-dialog').close(); if(saved)toast('已新增網站，下次打開也會保留。');
-  });
-  $('#reset-shortcuts').addEventListener('click',()=>$('#confirm-dialog').showModal());
-  $('#confirm-reset').addEventListener('click',()=>{shortcuts=cloneDefaults();const saved=saveShortcuts();$('#shortcut-search').value='';renderShortcuts();$('#confirm-dialog').close();if(saved)toast('已還原預設網站。');});
-
   // The walkthroughs are illustrative storyboards, not recordings of the apps.
   const demos = {
-    overview: {title:'一個入口，探索我的數位世界。',description:'從作品認識我，再把好用的工具和網站帶進你的日常。',url:data.profile.github,steps:[['探索作品','從需求，走到作品。','從語言學習、LINE 翻譯到星語命盤探索，讓好奇心成為作品。','code',['語言學習與 LINE 翻譯','Astral Notes 星語']],['找到工具','替日常，多省一點力。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['建立日常入口','把常用網站放在一起。','新增你常去的網址，用搜尋快速找到下個目的地。','globe',['新增個人常用網站','在此瀏覽器保存']] ]},
+    overview: {title:'W Studio 專案與工具',description:'這裡整理我的開發專案、使用連結與本機小工具。',url:data.profile.github,steps:[['查看專案','看看我做了哪些東西。','依分類瀏覽語言學習、LINE 翻譯、Astral Notes 星語與研發中的 Mycelint。','code',['專案介紹與使用連結','研發中的專案會標示狀態']],['找到工具','需要的小工具，在這裡下載。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['查看 GitHub','專案文件和程式碼，放在 GitHub。','點選 GitHub 連結，查看我公開的儲存庫與開發紀錄。','github',['公開儲存庫','專案文件與開發紀錄']] ]},
     astral: {title:'Astral Notes 星語',description:'西洋占星、紫微斗數與生辰八字，從自己的命盤到兩個人的連結。命理解讀供自我探索參考。',url:data.projects.find(p=>p.id==='astral')?.url,steps:[['建立命盤','從你的出生時刻開始。','選擇出生日期、時間與城市，展開三套本命盤。','spark',['西洋占星 / 紫微斗數 / 八字','出生資料在裝置上計算']],['讀懂星圖','把星象，讀成白話。','從星體位置與命盤解讀，找到自我探索的另一個角度。','book',['白話命盤解讀','每月星象']],['探索連結','看看彼此，如何交會。','切換雙人合盤，探索兩個命盤之間的相位與連結。','globe',['雙人合盤','計算規則可查看']] ]},
     language: {title:'泰語 × 繁體中文學習',description:'選擇你的學習方向，從字母和漢字開始，練習寫、打、說。資源載入與口說功能需要網路。',url:data.projects.find(p=>p.id==='language')?.url,steps:[['選擇方向','สวัสดี，也可以是你好。','用繁體中文學泰語，或用泰語學繁體中文。','language',['中文 → 泰語','泰語 → 繁體中文']],['動手練習','讓學習，留下筆跡。','跟著課程練習字母或漢字，也能試試手寫評分與打字。','pencil',['字母與漢字課程','手寫與打字練習']],['帶進日常','下一句，就用得上。','從旅遊、聊天短語到測驗，累積自己的語言能力。','book',['旅遊與聊天短語','測驗與瀏覽器進度保存']] ]},
     'line-zh-th': {title:'中泰翻譯 LINE 機器人',description:'支援中文和泰文翻譯。以下是使用步驟示意，實際操作請看聊天室內的說明。',url:data.projects.find(p=>p.id==='line-zh-th')?.url,visitLabel:'加入 LINE ↗',steps:[['加入好友','掃碼或點連結，加入機器人。','用手機掃描 QR Code，或點選「加入 LINE」。','chat',['LINE ID：@441rouxg','中文 × 泰文']],['查看說明','使用方式在聊天室裡。','加入好友後，開啟機器人聊天室，查看翻譯功能的操作說明。','language',['中文 / ไทย','依聊天室內的說明操作']],['開始使用','需要翻譯時，打開 LINE。','從 LINE 好友列表找到機器人，就能再次開啟聊天室。','globe',['支援中文、泰文翻譯','W Studio 翻譯系列']] ]},
