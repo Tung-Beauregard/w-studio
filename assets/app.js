@@ -34,7 +34,13 @@
   fillIcons();
   const labVisual = `<div class="visual-label"><i></i> ORGANIZE. SIMPLIFY. FOCUS.</div><span class="visual-note">功能概念示意</span><div class="mini-lab" aria-hidden="true"><div class="mini-top"><span>● ● ●</span><span>SFPLAB / workspace</span><span>↗</span></div><div class="mini-layout"><div class="mini-sidebar"><strong>SFPLAB</strong><span>⌂ 總覽</span><span>⚗ 藥品清單</span><span>▧ 儀器使用</span><span>✓ 待辦事項</span><span>⌁ 圖譜分析</span></div><div class="mini-dashboard"><b>專注研究，日常交給系統。</b><p>YOUR LAB, ALL IN ONE PLACE.</p><div class="mini-metrics"><span><b>⚗</b>藥品與試材</span><span><b>▧</b>儀器登記</span><span><b>✓</b>工作待辦</span></div><div class="mini-table"><span>實驗室日常<i>集中管理</i></span><span>儀器使用記錄<i>使用登記</i></span><span>工作與值週事項<i>一目了然</i></span></div></div></div></div><div class="mini-float">${icon('check')} 讓研究，多一點從容。</div>`;
   const languageVisual = `<div class="visual-label"><i></i> A NEW LANGUAGE. A NEW WORLD.</div><span class="visual-note">功能概念示意</span><div class="language-cards" aria-hidden="true"><div class="flash-card"><small>01 / THAI</small><strong lang="th">ก</strong><span lang="th">สวัสดี</span><em>從字母開始，一點一點進步</em></div><div class="language-exchange">⇄</div><div class="flash-card"><small>02 / CHINESE</small><strong>你</strong><span>你好</span><em>從一句問候，認識另一種文化</em></div></div><div class="mini-float">${icon('language')} 兩種語言，更多可能。</div>`;
-  $('#project-grid').innerHTML = data.projects.map(p => `<article class="project-card" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${p.id === 'lab' ? labVisual : languageVisual}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions"><a href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer" aria-label="開啟 ${escape(p.name)}">開啟專案 <span>↗</span></a><button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button><a href="${escape(safeUrl(p.repo))}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.name)} GitHub 原始碼">${icon('github')} 原始碼</a></div><p class="project-access">${escape(p.note)}</p></div></article>`).join('');
+  const astralVisual = `<div class="visual-label"><i></i> YOUR PERSONAL COSMOS.</div><span class="visual-note">功能概念示意</span><div class="astral-chart" aria-hidden="true"><svg viewBox="0 0 260 260" fill="none"><circle cx="130" cy="130" r="112"/><circle cx="130" cy="130" r="88"/><circle cx="130" cy="130" r="49"/><path class="astral-rays" d="M130 18v24M130 218v24M18 130h24M218 130h24M74 33l12 21M174 206l12 21M33 74l21 12M206 174l21 12M33 186l21-12M206 86l21-12M74 227l12-21M174 54l12-21"/><g class="astral-constellation"><path d="m80 56 128 93-149 32 71-137 65 151-115-139"/><circle cx="80" cy="56" r="4"/><circle cx="208" cy="149" r="4"/><circle cx="59" cy="181" r="4"/><circle cx="130" cy="44" r="4"/><circle cx="195" cy="195" r="4"/></g><path class="astral-center" d="m130 112 5 13 13 5-13 5-5 13-5-13-13-5 13-5Z"/></svg><span class="astral-sign sign-one">✦</span><span class="astral-sign sign-two">✧</span></div><div class="astral-caption" aria-hidden="true"><strong>星語</strong><span>ASTRAL NOTES</span><small>本命盤 / 雙人合盤 / 白話解讀</small></div>`;
+  const projectVisuals = { lab: labVisual, language: languageVisual, astral: astralVisual };
+  $('#project-grid').innerHTML = data.projects.map(p => {
+    const repo = safeUrl(p.repo);
+    const sourceLink = repo ? `<a href="${escape(repo)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.name)} GitHub 原始碼">${icon('github')} 原始碼</a>` : '';
+    return `<article class="project-card${p.id === 'astral' ? ' project-card-wide' : ''}" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions"><a href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer" aria-label="開啟 ${escape(p.name)}">開啟專案 <span>↗</span></a><button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button>${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
+  }).join('');
   function renderTools() {
     const tools = Array.isArray(data.tools) ? data.tools : [];
     if (!tools.length) {
@@ -68,10 +74,23 @@
   const storageKey = 'tung-studio-shortcuts-v1';
   const cloneDefaults = () => data.shortcuts.map(s => ({...s}));
   let shortcuts = cloneDefaults();
-  try { const stored = JSON.parse(localStorage.getItem(storageKey)); if(Array.isArray(stored)) shortcuts = stored.filter(s => s && typeof s.name === 'string' && typeof s.id === 'string' && safeUrl(s.url)).map(s => ({...s, url:safeUrl(s.url)})); } catch { /* Defaults remain usable if storage is unavailable. */ }
+  try {
+    const raw = JSON.parse(localStorage.getItem(storageKey));
+    const legacy = Array.isArray(raw);
+    const stored = legacy ? raw : raw?.version === 2 && Array.isArray(raw.items) ? raw.items : null;
+    if (stored) {
+      shortcuts = stored.filter(s => s && typeof s.name === 'string' && typeof s.id === 'string' && safeUrl(s.url)).map(s => ({...s, url:safeUrl(s.url)}));
+      // Add the new launch entry once, while preserving saved links and removals.
+      if (legacy) {
+        const astral = data.shortcuts.find(s => s.id === 'astral');
+        if (astral && !shortcuts.some(s => s.id === astral.id || s.url === safeUrl(astral.url))) shortcuts.push({...astral});
+        localStorage.setItem(storageKey, JSON.stringify({version:2, items:shortcuts}));
+      }
+    }
+  } catch { /* Defaults or loaded links remain usable if storage is unavailable. */ }
   let toastTimer;
   function toast(message) { const t=$('#toast'); t.textContent=message; t.classList.add('visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('visible'),3500); }
-  function saveShortcuts() { try { localStorage.setItem(storageKey,JSON.stringify(shortcuts)); return true; } catch { toast('瀏覽器無法儲存，這次變更僅在目前頁面有效。'); return false; } }
+  function saveShortcuts() { try { localStorage.setItem(storageKey,JSON.stringify({version:2, items:shortcuts})); return true; } catch { toast('瀏覽器無法儲存，這次變更僅在目前頁面有效。'); return false; } }
   function renderShortcuts() {
     const term = $('#shortcut-search').value.trim().toLocaleLowerCase();
     const shown = shortcuts.filter(s => [s.name,s.description || '',s.url].join(' ').toLocaleLowerCase().includes(term));
@@ -99,9 +118,10 @@
   $('#reset-shortcuts').addEventListener('click',()=>$('#confirm-dialog').showModal());
   $('#confirm-reset').addEventListener('click',()=>{shortcuts=cloneDefaults();const saved=saveShortcuts();$('#shortcut-search').value='';renderShortcuts();$('#confirm-dialog').close();if(saved)toast('已還原預設網站。');});
 
-  // The walkthrough is an illustrative storyboard, not a recording of either app.
+  // The walkthroughs are illustrative storyboards, not recordings of the apps.
   const demos = {
-    overview: {title:'一個入口，探索我的數位世界。',description:'從作品認識我，再把好用的工具和網站帶進你的日常。',url:data.profile.github,steps:[['探索作品','從需求，走到作品。','實驗室管理與語言學習，是我正在探索的方向。','code',['實驗室工作流程','雙向語言學習']],['找到工具','替日常，多省一點力。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['建立日常入口','把常用網站放在一起。','新增你常去的網址，用搜尋快速找到下個目的地。','globe',['新增個人常用網站','在此瀏覽器保存']] ]},
+    overview: {title:'一個入口，探索我的數位世界。',description:'從作品認識我，再把好用的工具和網站帶進你的日常。',url:data.profile.github,steps:[['探索作品','從需求，走到作品。','從實驗室管理、語言學習，到星語命盤探索，讓好奇心成為作品。','code',['實驗室與語言學習','Astral Notes 星語']],['找到工具','替日常，多省一點力。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['建立日常入口','把常用網站放在一起。','新增你常去的網址，用搜尋快速找到下個目的地。','globe',['新增個人常用網站','在此瀏覽器保存']] ]},
+    astral: {title:'Astral Notes 星語',description:'西洋占星、紫微斗數與生辰八字，從自己的命盤到兩個人的連結。命理解讀供自我探索參考。',url:data.projects.find(p=>p.id==='astral')?.url,steps:[['建立命盤','從你的出生時刻開始。','選擇出生日期、時間與城市，展開三套本命盤。','spark',['西洋占星 / 紫微斗數 / 八字','出生資料在裝置上計算']],['讀懂星圖','把星象，讀成白話。','從星體位置與命盤解讀，找到自我探索的另一個角度。','book',['白話命盤解讀','每月星象']],['探索連結','看看彼此，如何交會。','切換雙人合盤，探索兩個命盤之間的相位與連結。','globe',['雙人合盤','計算規則可查看']] ]},
     lab: {title:'SFPLAB 實驗室管理系統',description:'把實驗室裡分散的日常工作，整理到共同的管理入口。線上使用需要實驗室帳號。',url:data.projects.find(p=>p.id==='lab')?.url,steps:[['集中管理','清單，井然有序。','整合藥品、試材與樣品清單，方便查找管理。','flask',['藥品與試材清單','樣品資料管理']],['安排工作','日常，更有條理。','從儀器使用登記到工作待辦，集中查看與安排。','check',['儀器使用登記','待辦與值週事項']],['分析與記錄','回到研究本身。','透過圖譜分析與使用步驟入口，銜接實驗室工作。','chart',['圖譜分析入口','儀器使用步驟']] ]},
     language: {title:'泰語 × 繁體中文學習',description:'選擇你的學習方向，從字母和漢字開始，練習寫、打、說。資源載入與口說功能需要網路。',url:data.projects.find(p=>p.id==='language')?.url,steps:[['選擇方向','สวัสดี，也可以是你好。','用繁體中文學泰語，或用泰語學繁體中文。','language',['中文 → 泰語','泰語 → 繁體中文']],['動手練習','讓學習，留下筆跡。','跟著課程練習字母或漢字，也能試試手寫評分與打字。','pencil',['字母與漢字課程','手寫與打字練習']],['帶進日常','下一句，就用得上。','從旅遊、聊天短語到測驗，累積自己的語言能力。','book',['旅遊與聊天短語','測驗與瀏覽器進度保存']] ]},
   };
