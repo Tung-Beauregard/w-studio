@@ -2,7 +2,7 @@
 
 可放在 GitHub Pages 的繁體中文個人網站，整合 GitHub 介紹、公開專案、指定小工具下載與功能介紹動畫。
 
-本站使用純 HTML、CSS、JavaScript，不需 npm、不需編譯，也不依賴 API。直接開啟 `index.html` 即可預覽。
+本站使用純 HTML、CSS、JavaScript，不需 npm、不需編譯，主體不依賴 API；頁尾訪客數由外部計數服務提供。直接開啟 `index.html` 即可預覽。
 
 正式網站：[W Studio](https://tung-beauregard.github.io/w-studio/)
 
@@ -18,6 +18,7 @@ assets/
   app.js
   site-data.js
   downloads.js
+  visitors.js
   favicon.svg
 ```
 
@@ -108,3 +109,11 @@ tools: [
 已上線的網站不能用 `C:\...`、`file://...` 或只存在你電腦上的路徑，讓其他訪客直接取得檔案。檔案必須先放到訪客可連線的主機。若只在同一個區域網路分享，也能用區網檔案服務，但外部訪客無法使用。
 
 下載按鈕是公開檔案的入口，`published` 只控制此網站是否顯示可用按鈕，不是權限保護。要撤回已公開的檔案，還需從實際託管位置移除該檔案。
+
+## 累積到站人數
+
+頁尾使用[不蒜子官方服務](https://ibruce.info/2015/04/04/busuanzi/)的 `site_uv`，顯示估算訪客數，而非 `site_pv` 瀏覽次數。計數由共用服務保存，不是瀏覽器中的假累加器，也不含啟用前的流量。
+
+`assets/visitors.js` 只在正式網址 `https://tung-beauregard.github.io/w-studio/`（含 `index.html`）啟用；本機或其他預覽位置顯示「預覽」，不載入計數服務。正式頁面載入時會連線至 `busuanzi.ibruce.info`，不需要帳號或金鑰。停用 JavaScript 時顯示破折號；服務失敗或超過 10 秒時顯示「暫時無法載入」，不以 0 冒充真實統計。
+
+此數字依服務的 UV 識別方式估算，不能視為精確、不重複的真人總數；跨裝置、瀏覽器與追蹤阻擋可能影響結果。不蒜子以站點彙總，若未來同網域的其他專案也接入這項服務，需重新評估是否應改用獨立統計。更換正式網址時，也需更新腳本的網址檢查與計數設定。
