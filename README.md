@@ -1,10 +1,10 @@
-# W Studio｜專案與工具入口
+# W AI Studio｜專案與工具入口
 
 可放在 GitHub Pages 的繁體中文個人網站，整合 GitHub 介紹、公開專案、指定小工具下載與功能介紹動畫。
 
 本站使用純 HTML、CSS、JavaScript，不需 npm、不需編譯，主體不依賴 API；頁尾訪客數由外部計數服務提供。直接開啟 `index.html` 即可預覽。
 
-正式網站：[W Studio](https://tung-beauregard.github.io/w-studio/)
+正式網站：[W AI Studio](https://tung-beauregard.github.io/w-studio/)
 
 網站儲存庫：[Tung-Beauregard/w-studio](https://github.com/Tung-Beauregard/w-studio)。由 `main` 分支根目錄發布，後續更新提交後會自動部署。
 
@@ -54,7 +54,7 @@ assets/
 
 ## Mycelint 專案展示
 
-Mycelint（by W Studio）定位為 AI 協作開發工作臺，列於「AI 開發」分類。網站資料識別碼為 `agent-hub`，僅供網站元件識別。介紹以一般訪客可理解的需求、預期工作流程、名稱意象及研發原型狀態為主；尚未提供使用、下載或原始碼入口。
+Mycelint（by W AI Studio）定位為 AI 協作開發工作臺，列於「AI 開發」分類。網站資料識別碼為 `agent-hub`，僅供網站元件識別。介紹以一般訪客可理解的需求、預期工作流程、名稱意象及研發原型狀態為主；尚未提供使用、下載或原始碼入口。
 
 「了解專案」開啟原生 `<dialog>`，支援 Escape、關閉按鈕、鍵盤焦點限制與關閉後返回原按鈕。菌絲圖以內嵌 SVG 與 CSS 呈現核心、分枝、工具節點，標示「概念示意」；減少動態效果偏好與全站暫停動畫均支援。網站不連接任何工程環境。
 
@@ -70,7 +70,7 @@ Mycelint（by W Studio）定位為 AI 協作開發工作臺，列於「AI 開發
 - **中泰翻譯 LINE 機器人**：[@441rouxg](https://line.me/R/ti/p/%40441rouxg)，提供中文與泰文翻譯入口。
 - **中英韓翻譯 LINE 機器人**：[@492xqnyt](https://line.me/R/ti/p/%40492xqnyt)，依使用者提供的語言對應加入介紹。
 
-兩個 LINE 專案都有品牌頭像、概念介紹、直接加入好友連結與「掃碼加入」彈窗。QR Code 取自各自 LINE 官方加入好友頁的圖片，原樣保存在 assets；未疊加頭像或改寫 QR Code。公開加入好友頁可開啟，但未顯示可核對的帳號名稱。網站頭像為 W Studio 品牌設計，LINE 帳號本身的頭像需在其管理後台另外設定。
+兩個 LINE 專案都有品牌頭像、概念介紹、直接加入好友連結與「掃碼加入」彈窗。QR Code 取自各自 LINE 官方加入好友頁的圖片，原樣保存在 assets；未疊加頭像或改寫 QR Code。公開加入好友頁可開啟，但未顯示可核對的帳號名稱。網站頭像為 W AI Studio 品牌設計，LINE 帳號本身的頭像需在其管理後台另外設定。
 
 這些專案保留介紹與線上入口，不會自動加入工具下載區，也不會把專案原始碼 ZIP 當成小工具安裝包。
 

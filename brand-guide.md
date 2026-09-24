@@ -1,13 +1,13 @@
-# W Studio 品牌使用
+# W AI Studio 品牌使用
 
-主標誌以幾何折線組成 W，右上方斜切是辨識特徵。品牌名稱為 **W Studio**；標語沿用 **Build useful things / 把想法，變成好用的工具。**
+主標誌以幾何折線組成 W，右上方斜切是辨識特徵。品牌名稱為 **W AI Studio**；標語沿用 **Build useful things / 把想法，變成好用的工具。**
 
 ## 檔案
 
 - `assets/w-mark-mint.svg`：薄荷綠主標誌，透明背景，適合深色底。
 - `assets/w-mark-dark.svg`：近黑單色標誌，透明背景，適合淺色或薄荷綠底。
 - `assets/w-mark-white.svg`：純白單色標誌，透明背景。
-- `assets/w-studio-lockup.svg`：標誌搭配 STUDIO 字樣與英文標語，適合深色底。W 圖形是向量路徑；文字使用系統字型，跨裝置字形可能略有差異。
+- `assets/w-studio-lockup.svg`：標誌搭配 AI STUDIO 字樣與英文標語，適合深色底。W 圖形是向量路徑；文字使用系統字型，跨裝置字形可能略有差異。
 - `assets/favicon.svg`：帶近黑圓角背景的瀏覽器圖示。
 - `brand.html`：品牌示意板，可用瀏覽器開啟查看。
 
