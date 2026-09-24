@@ -23,16 +23,16 @@ dialog{padding:0;border:1px solid #425448;border-radius:15px;background:#131e17;
 @keyframes astral-drift{to{transform:rotate(360deg)}}
 @media(min-width:701px) and (max-width:1000px){.project-visual.astral{flex-direction:column;gap:0}.astral-chart{flex-basis:auto;width:210px}.astral-caption{align-items:center}.astral-caption strong{font-size:23px}.astral-caption small{margin-top:9px}.project-card-wide .project-meta{flex-wrap:wrap;gap:5px}}
 @media(max-width:700px){.project-card-wide{display:block}.project-card-wide .project-visual{min-height:0;height:275px}.project-visual.astral{padding:42px 24px 20px;gap:13px}.astral-chart{flex-basis:205px}.astral-caption strong{font-size:29px}.astral-caption>span{font-size:8px}.astral-caption small{font-size:8px;max-width:85px;line-height:1.9}.filter-button{padding:7px 9px}.project-card-wide .project-meta{flex-wrap:wrap;gap:6px}}
-/* W Studio wordmark */
+/* W AI Studio wordmark */
 .brand-icon{font-size:25px;letter-spacing:-.06em;padding-right:0;font-weight:650}.footer-brand .brand-icon{font-size:19px}
-/* Geometric monogram: one silhouette across the full W Studio identity. */
+/* Geometric monogram: one silhouette across the full W AI Studio identity. */
 .brand{gap:14px}.brand-emblem{display:grid;place-items:center;width:46px;height:46px;color:var(--mint);flex-shrink:0;transition:transform .3s}.brand-emblem .w-monogram{width:46px;height:46px}.brand-wordmark{font:600 16px/1 var(--sans);letter-spacing:.24em;color:var(--text)}.brand .brand-wordmark small{font:6px/1.5 var(--mono);letter-spacing:.115em;margin-top:8px;color:#8ea799;white-space:nowrap}.brand:hover .brand-emblem{transform:translateY(-1px) rotate(-4deg)}.hello{gap:13px;min-height:42px}.hello .identity-signature{display:inline-flex;align-items:center;width:57px;height:46px;color:var(--mint);position:relative}.identity-signature .w-monogram{width:57px;height:57px}.hello .identity-caption{font:8px var(--mono);letter-spacing:.1em;color:#789285;padding-left:13px;border-left:1px solid #344c3e;margin-left:3px}.closing-mark{width:70px;color:#a5f3cda6;flex-shrink:0}.closing-mark .w-monogram{width:70px;height:70px}.footer-brand{gap:10px}.footer-brand .brand-emblem,.footer-brand .brand-emblem .w-monogram{width:35px;height:35px}.footer-brand .brand-wordmark{font-size:12px;letter-spacing:.19em}.footer-brand .brand-wordmark small{font-size:5px;margin-top:6px}.footer-brand+.site-footer{margin-left:0}
 @media(max-width:700px){.header-inner{gap:12px}.brand{gap:9px}.brand-emblem,.brand-emblem .w-monogram{width:38px;height:38px}.brand-wordmark{font-size:13px;letter-spacing:.18em}.brand .brand-wordmark small{font-size:5px;margin-top:6px;letter-spacing:.06em}.hello .identity-signature{width:49px;height:40px}.identity-signature .w-monogram{width:49px;height:49px}.hello .identity-caption{font-size:7px;padding-left:10px;margin-left:0}.closing-mark,.closing-mark .w-monogram{width:45px;height:45px}.footer-brand .brand-wordmark{font-size:11px}.footer-brand .brand-wordmark small{font-size:4.5px}}
 .tools-empty{display:flex;align-items:center;gap:25px;padding:38px 0;border-bottom:1px solid #354439}.tools-empty-icon{width:64px;height:64px;border:1px solid #3b5845;background:#1e3226;border-radius:16px;color:var(--mint);display:grid;place-items:center;flex-shrink:0}.tools-empty-icon svg{width:27px;height:27px}.tools-empty h3{font-size:22px;font-weight:550;margin-top:10px}.tools-empty .eyebrow{font-size:8px;color:#88a691}.tools-empty p{font-size:12px;color:#99ad9f;line-height:1.9;margin-top:9px}.tools-empty>.outline-label{margin-left:auto;color:#98b4a0}.download-pending{font-size:11px;color:#95a99b;padding:10px 14px;border:1px dashed #405646;border-radius:6px}.tool-copy>.tool-file{font:10px var(--mono);color:#afc8b5;margin-top:9px;overflow-wrap:anywhere}
 @media(max-width:700px){.tools-empty{gap:17px;align-items:flex-start;flex-wrap:wrap;padding:28px 0}.tools-empty-icon{width:45px;height:45px;border-radius:12px}.tools-empty-icon svg{width:23px;height:23px}.tools-empty>div{flex:1;min-width:200px}.tools-empty .eyebrow{font-size:7px}.tools-empty h3{font-size:20px}.tools-empty p{font-size:11px}.tools-empty>.outline-label{margin-left:62px}.tool-file{max-width:100%}}
 
 
-/* W Studio translation companions */
+/* W AI Studio translation companions */
 .project-visual.line-zh-th,.project-visual.line-zh-en-ko{background:radial-gradient(ellipse at 50% 40%,rgba(165,243,205,.08),transparent 70%),#0c1413;min-height:390px}
 .project-visual.line-zh-th{--bot-accent:#eac18b}
 .project-visual.line-zh-en-ko{--bot-accent:#b4a3ed}
@@ -113,3 +113,5 @@ dialog{padding:0;border:1px solid #425448;border-radius:15px;background:#131e17;
 .visitor-counter{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap;font-size:10px;flex-shrink:0}
 .visitor-counter strong{font:500 10px var(--mono);color:var(--mint);font-variant-numeric:tabular-nums}
 @media(max-width:900px){.footer-meta{order:4;flex-basis:100%;padding-top:14px;border-top:1px solid #26352b}.site-footer{flex-wrap:wrap}.copyright{font-size:8px}.visitor-counter,.visitor-counter strong{font-size:9px}.footer-meta{gap:12px}}
+
+.brand-wordmark{white-space:nowrap}

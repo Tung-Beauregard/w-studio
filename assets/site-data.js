@@ -8,7 +8,7 @@ window.SITE_DATA = {
     { id: 'line-zh-en-ko', category: 'translation', number: '04', eyebrow: 'W TRANSLATE / CHINESE × ENGLISH × KOREAN', title: '中英韓翻譯，直接用 LINE。', name: '中英韓翻譯 LINE 機器人', description: '支援中文、英文和韓文翻譯。加入 LINE 好友就能使用，操作方式請看聊天室內的說明。', tags: ['中文 / English / 한국어', 'LINE 機器人', '語言翻譯'], url: 'https://line.me/R/ti/p/%40492xqnyt', linkLabel: '加入 LINE', lineId: '@492xqnyt', qr: './assets/line-zh-en-ko-qr.png', note: 'LINE ID：@492xqnyt · 掃碼加入，或直接開啟 LINE', icon: 'chat' }
     ,{
       id: 'agent-hub', category: 'ai-development', number: '05',
-      eyebrow: 'MYCELINT / AI DEVELOPMENT', name: 'Mycelint', brand: 'by W Studio',
+      eyebrow: 'MYCELINT / AI DEVELOPMENT', name: 'Mycelint', brand: 'by W AI Studio',
       position: 'AI 協作開發工作臺', title: '讓想法，長成可用的工具。',
       description: 'Mycelint 是正在研發的 AI 協作開發工作臺，目標是串起任務規劃、程式修改、測試、獨立審查與交付。讓每次開發都有可追蹤的結果，減少在人與模型之間反覆整理、複製與傳話。',
       tags: ['AI 協作', '開發流程', '可追蹤成果'], status: '研發中',

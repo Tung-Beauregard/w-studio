@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="W Studio — Build useful things">
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="120" viewBox="0 0 430 120" role="img" aria-label="W AI Studio — Build useful things">
 <path d="M7 22H23L35 61L46 34H57L68 61L80 22L96 16L77 82H62L51 55L40 82H26Z" transform="translate(4 10)" fill="#a5f3cd"/>
-<text x="133" y="65" fill="#f0f3ee" font-family="Segoe UI,Arial,sans-serif" font-weight="600" font-size="38" letter-spacing="8">STUDIO</text>
+<text x="133" y="65" fill="#f0f3ee" font-family="Segoe UI,Arial,sans-serif" font-weight="600" font-size="38" letter-spacing="6">AI STUDIO</text>
 <text x="136" y="90" fill="#95a5a0" font-family="Consolas,monospace" font-size="10" letter-spacing="3">BUILD USEFUL THINGS</text>
 </svg>
