@@ -106,3 +106,10 @@ dialog{padding:0;border:1px solid #425448;border-radius:15px;background:#131e17;
 @media(max-width:700px){.project-card-wide .project-visual.agent-hub{height:355px;min-height:355px;padding:37px 20px 22px}.mycelint-network{max-height:225px;flex-shrink:0}.mycelint-caption strong{font-size:25px}.project-detail-body{padding:24px 21px 0}.project-detail-intro h2{font-size:32px}.project-detail-intro h2 small{display:block;margin:4px 0 0}.project-detail-tagline{font-size:17px}.project-workflow{grid-template-columns:1fr;gap:22px}.project-workflow li{flex-direction:row;align-items:center;gap:14px;padding:12px 15px}.project-workflow li:not(:last-child):after{content:'↓';right:auto;left:22px;top:auto;bottom:-25px}.project-growth{grid-template-columns:1fr;gap:9px}.project-growth>div{padding:12px 14px}.project-detail-footer{padding:0 21px 25px}.project-detail-footer .button{width:100%}}
 .motion-paused .mycelint-core,.motion-paused .mycelint-branches path,.motion-paused .mycelint-nodes{animation:none;opacity:1;transform:none;stroke-dashoffset:0}
 @media(prefers-reduced-motion:reduce){.mycelint-core,.mycelint-branches path,.mycelint-nodes{animation:none!important;opacity:1;transform:none;stroke-dashoffset:0}}
+
+/* Keep the visitor count on one quiet line beside the copyright. */
+.footer-meta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex:1;min-width:0;color:#7d9385}
+.copyright{font-size:9px;line-height:1.7}
+.visitor-counter{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap;font-size:10px;flex-shrink:0}
+.visitor-counter strong{font:500 10px var(--mono);color:var(--mint);font-variant-numeric:tabular-nums}
+@media(max-width:900px){.footer-meta{order:4;flex-basis:100%;padding-top:14px;border-top:1px solid #26352b}.site-footer{flex-wrap:wrap}.copyright{font-size:8px}.visitor-counter,.visitor-counter strong{font-size:9px}.footer-meta{gap:12px}}
