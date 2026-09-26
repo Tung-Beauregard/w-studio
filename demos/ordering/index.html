@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; object-src 'none'; base-uri 'self'">
+  <meta name="theme-color" content="#f5f3ed">
+  <meta name="description" content="無品牌點餐系統 Demo：使用虛構菜單體驗選餐、購物車及取餐時段，僅模擬送出，不建立真實訂單。">
+  <title>點餐系統 Demo</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./demo.css">
+  <script src="./demo.js" defer></script>
+</head>
+<body>
+  <div class="demo-banner"><span>DEMO · 虛構菜單與價格</span><span>僅供操作體驗，不會成立訂單</span></div>
+  <header class="wrap header"><a href="../../#projects" class="back-link">← 返回作品集</a><span class="header-label">ORDERING SYSTEM / DEMO</span><button id="reset" class="text-button">重新體驗</button></header>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="title"><div><p class="eyebrow">INTERACTIVE DEMO</p><h1 id="title">點餐系統 <span>Demo</span></h1><p class="intro-copy">選餐、調整份數，再選擇用餐方式與時段。<br>從挑選到確認，試走一次點餐流程。</p><div class="feature-tags"><span>菜單搜尋</span><span>購物車</span><span>預約時段</span></div></div><div class="intro-art" aria-hidden="true"><div class="plate"><span class="leaf leaf-a"></span><span class="leaf leaf-b"></span><span class="leaf leaf-c"></span><span class="grain"></span><span class="tomato"></span></div><span class="art-note">MENU / DEMO ONLY</span></div></section>
+    <div class="workspace">
+      <section class="menu-section" aria-labelledby="menu-title"><div class="section-title"><h2 id="menu-title">挑選餐點</h2><span id="menu-count">6 道示範餐點</span></div><label class="search-label"><span>搜尋餐點</span><input id="search" type="search" placeholder="輸入餐點名稱" autocomplete="off"></label><div class="filters" role="group" aria-label="菜單分類"><button data-category="all" aria-pressed="true">全部</button><button data-category="main" aria-pressed="false">主食</button><button data-category="side" aria-pressed="false">小點</button><button data-category="drink" aria-pressed="false">飲品</button></div><div id="menu" class="menu-grid"></div><p id="empty-search" class="empty-search" hidden>沒有符合的餐點，換個關鍵字試試。</p></section>
+      <aside class="order-panel" aria-labelledby="order-title"><div class="section-title"><h2 id="order-title">已選餐點</h2><span id="cart-count">0 份</span></div><p id="empty-cart" class="empty-cart">還沒選餐點。<br>從菜單加入幾樣試試看。</p><ul id="cart" class="cart-list"></ul><div class="total"><span>合計</span><strong id="total">NT$ 0</strong></div>
+        <form id="order-form"><fieldset class="mode-field"><legend>用餐方式</legend><label><input type="radio" name="mode" value="外帶自取" checked><span>外帶自取</span></label><label><input type="radio" name="mode" value="內用預約"><span>內用預約</span></label></fieldset><div class="schedule-fields"><label>預約日期<input type="date" id="date" required></label><label>預約時段<select id="time" required><option value="">請選擇</option><option>11:30</option><option>12:00</option><option disabled>12:30（示範額滿）</option><option>13:00</option><option>17:30</option><option>18:00</option><option>18:30</option></select></label></div><p class="form-note">時段僅為示意，不代表任何店家的實際名額。無需填寫姓名、電話或付款資料。</p><button class="primary-button" type="submit" id="review" disabled>查看模擬訂單 →</button></form><p class="local-note">操作只存在目前頁面，重新整理即可清除。</p>
+      </aside>
+    </div>
+  </main>
+  <footer class="wrap footer"><span>點餐系統 Demo · 所有品項與價格皆為虛構</span><a href="../../#projects">返回作品集 ↗</a></footer>
+  <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <dialog id="confirmation" aria-labelledby="confirmation-title"><div class="dialog-top"><span class="eyebrow">DEMO / ORDER REVIEW</span><button id="close-dialog" class="icon-button" aria-label="關閉訂單視窗">×</button></div><div id="review-content"><h2 id="confirmation-title">確認模擬訂單</h2><p id="order-summary" class="summary"></p><ul id="review-items" class="review-items"></ul><div class="total"><span>合計</span><strong id="review-total"></strong></div><p class="form-note">送出只會在此頁顯示展示結果。</p><button id="simulate" class="primary-button">模擬送出</button><button id="back-to-edit" class="secondary-button">返回修改</button></div><div id="success-content" hidden><div class="success-icon" aria-hidden="true">✓</div><h2>模擬流程已完成</h2><p>這是 Demo，沒有建立真實訂單、<br>保留名額或通知任何店家。</p><button id="finish" class="primary-button">繼續體驗</button></div></dialog>
+  <noscript><div class="noscript">請啟用 JavaScript 以體驗點餐流程。<a href="../../#projects">返回作品集</a></div></noscript>
+</body>
+</html>
