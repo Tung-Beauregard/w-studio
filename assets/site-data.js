@@ -26,6 +26,24 @@ window.SITE_DATA = {
         vision: '專案希望從一個可重複使用的核心開始，逐步建立更多實用作品。',
         progress: '目前為研發原型，持續整合受限執行、測試與獨立審查流程，尚未開放使用。'
       }
+    },
+    {
+      id: 'lab-demo', category: 'systems', number: '06',
+      eyebrow: 'LAB MANAGEMENT / DEMO', name: '實驗室管理 Demo',
+      title: '庫存、預約和借閱，集中管理。',
+      description: '試試看查庫存、登記領用、預約儀器和借還圖書。也能管理待辦與值週清單，所有內容都使用虛構資料。',
+      tags: ['庫存管理', '儀器預約', '互動 Demo'],
+      url: 'https://tung-beauregard.github.io/w-lab-demo/', linkLabel: '開啟 Demo',
+      note: '公開展示版 · 變更僅存於目前瀏覽器，可隨時重設', icon: 'flask'
+    },
+    {
+      id: 'ordering-demo', category: 'systems', number: '07',
+      eyebrow: 'ORDERING SYSTEM / DEMO', name: '點餐系統 Demo',
+      title: '從選餐到確認，走一次點餐流程。',
+      description: '瀏覽菜單、調整份數，選擇內用或外帶和預約時段。這份展示版使用虛構餐點與價格，送出後只會顯示模擬結果。',
+      tags: ['線上選餐', '購物車', '互動 Demo'],
+      url: 'https://tung-beauregard.github.io/w-studio/demos/ordering/', linkLabel: '開啟 Demo',
+      note: '公開展示版 · 不會建立真實訂單或保留名額', icon: 'book'
     }
   ],
   // 只加入你指定要公開的小工具，不會從 GitHub 專案自動產生下載。

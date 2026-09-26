@@ -50,7 +50,15 @@
         <g><rect x="97" y="245" width="42" height="42" rx="12"/><path d="M108 273v-13l10-6 10 6v13l-10 6Zm0-13 10 6 10-6m-10 6v13"/></g>
       </g>
     </svg><div class="mycelint-caption"><strong>Mycelint</strong><span>AI 協作開發工作臺</span><small>從一個核心，長出更多可能。</small></div>`;
-  const projectVisuals = { language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요'), 'agent-hub': mycelintVisual };
+  const labDemoVisual = `<div class="visual-label">LAB MANAGEMENT / DEMO</div><span class="visual-note">介面概念示意</span>
+    <div class="system-preview" aria-hidden="true"><div class="system-preview-top"><span>${icon('flask')} 實驗室管理</span><small>DEMO</small></div>
+      <div class="system-preview-tabs"><span>庫存</span><span>預約</span><span>借閱</span></div>
+      <div class="system-preview-body"><span class="system-preview-caption">展示庫存</span><div class="system-preview-row"><span>示範緩衝液</span><small>240 mL</small><i>充足</i></div><div class="system-preview-row"><span>示範濾紙組</span><small>8 盒</small><i class="low">待補充</i></div>
+      <div class="system-preview-note">${icon('check')} 虛構資料，可自由操作</div></div>
+    </div>`;
+  const orderingDemoVisual = `<div class="visual-label">ORDERING SYSTEM / DEMO</div><span class="visual-note">介面概念示意</span>
+    <div class="system-preview" aria-hidden="true"><div class="system-preview-top"><span>${icon('book')} 點餐系統</span><small>DEMO</small></div><div class="system-preview-tabs"><span>菜單</span><span>購物車</span><span>確認</span></div><div class="system-preview-body"><span class="system-preview-caption">示範餐點</span><div class="system-preview-row"><span>時蔬飯碗</span><small>NT$ 130</small><i>× 1</i></div><div class="system-preview-row"><span>冷泡茶</span><small>NT$ 45</small><i>× 1</i></div><div class="system-preview-note">${icon('check')} 模擬選餐，不成立訂單</div></div></div>`;
+  const projectVisuals = { language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요'), 'agent-hub': mycelintVisual, 'lab-demo': labDemoVisual, 'ordering-demo': orderingDemoVisual };
   $('#project-grid').innerHTML = data.projects.map(p => {
     const repo = safeUrl(p.repo);
     const qrButton = p.qr ? `<button class="demo-link qr-link" data-qr="${escape(p.id)}" aria-label="掃碼加入 ${escape(p.name)}">⊞ 掃碼加入</button>` : '';
@@ -142,7 +150,11 @@
   }));
   // The walkthroughs are illustrative storyboards, not recordings of the apps.
   const demos = {
-    overview: {title:'W AI Studio 專案與工具',description:'這裡整理我的開發專案、使用連結與本機小工具。',url:data.profile.github,steps:[['查看專案','看看我做了哪些東西。','依分類瀏覽語言學習、LINE 翻譯、Astral Notes 星語與研發中的 Mycelint。','code',['專案介紹與使用連結','研發中的專案會標示狀態']],['找到工具','需要的小工具，在這裡下載。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['查看 GitHub','專案文件和程式碼，放在 GitHub。','點選 GitHub 連結，查看我公開的儲存庫與開發紀錄。','github',['公開儲存庫','專案文件與開發紀錄']] ]},
+    'ordering-demo': {title:'點餐系統 Demo',description:'用虛構菜單體驗選餐與確認流程。沒有付款、店家通知或真實訂單。',url:data.projects.find(p=>p.id==='ordering-demo')?.url,visitLabel:'開啟 Demo ↗',steps:[['挑選餐點','看看菜單，加入想試的餐點。','依主食、小點和飲品篩選，也能直接搜尋名稱。','book',['菜單分類與搜尋','示範餐點與價格']],['調整內容','調整份數，選擇預約時段。','購物車會更新合計金額；可選內用或外帶，指定日期和時段。','check',['購物車增減與合計','用餐方式與預約時段']],['確認結果','確認內容，試試模擬送出。','檢查餐點與預約資訊，再查看完成畫面。整個流程只在目前頁面執行。','globe',['不需姓名、電話或付款資料','不成立訂單，也不保留名額']]]},
+
+    'lab-demo': {title:'實驗室管理 Demo',description:'使用虛構資料體驗管理功能。修改只保存在目前瀏覽器，可隨時重設。',url:data.projects.find(p=>p.id==='lab-demo')?.url,visitLabel:'開啟 Demo ↗',steps:[['查庫存','查詢物品，再試試登記領用。','搜尋藥品、試材與樣品，篩選低庫存項目，查看模擬領用紀錄。','flask',['物品搜尋與低庫存篩選','模擬領用與紀錄']],['排預約','選一台儀器，安排使用時段。','新增或取消展示預約，重疊時段會提醒衝突；圖書也能模擬借還。','book',['儀器預約與時段檢查','圖書借閱與歸還']],['管待辦','把待辦和值週項目逐一完成。','勾選待辦、更新值週清單，也能查看採買與報修進度。','check',['待辦、值週與採買報修','可重設全部展示資料']]]},
+
+    overview: {title:'W AI Studio 專案與工具',description:'這裡整理我的開發專案、使用連結與本機小工具。',url:data.profile.github,steps:[['查看專案','看看我做了哪些東西。','依分類瀏覽語言學習、LINE 翻譯、星語、系統 Demo 與研發中的 Mycelint。','code',['專案介紹與使用連結','研發中的專案會標示狀態']],['找到工具','需要的小工具，在這裡下載。','本機小工具正在整理中，正式發布後會提供使用說明與檔案下載。','download',['本機小工具','介紹與使用說明']],['查看 GitHub','專案文件和程式碼，放在 GitHub。','點選 GitHub 連結，查看我公開的儲存庫與開發紀錄。','github',['公開儲存庫','專案文件與開發紀錄']] ]},
     astral: {title:'Astral Notes 星語',description:'西洋占星、紫微斗數與生辰八字，從自己的命盤到兩個人的連結。命理解讀供自我探索參考。',url:data.projects.find(p=>p.id==='astral')?.url,steps:[['建立命盤','從你的出生時刻開始。','選擇出生日期、時間與城市，展開三套本命盤。','spark',['西洋占星 / 紫微斗數 / 八字','出生資料在裝置上計算']],['讀懂星圖','把星象，讀成白話。','從星體位置與命盤解讀，找到自我探索的另一個角度。','book',['白話命盤解讀','每月星象']],['探索連結','看看彼此，如何交會。','切換雙人合盤，探索兩個命盤之間的相位與連結。','globe',['雙人合盤','計算規則可查看']] ]},
     language: {title:'泰語 × 繁體中文學習',description:'選擇你的學習方向，從字母和漢字開始，練習寫、打、說。資源載入與口說功能需要網路。',url:data.projects.find(p=>p.id==='language')?.url,steps:[['選擇方向','สวัสดี，也可以是你好。','用繁體中文學泰語，或用泰語學繁體中文。','language',['中文 → 泰語','泰語 → 繁體中文']],['動手練習','讓學習，留下筆跡。','跟著課程練習字母或漢字，也能試試手寫評分與打字。','pencil',['字母與漢字課程','手寫與打字練習']],['帶進日常','下一句，就用得上。','從旅遊、聊天短語到測驗，累積自己的語言能力。','book',['旅遊與聊天短語','測驗與瀏覽器進度保存']] ]},
     'line-zh-th': {title:'中泰翻譯 LINE 機器人',description:'支援中文和泰文翻譯。以下是使用步驟示意，實際操作請看聊天室內的說明。',url:data.projects.find(p=>p.id==='line-zh-th')?.url,visitLabel:'加入 LINE ↗',steps:[['加入好友','掃碼或點連結，加入機器人。','用手機掃描 QR Code，或點選「加入 LINE」。','chat',['LINE ID：@441rouxg','中文 × 泰文']],['查看說明','使用方式在聊天室裡。','加入好友後，開啟機器人聊天室，查看翻譯功能的操作說明。','language',['中文 / ไทย','依聊天室內的說明操作']],['開始使用','需要翻譯時，打開 LINE。','從 LINE 好友列表找到機器人，就能再次開啟聊天室。','globe',['支援中文、泰文翻譯','W AI Studio 翻譯系列']] ]},
