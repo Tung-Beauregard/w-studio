@@ -7,9 +7,13 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = name => fs.readFileSync(path.join(root, name), 'utf8').replace(/\r\n/g, '\n');
 const app = read('assets/app.js');
+const publishedHome = JSON.parse(read('content/home.json'));
 const publishedProjects = JSON.parse(read('content/projects.json'));
 const publishedIntroductions = JSON.parse(read('content/introductions.json'));
 const plain = value => JSON.parse(JSON.stringify(value));
+const technicalFields = ['id', 'category', 'number', 'url', 'repo', 'qr', 'icon'];
+const renderedCards = html => [...html.matchAll(/<article\b[^>]*data-project="([^"]+)"[^>]*>[\s\S]*?<\/article>/g)]
+  .map(match => ({id: match[1], html: match[0]}));
 
 function section(start, end) {
   const from = app.indexOf(start);
@@ -48,18 +52,93 @@ async function render(content, {reject = false} = {}) {
   };
 }
 
-test('initial published copy preserves all seven projects and three-step introductions', async () => {
+test('published CMS copy preserves all seven project identities and three-step introductions', async () => {
   const baseline = await render();
-  const actual = await render({projects: publishedProjects, introductions: publishedIntroductions});
-  assert.deepEqual(actual.data, actual.defaults);
+  const actual = await render({home: publishedHome, projects: publishedProjects, introductions: publishedIntroductions});
   assert.equal(Object.keys(publishedProjects).length, 7);
   assert.equal(Object.keys(publishedIntroductions).length, 7);
+  assert.equal(actual.data.projects.length, 7);
+  assert.deepEqual(actual.data.projects.map(project => project.id).sort(), baseline.data.projects.map(project => project.id).sort());
+  for (const project of actual.data.projects) {
+    const original = baseline.data.projects.find(item => item.id === project.id);
+    for (const key of technicalFields) assert.equal(project[key], original[key], `${project.id}.${key}`);
+    assert.equal(project.title, publishedProjects[project.id].title);
+    assert.equal(project.description, publishedProjects[project.id].description);
+  }
   for (const [id, demo] of Object.entries(actual.demos)) {
     assert.equal(demo.steps.length, 3);
-    assert.deepEqual(demo.steps, baseline.demos[id].steps);
-    assert.equal(demo.title, baseline.demos[id].title);
-    assert.equal(demo.description, baseline.demos[id].description);
+    assert.ok(demo.steps.every(step => step[4].length === 2));
+    assert.deepEqual(demo.steps.map(step => step[3]), baseline.demos[id].steps.map(step => step[3]));
+    assert.equal(demo.title, publishedIntroductions[id].title);
+    assert.equal(demo.description, publishedIntroductions[id].description);
     assert.equal(demo.url, baseline.demos[id].url);
+  }
+});
+
+test('project order changes rendered card positions while keeping copy, links and actions with each ID', async () => {
+  const baseline = await render();
+  const ids = ['agent-hub', 'line-zh-en-ko', 'ordering-demo', 'language', 'line-zh-th', 'lab-demo', 'astral'];
+  const projects = Object.fromEntries(ids.map(id => [id, {
+    title: `Title ${id}`, name: `Name ${id}`, description: `Description ${id}`
+  }]));
+  const actual = await render({
+    home: {projectOrder: ids.map(id => ({id, label: `Editor label ${id}`, url: 'https://unexpected.example/'}))},
+    projects
+  });
+  const cards = renderedCards(actual.projectsHTML);
+  assert.deepEqual(actual.data.projects.map(project => project.id), ids);
+  assert.deepEqual(cards.map(card => card.id), ids);
+  assert.deepEqual(actual.demos, baseline.demos);
+  for (const project of actual.data.projects) {
+    const original = baseline.data.projects.find(item => item.id === project.id);
+    const card = cards.find(item => item.id === project.id);
+    for (const key of [...technicalFields, 'lineId']) assert.equal(project[key], original[key], `${project.id}.${key}`);
+    assert.deepEqual(project.details, original.details);
+    assert.ok(card.html.includes(`<h3>Title ${project.id}</h3>`));
+    assert.ok(card.html.includes(`Name ${project.id}`));
+    assert.ok(card.html.includes(`Description ${project.id}`));
+    assert.ok(card.html.includes(`data-category="${original.category}"`));
+    assert.ok(card.html.includes(`PROJECT / ${original.number}`));
+    const hrefs = [...card.html.matchAll(/href="([^"]+)"/g)].map(match => match[1]).sort();
+    assert.deepEqual(hrefs, [original.url, original.repo].filter(Boolean).sort(), `${project.id} links`);
+    if (original.qr) assert.ok(card.html.includes(`data-qr="${project.id}"`));
+    if (original.details) assert.ok(card.html.includes(`data-project-detail="${project.id}"`));
+    else assert.ok(card.html.includes(`data-demo="${project.id}"`));
+  }
+  assert.ok(!actual.projectsHTML.includes('Editor label'));
+  assert.deepEqual(actual.defaults.projects.map(project => project.id), baseline.data.projects.map(project => project.id));
+});
+
+test('missing, empty or malformed project order keeps the original card order', async () => {
+  const baseline = await render();
+  const homeValues = [
+    undefined, null, [], {},
+    {projectOrder: null}, {projectOrder: ''}, {projectOrder: 7},
+    {projectOrder: {id: 'astral'}}, {projectOrder: []},
+    {projectOrder: ['astral', 'language', null, 3, {}, [], {id: false}]}
+  ];
+  for (const home of homeValues) {
+    const actual = await render({home});
+    assert.deepEqual(actual.data.projects, baseline.data.projects, JSON.stringify(home));
+    assert.equal(actual.projectsHTML, baseline.projectsHTML);
+  }
+});
+
+test('duplicate and unknown project order entries are ignored and omitted projects follow in original order', async () => {
+  const baseline = await render();
+  const actual = await render({home: {projectOrder: [
+    {id: 'ordering-demo', label: 'First'},
+    {id: 'unknown'}, null, 'astral', 7, [], {id: 7}, {label: 'language'},
+    {id: '__proto__'}, {id: 'constructor'}, {id: 'toString'},
+    {id: 'ordering-demo', label: 'Duplicate'},
+    {id: 'line-zh-th'}
+  ]}});
+  const expected = ['ordering-demo', 'line-zh-th', 'language', 'astral', 'line-zh-en-ko', 'agent-hub', 'lab-demo'];
+  assert.deepEqual(actual.data.projects.map(project => project.id), expected);
+  assert.deepEqual(renderedCards(actual.projectsHTML).map(card => card.id), expected);
+  assert.equal(new Set(actual.data.projects.map(project => project.id)).size, 7);
+  for (const project of actual.data.projects) {
+    assert.deepEqual(project, baseline.data.projects.find(item => item.id === project.id));
   }
 });
 

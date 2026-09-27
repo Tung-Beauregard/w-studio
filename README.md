@@ -61,18 +61,21 @@ assets/
 
 1. 在 Pages CMS 選擇「首頁文案」、「專案文案」或「功能介紹」。
 2. 修改對應欄位，使用純文字；這些欄位不支援 HTML 或 Markdown。短標題、按鈕和標籤有長度限制；既有步驟的數量與順序請保留，以對應頁面與動畫。
+   要調整首頁專案卡片順序，開啟「首頁文案」最上方的「專案卡片順序」，拖曳各列左側把手。請保留全部七個專案；專案選項固定，文案仍在「專案文案」編輯。
 3. 確認內容後按 **Save／儲存**。在 **main** 儲存會建立 GitHub 提交，並透過現有 GitHub Pages 設定發布到正式網站；沒有另一個「發布」按鈕或審稿階段。
 4. 等待部署完成再重新整理網站，通常需要幾分鐘。可到 [GitHub Actions](https://github.com/Tung-Beauregard/w-studio/actions) 查看執行狀態；若仍看到舊內容，可重新載入頁面。
 
 | 表單 | 內容來源與編輯範圍 |
 | --- | --- |
-| 首頁文案 | `content/home.json`：導覽文字、首頁主標題與介紹、按鈕、特色標籤、專案／工具區塊說明與頁尾 |
+| 首頁文案 | `content/home.json`：專案卡片順序、導覽文字、首頁主標題與介紹、按鈕、特色標籤、專案／工具區塊說明與頁尾 |
 | 專案文案 | `content/projects.json`：七個既有專案的名稱、標語、簡介、標籤、提示、入口按鈕文字，以及 Mycelint 詳情 |
 | 功能介紹 | `content/introductions.json`：網站與專案介紹彈窗的標題、說明、入口按鈕文字與三個步驟 |
 
 三份 JSON 是**線上可編輯文案的主要來源**。不要只改 `index.html`、`assets/site-data.js` 或 `assets/app.js` 內的同名舊文案：HTTP 網站成功載入 JSON 後，會以 JSON 文案覆蓋備援版本。根目錄 `.pages.yml` 的 `settings.content.merge: true` 保留表單未公開的資料；固定專案物件與清單長度用來維持現有結構。
 
 入口網址、GitHub 網址、LINE 帳號識別與 QR Code、專案分類、圖示、圖片、工具下載設定和互動示意圖仍由原始碼維護。文字表單不新增或刪除專案，也不修改這些技術設定。
+
+`content/home.json` 的 `projectOrder` 是含固定 `id` 的物件清單，僅控制卡片的展示順序；分類篩選也沿用此順序。專案文案仍按 `content/projects.json` 的固定 ID 對應，卡片上的 PROJECT 編號為原有識別編號，不因排序改變。缺少或無法讀取排序時沿用預設順序；重複、未知或格式錯誤的項目會略過，未列出的專案依預設順序補在後面，避免卡片遺失。排序清單顯示的名稱由 `.pages.yml` 提供，不影響卡片文案。
 
 ### 找回先前文案
 
@@ -101,6 +104,8 @@ python -m http.server 8000
 | `assets/styles.css` | 視覺樣式與響應式排版 |
 
 新增專案時，需同步更新 `assets/site-data.js` 的專案資料、`assets/app.js` 的示意圖及介紹、`content/projects.json` 與需要的 `content/introductions.json`，再將對應欄位加入 `.pages.yml`。分類按鈕在 `index.html` 設定。現有七個專案均具備介紹，全部專案數量由資料自動更新；沒有有效網址的專案不會顯示外部入口，未提供原始碼網址的專案不會顯示原始碼按鈕。
+
+新增專案也需將固定 ID 加入 `content/home.json` 的 `projectOrder`，並更新 `.pages.yml` 排序欄的選項與 `min`／`max` 數量。
 
 已提供使用入口的專案沿用三步驟介紹動畫；Mycelint 由專案的 `details` 提供站內詳情。新增圖片等資源可放進 `assets/`。網站不會自動從 GitHub 抓取新專案或版本。改版後也應維護程式內的備援文案，避免直接開檔或載入失敗時呈現過時資訊。
 

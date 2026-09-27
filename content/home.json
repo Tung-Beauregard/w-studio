@@ -1,4 +1,27 @@
 {
+  "projectOrder": [
+    {
+      "id": "language"
+    },
+    {
+      "id": "astral"
+    },
+    {
+      "id": "line-zh-th"
+    },
+    {
+      "id": "line-zh-en-ko"
+    },
+    {
+      "id": "agent-hub"
+    },
+    {
+      "id": "lab-demo"
+    },
+    {
+      "id": "ordering-demo"
+    }
+  ],
   "nav": {
     "about": "關於",
     "projects": "精選專案",

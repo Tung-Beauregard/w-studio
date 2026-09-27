@@ -1,5 +1,5 @@
 # W AI Studio — Pages CMS
-# Plain-text copy only. Fixed objects and list sizes preserve the site's layout.
+# Plain-text copy and project display order. Fixed objects preserve project settings.
 # https://pagescms.org/docs/configuration/
 content:
   - name: "home"
@@ -8,6 +8,37 @@ content:
     path: "content/home.json"
     format: "json"
     fields:
+      - name: "projectOrder"
+        label: "專案卡片順序"
+        type: "object"
+        required: true
+        description: "拖曳每列左側的把手調整首頁順序，再按 Save／儲存。請保留全部 7 個專案；專案名稱請到「專案文案」修改。"
+        list:
+          min: 7
+          max: 7
+          collapsible: false
+        fields:
+          - name: "id"
+            label: "專案"
+            type: "select"
+            required: true
+            readonly: true
+            options:
+              values:
+                - name: "language"
+                  label: "泰語 × 繁體中文學習"
+                - name: "astral"
+                  label: "Astral Notes 星語"
+                - name: "line-zh-th"
+                  label: "中泰翻譯 LINE 機器人"
+                - name: "line-zh-en-ko"
+                  label: "中英韓翻譯 LINE 機器人"
+                - name: "agent-hub"
+                  label: "Mycelint"
+                - name: "lab-demo"
+                  label: "實驗室管理系統"
+                - name: "ordering-demo"
+                  label: "點餐系統 Demo"
       - name: "nav"
         label: "導覽列"
         type: "object"

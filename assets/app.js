@@ -15,7 +15,7 @@
     if (isRecord(edited)) fields.forEach(key => { result[key] = contentText(edited[key], base[key]); });
     return result;
   }
-  // Editable JSON contains copy only. IDs, categories, links and visual templates stay in code.
+  // Editable JSON supplies copy and display order. Project identity and technical settings stay in code.
   const projectCopyFields = ['title', 'name', 'eyebrow', 'description', 'note', 'status', 'brand', 'position', 'linkLabel', 'lineId'];
   const data = {...defaults, projects: defaults.projects.map(project => {
     const edited = isRecord(content.projects) && Object.hasOwn(content.projects, project.id) ? content.projects[project.id] : null;
@@ -32,6 +32,18 @@
     }
     return result;
   })};
+  // Only known project IDs can affect order. Keep every project even if a list is incomplete.
+  const projectOrder = isRecord(content.home) ? content.home.projectOrder : null;
+  if (Array.isArray(projectOrder)) {
+    const remaining = new Map(data.projects.map(project => [project.id, project]));
+    const ordered = [];
+    projectOrder.forEach(item => {
+      if (!isRecord(item) || !remaining.has(item.id)) return;
+      ordered.push(remaining.get(item.id));
+      remaining.delete(item.id);
+    });
+    data.projects = [...ordered, ...remaining.values()];
+  }
   const $ = (s, parent = document) => parent.querySelector(s);
   const $$ = (s, parent = document) => [...parent.querySelectorAll(s)];
   const escape = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
