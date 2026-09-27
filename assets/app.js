@@ -1,7 +1,37 @@
-(() => {
+(async () => {
   'use strict';
-  const data = window.SITE_DATA;
-  if (!data) return;
+  const defaults = window.SITE_DATA;
+  if (!defaults) return;
+  let loadedContent;
+  try { loadedContent = await window.W_STUDIO_CONTENT_READY; } catch { /* Keep the bundled copy if content cannot load. */ }
+  const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  const content = isRecord(loadedContent) ? loadedContent : {};
+  const contentText = (value, fallback) => typeof value === 'string' && value.trim() ? value : fallback;
+  const stringList = (value, fallback, length) => Array.isArray(value) && value.length > 0 &&
+    (length === undefined || value.length === length) && value.every(item => typeof item === 'string' && item.trim())
+      ? value.slice() : fallback;
+  function mergeText(base, edited, fields) {
+    const result = {...base};
+    if (isRecord(edited)) fields.forEach(key => { result[key] = contentText(edited[key], base[key]); });
+    return result;
+  }
+  // Editable JSON contains copy only. IDs, categories, links and visual templates stay in code.
+  const projectCopyFields = ['title', 'name', 'eyebrow', 'description', 'note', 'status', 'brand', 'position', 'linkLabel', 'lineId'];
+  const data = {...defaults, projects: defaults.projects.map(project => {
+    const edited = isRecord(content.projects) && Object.hasOwn(content.projects, project.id) ? content.projects[project.id] : null;
+    if (!isRecord(edited)) return project;
+    const result = mergeText(project, edited, projectCopyFields);
+    result.tags = stringList(edited.tags, project.tags);
+    if (isRecord(project.details) && isRecord(edited.details)) {
+      const detail = edited.details;
+      result.details = mergeText(project.details, detail, ['why', 'feedback', 'naming', 'vision', 'progress']);
+      result.details.workflow = stringList(detail.workflow, project.details.workflow);
+      result.details.growth = Array.isArray(detail.growth) && detail.growth.length > 0 &&
+        detail.growth.every(item => isRecord(item) && contentText(item.name, null) && contentText(item.meaning, null))
+          ? detail.growth.map(item => [item.name, item.meaning]) : project.details.growth;
+    }
+    return result;
+  })};
   const $ = (s, parent = document) => parent.querySelector(s);
   const $$ = (s, parent = document) => [...parent.querySelectorAll(s)];
   const escape = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -75,7 +105,9 @@
   function renderTools() {
     const tools = Array.isArray(data.tools) ? data.tools : [];
     if (!tools.length) {
-      $('#tools-list').innerHTML = `<div class="tools-empty"><span class="tools-empty-icon">${icon('folder')}</span><div><span class="eyebrow">A FEW USEFUL THINGS, COMING SOON.</span><h3>小工具，準備中。</h3><p>正在整理一些讓日常更省力的本機工具。<br>正式上架後，這裡會提供介紹、支援系統與下載。</p></div><span class="outline-label">敬請期待</span></div>`;
+      const emptyCopy = isRecord(content.home) && isRecord(content.home.tools) ? content.home.tools : {};
+      const emptyText = (key, fallback) => escape(contentText(emptyCopy[key], fallback));
+      $('#tools-list').innerHTML = `<div class="tools-empty"><span class="tools-empty-icon">${icon('folder')}</span><div><span class="eyebrow">${emptyText('emptyEyebrow', 'A FEW USEFUL THINGS, COMING SOON.')}</span><h3>${emptyText('emptyTitle', '小工具，準備中。')}</h3><p>${emptyText('emptyDescriptionLine1', '正在整理一些讓日常更省力的本機工具。')}<br>${emptyText('emptyDescriptionLine2', '正式上架後，這裡會提供介紹、支援系統與下載。')}</p></div><span class="outline-label">${emptyText('emptyBadge', '敬請期待')}</span></div>`;
       return;
     }
     $('#tools-list').innerHTML = tools.map(t => {
@@ -160,6 +192,20 @@
     'line-zh-th': {title:'中泰翻譯 LINE 機器人',description:'支援中文和泰文翻譯。以下是使用步驟示意，實際操作請看聊天室內的說明。',url:data.projects.find(p=>p.id==='line-zh-th')?.url,visitLabel:'加入 LINE ↗',steps:[['加入好友','掃碼或點連結，加入機器人。','用手機掃描 QR Code，或點選「加入 LINE」。','chat',['LINE ID：@441rouxg','中文 × 泰文']],['查看說明','使用方式在聊天室裡。','加入好友後，開啟機器人聊天室，查看翻譯功能的操作說明。','language',['中文 / ไทย','依聊天室內的說明操作']],['開始使用','需要翻譯時，打開 LINE。','從 LINE 好友列表找到機器人，就能再次開啟聊天室。','globe',['支援中文、泰文翻譯','W AI Studio 翻譯系列']] ]},
     'line-zh-en-ko': {title:'中英韓翻譯 LINE 機器人',description:'支援中文、英文和韓文翻譯。以下是使用步驟示意，實際操作請看聊天室內的說明。',url:data.projects.find(p=>p.id==='line-zh-en-ko')?.url,visitLabel:'加入 LINE ↗',steps:[['加入好友','掃碼或點連結，加入機器人。','用手機掃描 QR Code，或點選「加入 LINE」。','chat',['LINE ID：@492xqnyt','中文 × English × 한국어']],['查看說明','使用方式在聊天室裡。','加入好友後，開啟機器人聊天室，查看翻譯功能的操作說明。','language',['中文 / 英文 / 韓文','依聊天室內的說明操作']],['開始使用','需要翻譯時，打開 LINE。','從 LINE 好友列表找到機器人，就能再次開啟聊天室。','globe',['支援中文、英文、韓文翻譯','W AI Studio 翻譯系列']] ]},
   };
+  Object.entries(demos).forEach(([id, demo]) => {
+    const edited = isRecord(content.introductions) && Object.hasOwn(content.introductions, id) ? content.introductions[id] : null;
+    if (!isRecord(edited)) return;
+    const result = mergeText(demo, edited, ['title', 'description', 'visitLabel']);
+    // Each existing storyboard has exactly three steps and two bullet points per step.
+    if (Array.isArray(edited.steps) && edited.steps.length === 3 && edited.steps.every(isRecord)) {
+      result.steps = demo.steps.map((step, index) => {
+        const copy = edited.steps[index];
+        return [contentText(copy.label, step[0]), contentText(copy.title, step[1]),
+          contentText(copy.description, step[2]), step[3], stringList(copy.bullets, step[4], 2)];
+      });
+    }
+    demos[id] = result;
+  });
   renderTools();
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   let motionPaused = motionPreference.matches;

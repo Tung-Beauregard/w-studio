@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "about": "關於",
+    "projects": "精選專案",
+    "tools": "工具下載"
+  },
+  "hero": {
+    "eyebrow": "A LITTLE CODE. A LITTLE POSSIBILITY.",
+    "titleLine1": "把想法，",
+    "titleLead": "變成",
+    "titleAccent": "好用的工具",
+    "titleEnd": "。",
+    "descriptionLine1": "從日常學習的小需求，到自我探索的新發現。",
+    "descriptionLine2": "這裡收集我的開發專案與實用工具。",
+    "primaryButton": "探索我的專案",
+    "secondaryButton": "看看這裡有什麼",
+    "tags": ["實用優先", "持續探索", "分享創作"],
+    "studioLabel": "我的數位工作室",
+    "exploreLabel": "向下探索"
+  },
+  "projectSection": {
+    "eyebrow": "01 — SELECTED WORK",
+    "titleLead": "小小想法，",
+    "titleAccent": "認真實現。",
+    "description": "從真實需求出發，做出每天都用得上的東西。",
+    "allProjectsLabel": "所有 GitHub 專案",
+    "filterNote": "從需求到作品 / 持續累積中"
+  },
+  "tools": {
+    "eyebrow": "02 — THE TOOLBOX",
+    "titleLead": "好用的工具，",
+    "titleAccent": "帶著走。",
+    "description": "為日常工作做一點減法，收藏簡單實用的本機小工具。",
+    "badge": "本機實用工具",
+    "note": "工具將於正式發布後提供下載；使用前請參考各工具說明。",
+    "emptyEyebrow": "A FEW USEFUL THINGS, COMING SOON.",
+    "emptyTitle": "小工具，準備中。",
+    "emptyDescriptionLine1": "正在整理一些讓日常更省力的本機工具。",
+    "emptyDescriptionLine2": "正式上架後，這裡會提供介紹、支援系統與下載。",
+    "emptyBadge": "敬請期待"
+  },
+  "closing": {
+    "eyebrow": "ALWAYS A WORK IN PROGRESS",
+    "title": "下一個好點子，正在路上。",
+    "description": "到 GitHub 看看我的最新探索，也歡迎留下你的想法。",
+    "button": "在 GitHub 找到我"
+  },
+  "footer": {
+    "copyright": "W AI Studio · Crafted with curiosity."
+  }
+}

@@ -2,7 +2,7 @@
 
 可放在 GitHub Pages 的繁體中文個人網站，整合 GitHub 介紹、公開專案、指定小工具下載與功能介紹動畫。
 
-本站使用純 HTML、CSS、JavaScript，不需 npm、不需編譯，主體不依賴 API；頁尾訪客數由外部計數服務提供。直接開啟 `index.html` 即可預覽。
+本站使用純 HTML、CSS、JavaScript，不需 npm、不需編譯。網站透過同站 JSON 載入可編輯文案，頁尾訪客數由外部計數服務提供。請使用 HTTP 本機伺服器預覽最新文案；直接開啟 `index.html` 只會顯示程式內的備援版本。
 
 正式網站：[W AI Studio](https://tung-beauregard.github.io/w-studio/)
 
@@ -13,9 +13,18 @@
 ```text
 index.html
 .nojekyll
+.pages.yml              # Pages CMS 中文編輯表單
+admin/
+  index.html            # 文案管理入口（noindex）
+  admin.css
+content/
+  home.json             # 首頁與區塊文案
+  projects.json         # 既有專案與 Mycelint 詳情
+  introductions.json    # 功能介紹彈窗文案
 assets/
   styles.css
   app.js
+  content.js
   site-data.js
   downloads.js
   visitors.js
@@ -36,21 +45,64 @@ assets/
 
 官方說明：[建立 Pages 網站](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)、[設定發布來源](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)、[預設網址規則](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)。
 
-## 修改公開內容
+## 文案管理
 
-主要內容集中在 `assets/site-data.js` 的 `window.SITE_DATA`：
+開啟 [文案管理入口](https://tung-beauregard.github.io/w-studio/admin/)，按「登入 GitHub 編輯文案」前往 [Pages CMS](https://app.pagescms.org/)。網站訪客照常瀏覽首頁；編輯權限由 GitHub 和 Pages CMS 驗證。管理入口本身是公開說明頁，`noindex` 用於避免搜尋索引，並不是存取權限機制。
 
-| 區塊 | 用途 |
+### 第一次登入
+
+1. 使用具有 `Tung-Beauregard/w-studio` 寫入權限的 GitHub 帳號登入 Pages CMS。
+2. 依 GitHub 畫面授權官方 Pages CMS GitHub App；安裝範圍選 **Only select repositories**，只選 **w-studio**。
+3. 回到 Pages CMS，選擇 **Tung-Beauregard/w-studio** 儲存庫與 **main** 分支。根目錄的 `.pages.yml` 會提供中文編輯表單。
+
+首次 GitHub 授權須由網站擁有者本人完成；此設定檔不代表帳號已完成授權。之後通常只需登入並選取網站。本站使用 Pages CMS 官方線上服務，不需自行架設後端，也不需要在網站檔案或表單中放入 GitHub Token。
+
+### 日常編輯與發布
+
+1. 在 Pages CMS 選擇「首頁文案」、「專案文案」或「功能介紹」。
+2. 修改對應欄位，使用純文字；這些欄位不支援 HTML 或 Markdown。短標題、按鈕和標籤有長度限制；既有步驟的數量與順序請保留，以對應頁面與動畫。
+3. 確認內容後按 **Save／儲存**。在 **main** 儲存會建立 GitHub 提交，並透過現有 GitHub Pages 設定發布到正式網站；沒有另一個「發布」按鈕或審稿階段。
+4. 等待部署完成再重新整理網站，通常需要幾分鐘。可到 [GitHub Actions](https://github.com/Tung-Beauregard/w-studio/actions) 查看執行狀態；若仍看到舊內容，可重新載入頁面。
+
+| 表單 | 內容來源與編輯範圍 |
 | --- | --- |
-| `profile` | 首頁介紹動畫的 GitHub 入口 |
-| `projects` | 專案名稱、介紹與連結 |
-| `tools` | 由你指定的工具介紹、檔名與下載連結；預設為空 |
+| 首頁文案 | `content/home.json`：導覽文字、首頁主標題與介紹、按鈕、特色標籤、專案／工具區塊說明與頁尾 |
+| 專案文案 | `content/projects.json`：七個既有專案的名稱、標語、簡介、標籤、提示、入口按鈕文字，以及 Mycelint 詳情 |
+| 功能介紹 | `content/introductions.json`：網站與專案介紹彈窗的標題、說明、入口按鈕文字與三個步驟 |
 
-照現有資料格式修改文字與網址，儲存後重新整理即可預覽。更新完成後提交到 GitHub 的 `main`，Pages 會自動重新發布。網站不會自動從 GitHub 抓取新專案或版本，相關文案和連結需在這個檔案更新。
+三份 JSON 是**線上可編輯文案的主要來源**。不要只改 `index.html`、`assets/site-data.js` 或 `assets/app.js` 內的同名舊文案：HTTP 網站成功載入 JSON 後，會以 JSON 文案覆蓋備援版本。根目錄 `.pages.yml` 的 `settings.content.merge: true` 保留表單未公開的資料；固定專案物件與清單長度用來維持現有結構。
 
-品牌、姓名、首頁標語與頁尾文字在 `index.html`；視覺樣式在 `assets/styles.css`，互動功能在 `assets/app.js`。新增圖片等資源可放進 `assets/`。
+入口網址、GitHub 網址、LINE 帳號識別與 QR Code、專案分類、圖示、圖片、工具下載設定和互動示意圖仍由原始碼維護。文字表單不新增或刪除專案，也不修改這些技術設定。
 
-新增專案時，請依需要在 `assets/app.js` 加入示意圖及介紹。已提供使用入口的專案沿用 `demos` 三步驟動畫；研發中的 Mycelint 以 `site-data.js` 的 `details` 提供站內詳情。現有七個專案均具備介紹，全部專案數量由資料自動更新；分類按鈕在 `index.html` 設定。沒有有效網址的專案不會顯示外部入口，未提供原始碼網址的專案不會顯示原始碼按鈕。
+### 找回先前文案
+
+每次儲存都有 GitHub 提交紀錄。到 [修改紀錄](https://github.com/Tung-Beauregard/w-studio/commits/main/) 找到正確版本，可將該版本的 JSON 文案複製回編輯器，再儲存發布。熟悉 Git 的維護者也可對要撤回的提交執行 `git revert <commit-sha>`，檢查差異後推送新的還原提交；無需覆寫或刪除既有提交歷史。
+
+若 Pages CMS 暫時無法使用，仍可在 GitHub 或本機修改 `content/*.json` 並提交到 `main`，發布流程相同。各欄位的名稱、資料型態與固定清單長度須保留。
+
+官方文件：[Pages CMS 快速開始](https://pagescms.org/docs/quick-start/)、[內容設定](https://pagescms.org/docs/configuration/content/)、[欄位設定](https://pagescms.org/docs/configuration/content/fields/)。
+
+## 本機預覽與程式維護
+
+在儲存庫根目錄啟動任一靜態 HTTP 伺服器。例如電腦已安裝 Python 時：
+
+```sh
+python -m http.server 8000
+```
+
+開啟 `http://localhost:8000/` 查看首頁，`http://localhost:8000/admin/` 查看管理入口。編輯 JSON 後重新整理即可預覽。直接以 `file://` 開啟 `index.html` 時，瀏覽器通常無法讀取這些 JSON，因此頁面保留 HTML／JavaScript 內的備援文案；JSON 載入失敗時同樣使用備援，備援內容可能比線上編輯版本舊。
+
+| 程式來源 | 用途 |
+| --- | --- |
+| `index.html` | 頁面骨架、固定視覺標記與首頁備援文案 |
+| `assets/site-data.js` | `window.SITE_DATA`：個人 GitHub 連結、專案識別與入口、專案備援文案，以及工具下載清單 |
+| `assets/content.js` | JSON 文案載入、首頁文字套用與載入失敗處理 |
+| `assets/app.js` | 互動功能、示意圖、專案及介紹文案合併、備援與渲染 |
+| `assets/styles.css` | 視覺樣式與響應式排版 |
+
+新增專案時，需同步更新 `assets/site-data.js` 的專案資料、`assets/app.js` 的示意圖及介紹、`content/projects.json` 與需要的 `content/introductions.json`，再將對應欄位加入 `.pages.yml`。分類按鈕在 `index.html` 設定。現有七個專案均具備介紹，全部專案數量由資料自動更新；沒有有效網址的專案不會顯示外部入口，未提供原始碼網址的專案不會顯示原始碼按鈕。
+
+已提供使用入口的專案沿用三步驟介紹動畫；Mycelint 由專案的 `details` 提供站內詳情。新增圖片等資源可放進 `assets/`。網站不會自動從 GitHub 抓取新專案或版本。改版後也應維護程式內的備援文案，避免直接開檔或載入失敗時呈現過時資訊。
 
 ## Mycelint 專案展示
 

@@ -1,0 +1,1184 @@
+# W AI Studio — Pages CMS
+# Plain-text copy only. Fixed objects and list sizes preserve the site's layout.
+# https://pagescms.org/docs/configuration/
+content:
+  - name: "home"
+    label: "首頁文案"
+    type: "file"
+    path: "content/home.json"
+    format: "json"
+    fields:
+      - name: "nav"
+        label: "導覽列"
+        type: "object"
+        required: true
+        fields:
+          - name: "about"
+            label: "關於連結文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+          - name: "projects"
+            label: "專案連結文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+          - name: "tools"
+            label: "下載連結文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+      - name: "hero"
+        label: "首頁主視覺"
+        type: "object"
+        required: true
+        fields:
+          - name: "eyebrow"
+            label: "主標題上方小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "titleLine1"
+            label: "主標題：第一行"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "titleLead"
+            label: "主標題：第二行前段"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+          - name: "titleAccent"
+            label: "主標題：薄荷綠重點文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "titleEnd"
+            label: "主標題：結尾標點"
+            type: "string"
+            required: true
+            options:
+              maxlength: 4
+          - name: "descriptionLine1"
+            label: "介紹文字：第一行"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "descriptionLine2"
+            label: "介紹文字：第二行"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "primaryButton"
+            label: "主要按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "secondaryButton"
+            label: "功能介紹按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "tags"
+            label: "三個特色標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "studioLabel"
+            label: "工作室文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "exploreLabel"
+            label: "向下探索文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+      - name: "projectSection"
+        label: "精選專案區塊"
+        type: "object"
+        required: true
+        fields:
+          - name: "eyebrow"
+            label: "區塊編號與英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 80
+          - name: "titleLead"
+            label: "標題：前段"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "titleAccent"
+            label: "標題：後段"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "description"
+            label: "區塊說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 200
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "allProjectsLabel"
+            label: "GitHub 專案連結文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "filterNote"
+            label: "分類列旁提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+      - name: "tools"
+        label: "工具下載區塊"
+        type: "object"
+        required: true
+        fields:
+          - name: "eyebrow"
+            label: "區塊編號與英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 80
+          - name: "titleLead"
+            label: "標題：前段"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "titleAccent"
+            label: "標題：後段"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "description"
+            label: "區塊說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 200
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "badge"
+            label: "區塊標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+          - name: "note"
+            label: "下載提示"
+            type: "text"
+            required: true
+            options:
+              maxlength: 300
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "emptyEyebrow"
+            label: "準備中：英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "emptyTitle"
+            label: "準備中：標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+          - name: "emptyDescriptionLine1"
+            label: "準備中：說明第一行"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "emptyDescriptionLine2"
+            label: "準備中：說明第二行"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "emptyBadge"
+            label: "準備中：狀態標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+      - name: "closing"
+        label: "頁尾邀請區塊"
+        type: "object"
+        required: true
+        fields:
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 80
+          - name: "title"
+            label: "邀請標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 40
+          - name: "description"
+            label: "邀請說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 200
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "button"
+            label: "GitHub 按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+      - name: "footer"
+        label: "頁尾"
+        type: "object"
+        required: true
+        fields:
+          - name: "copyright"
+            label: "頁尾署名"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+  - name: "projects"
+    label: "專案文案"
+    type: "file"
+    path: "content/projects.json"
+    format: "json"
+    fields:
+      - name: "language"
+        label: "泰語 × 繁體中文學習"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+      - name: "astral"
+        label: "Astral Notes 星語"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+      - name: "line-zh-th"
+        label: "中泰翻譯 LINE 機器人"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+          - name: "linkLabel"
+            label: "使用入口按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+      - name: "line-zh-en-ko"
+        label: "中英韓翻譯 LINE 機器人"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+          - name: "linkLabel"
+            label: "使用入口按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+      - name: "agent-hub"
+        label: "Mycelint"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+          - name: "status"
+            label: "專案狀態"
+            type: "string"
+            required: true
+            options:
+              maxlength: 16
+          - name: "brand"
+            label: "品牌署名"
+            type: "string"
+            required: true
+            options:
+              maxlength: 40
+          - name: "position"
+            label: "專案定位"
+            type: "string"
+            required: true
+            options:
+              maxlength: 40
+          - name: "details"
+            label: "Mycelint 詳細介紹"
+            type: "object"
+            required: true
+            fields:
+              - name: "why"
+                label: "為什麼做這個專案"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 1200
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "workflow"
+                label: "五個工作流程步驟"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 40
+                list:
+                  min: 5
+                  max: 5
+                description: "固定 5 項，請保留排列順序並使用純文字。"
+              - name: "feedback"
+                label: "回饋與人工決策說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 800
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "naming"
+                label: "名稱由來"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 800
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "growth"
+                label: "三個名稱意象"
+                type: "object"
+                required: true
+                list:
+                  min: 3
+                  max: 3
+                  collapsible:
+                    collapsed: true
+                    summary: "{fields.name}"
+                fields:
+                  - name: "name"
+                    label: "意象名稱"
+                    type: "string"
+                    required: true
+                    options:
+                      maxlength: 24
+                  - name: "meaning"
+                    label: "意象說明"
+                    type: "string"
+                    required: true
+                    options:
+                      maxlength: 80
+              - name: "vision"
+                label: "專案願景"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 800
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "progress"
+                label: "目前進度"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 800
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+      - name: "lab-demo"
+        label: "實驗室管理 Demo"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+          - name: "linkLabel"
+            label: "使用入口按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+      - name: "ordering-demo"
+        label: "點餐系統 Demo"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+          - name: "linkLabel"
+            label: "使用入口按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+  - name: "introductions"
+    label: "功能介紹"
+    type: "file"
+    path: "content/introductions.json"
+    format: "json"
+    fields:
+      - name: "overview"
+        label: "網站功能介紹"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "language"
+        label: "泰語 × 繁體中文學習"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "astral"
+        label: "Astral Notes 星語"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "line-zh-th"
+        label: "中泰翻譯 LINE 機器人"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "line-zh-en-ko"
+        label: "中英韓翻譯 LINE 機器人"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "lab-demo"
+        label: "實驗室管理 Demo"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "ordering-demo"
+        label: "點餐系統 Demo"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+settings:
+  content:
+    merge: true

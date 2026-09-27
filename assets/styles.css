@@ -131,3 +131,14 @@ dialog{padding:0;border:1px solid #425448;border-radius:15px;background:#131e17;
 .ordering-demo .system-preview{transform:rotate(2deg);border-color:#676447;background:#20231a}.ordering-demo .system-preview-top{border-color:#464937}.ordering-demo .system-preview-tabs>span:first-child{color:#d7cd9e}.ordering-demo .system-preview-row{border-color:#3c4230}.ordering-demo .system-preview-row i{background:#3c4530;color:#d1dcba}
 @media(max-width:700px){.project-card-wide .project-visual.ordering-demo{height:315px;padding:52px 28px 28px}}
 @media(max-width:370px){.project-card-wide .project-visual.ordering-demo{padding-left:18px;padding-right:18px}}
+
+/* Copy wrappers keep the original heading and link typography. */
+h2 > [data-copy$="titleLead"]{color:inherit}
+.text-link [data-copy],.hero-bottom a [data-copy]{font-size:inherit;color:inherit}
+.hero-copy{min-width:0}
+.hero-copy h1{white-space:normal;overflow-wrap:anywhere}
+.hero-tags,.hero-actions,.hero-bottom{flex-wrap:wrap}
+.hero-actions .button{white-space:normal;text-align:center}
+.section-heading>div{min-width:0}
+.section-heading .text-link{white-space:normal}
+@media(max-width:700px){.section-heading{flex-wrap:wrap}.hero-bottom{gap:12px}}
