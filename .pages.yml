@@ -63,7 +63,8 @@ content:
           - name: "titleEnd"
             label: "主標題：結尾標點"
             type: "string"
-            required: true
+            required: false
+            description: "可留白；留白時不顯示結尾標點。"
             options:
               maxlength: 4
           - name: "descriptionLine1"
