@@ -6,7 +6,7 @@
   },
   "hero": {
     "eyebrow": "A LITTLE CODE. A LITTLE POSSIBILITY.",
-    "titleLine1": "把想法，",
+    "titleLine1": "把想法",
     "titleLead": "變成",
     "titleAccent": "好用的工具",
     "titleEnd": "。",
@@ -14,14 +14,18 @@
     "descriptionLine2": "這裡收集我的開發專案與實用工具。",
     "primaryButton": "探索我的專案",
     "secondaryButton": "看看這裡有什麼",
-    "tags": ["實用優先", "持續探索", "分享創作"],
+    "tags": [
+      "實用優先",
+      "持續探索",
+      "分享創作"
+    ],
     "studioLabel": "我的數位工作室",
     "exploreLabel": "向下探索"
   },
   "projectSection": {
     "eyebrow": "01 — SELECTED WORK",
-    "titleLead": "小小想法，",
-    "titleAccent": "認真實現。",
+    "titleLead": "小小想法",
+    "titleAccent": "認真實現",
     "description": "從真實需求出發，做出每天都用得上的東西。",
     "allProjectsLabel": "所有 GitHub 專案",
     "filterNote": "從需求到作品 / 持續累積中"
