@@ -104,6 +104,16 @@ python -m http.server 8000
 
 已提供使用入口的專案沿用三步驟介紹動畫；Mycelint 由專案的 `details` 提供站內詳情。新增圖片等資源可放進 `assets/`。網站不會自動從 GitHub 抓取新專案或版本。改版後也應維護程式內的備援文案，避免直接開檔或載入失敗時呈現過時資訊。
 
+### 文案功能檢查
+
+已安裝 Node.js 時，可執行以下測試，不需安裝 npm 套件：
+
+```sh
+node --test tests/content-loader.test.cjs tests/content-merge.test.cjs
+```
+
+測試涵蓋文案載入、網路失敗與逾時回退、純文字呈現、專案設定保護，以及固定三步介紹。首次 Pages CMS 授權後，仍需實際儲存一次文案並確認 GitHub Pages 更新，以驗證帳號權限及完整發布流程。
+
 ## Mycelint 專案展示
 
 Mycelint（by W AI Studio）定位為 AI 協作開發工作臺，列於「AI 開發」分類。網站資料識別碼為 `agent-hub`，僅供網站元件識別。介紹以一般訪客可理解的需求、預期工作流程、名稱意象及研發原型狀態為主；尚未提供使用、下載或原始碼入口。
