@@ -25,10 +25,11 @@ function section(start, end) {
 // Run the actual merge code and HTML renderers without a browser or a second
 // implementation. Omit the unrelated menu, dialog and animation event wiring.
 const program = section('(async () => {', "  $('.filter-button[data-filter=\"all\"] span')") +
+  section("  $('.filter-button[data-filter=\"all\"] span')", "  $$('.filter-button').forEach") +
   section('  const demos = ', '  const motionPreference = ') +
   'let stepIndex = 0; let activeDemo = demos.overview;\n' +
   section('  function showScene(index)', '  function startDemoTimer()') +
-  'showScene(0); return {data, demos};\n})();';
+  'showScene(0); return {data, visibleProjects, demos};\n})();';
 
 async function render(content, {reject = false} = {}) {
   const elements = new Map();
@@ -47,6 +48,7 @@ async function render(content, {reject = false} = {}) {
   return {
     ...plain(result), defaults,
     projectsHTML: elements.get('#project-grid').innerHTML,
+    projectCount: elements.get('.filter-button[data-filter="all"] span').textContent,
     toolsHTML: elements.get('#tools-list').innerHTML,
     sceneHTML: elements.get('#demo-stage').innerHTML
   };
@@ -58,6 +60,8 @@ test('published CMS copy preserves all seven project identities and three-step i
   assert.equal(Object.keys(publishedProjects).length, 7);
   assert.equal(Object.keys(publishedIntroductions).length, 7);
   assert.equal(actual.data.projects.length, 7);
+  assert.deepEqual(renderedCards(actual.projectsHTML).map(card => card.id), actual.visibleProjects.map(project => project.id));
+  assert.equal(actual.projectCount, String(actual.visibleProjects.length).padStart(2, '0'));
   assert.deepEqual(actual.data.projects.map(project => project.id).sort(), baseline.data.projects.map(project => project.id).sort());
   for (const project of actual.data.projects) {
     const original = baseline.data.projects.find(item => item.id === project.id);
@@ -82,12 +86,14 @@ test('project order changes rendered card positions while keeping copy, links an
     title: `Title ${id}`, name: `Name ${id}`, description: `Description ${id}`
   }]));
   const actual = await render({
-    home: {projectOrder: ids.map(id => ({id, label: `Editor label ${id}`, url: 'https://unexpected.example/'}))},
+    home: {projectSelectionConfigured: true, projectOrder: ids.map(id => ({id, label: `Editor label ${id}`, url: 'https://unexpected.example/'}))},
     projects
   });
   const cards = renderedCards(actual.projectsHTML);
-  assert.deepEqual(actual.data.projects.map(project => project.id), ids);
+  assert.deepEqual(actual.visibleProjects.map(project => project.id), ids);
+  assert.deepEqual(actual.data.projects.map(project => project.id), baseline.data.projects.map(project => project.id));
   assert.deepEqual(cards.map(card => card.id), ids);
+  assert.equal(actual.projectCount, '07');
   assert.deepEqual(actual.demos, baseline.demos);
   for (const project of actual.data.projects) {
     const original = baseline.data.projects.find(item => item.id === project.id);
@@ -109,22 +115,23 @@ test('project order changes rendered card positions while keeping copy, links an
   assert.deepEqual(actual.defaults.projects.map(project => project.id), baseline.data.projects.map(project => project.id));
 });
 
-test('missing, empty or malformed project order keeps the original card order', async () => {
-  const baseline = await render();
+test('legacy home objects without configured selection preserve all cards when order is absent or malformed', async () => {
+  const baseline = await render({home: {}});
   const homeValues = [
-    undefined, null, [], {},
+    {}, {projectSelectionConfigured: false}, {projectSelectionConfigured: 'true'},
     {projectOrder: null}, {projectOrder: ''}, {projectOrder: 7},
-    {projectOrder: {id: 'astral'}}, {projectOrder: []},
-    {projectOrder: ['astral', 'language', null, 3, {}, [], {id: false}]}
+    {projectOrder: {id: 'astral'}}
   ];
   for (const home of homeValues) {
     const actual = await render({home});
     assert.deepEqual(actual.data.projects, baseline.data.projects, JSON.stringify(home));
+    assert.deepEqual(actual.visibleProjects, baseline.data.projects);
     assert.equal(actual.projectsHTML, baseline.projectsHTML);
+    assert.equal(actual.projectCount, '07');
   }
 });
 
-test('duplicate and unknown project order entries are ignored and omitted projects follow in original order', async () => {
+test('duplicate and unknown project selections are ignored without restoring omitted cards', async () => {
   const baseline = await render();
   const actual = await render({home: {projectOrder: [
     {id: 'ordering-demo', label: 'First'},
@@ -133,13 +140,97 @@ test('duplicate and unknown project order entries are ignored and omitted projec
     {id: 'ordering-demo', label: 'Duplicate'},
     {id: 'line-zh-th'}
   ]}});
-  const expected = ['ordering-demo', 'line-zh-th', 'language', 'astral', 'line-zh-en-ko', 'agent-hub', 'lab-demo'];
-  assert.deepEqual(actual.data.projects.map(project => project.id), expected);
+  const expected = ['ordering-demo', 'line-zh-th'];
+  assert.deepEqual(actual.visibleProjects.map(project => project.id), expected);
   assert.deepEqual(renderedCards(actual.projectsHTML).map(card => card.id), expected);
-  assert.equal(new Set(actual.data.projects.map(project => project.id)).size, 7);
-  for (const project of actual.data.projects) {
-    assert.deepEqual(project, baseline.data.projects.find(item => item.id === project.id));
+  assert.equal(actual.projectCount, '02');
+  assert.deepEqual(actual.data.projects, baseline.data.projects);
+  assert.deepEqual(actual.demos, baseline.demos);
+});
+
+test('an empty or entirely invalid selection hides every card without deleting project or demo data', async () => {
+  const baseline = await render();
+  for (const projectOrder of [[], ['astral', 'language', null, 3, {}, [], {id: false}, {id: 'unknown'}]]) {
+    const actual = await render({home: {projectOrder}});
+    assert.deepEqual(actual.visibleProjects, []);
+    assert.deepEqual(renderedCards(actual.projectsHTML), []);
+    assert.equal(actual.projectCount, '00');
+    assert.deepEqual(actual.data.projects, baseline.data.projects);
+    assert.deepEqual(actual.demos, baseline.demos);
   }
+});
+
+test('configured selection remains empty when CMS omits an empty list or supplies a malformed list', async () => {
+  const baseline = await render();
+  for (const projectOrder of [undefined, null, '', 7, {id: 'astral'}]) {
+    // JSON serialization models the CMS omitting an undefined/empty-list property.
+    const home = plain({projectSelectionConfigured: true, projectOrder});
+    const actual = await render({home});
+    assert.deepEqual(actual.visibleProjects, []);
+    assert.deepEqual(renderedCards(actual.projectsHTML), []);
+    assert.equal(actual.projectCount, '00');
+    assert.deepEqual(actual.data.projects, baseline.data.projects);
+    assert.deepEqual(actual.demos, baseline.demos);
+  }
+});
+
+test('unavailable or invalid home content does not bring hidden cards back', async () => {
+  for (const home of [undefined, null, [], '', 7, false]) {
+    const actual = await render({home});
+    assert.deepEqual(actual.visibleProjects, []);
+    assert.deepEqual(renderedCards(actual.projectsHTML), []);
+    assert.equal(actual.projectCount, '00');
+    assert.equal(actual.data.projects.length, 7);
+    assert.equal(Object.keys(actual.demos).length, 7);
+  }
+  const offline = await render(undefined, {reject: true});
+  assert.deepEqual(offline.visibleProjects, []);
+  assert.deepEqual(renderedCards(offline.projectsHTML), []);
+  assert.equal(offline.projectCount, '00');
+});
+
+test('removing and adding selections hides and restores saved copy, links, details and introductions', async () => {
+  const copy = {
+    projects: {
+      'agent-hub': {title: 'Saved Mycelint title', details: {why: 'Saved project reasoning'}},
+      'line-zh-th': {title: 'Saved translation title'}
+    },
+    introductions: {'line-zh-th': {title: 'Saved translation introduction'}}
+  };
+  const baseline = await render({...copy, home: {}});
+  const subset = ['ordering-demo', 'language'];
+  const hidden = await render({...copy, home: {
+    projectSelectionConfigured: true, projectOrder: subset.map(id => ({id}))
+  }});
+  assert.deepEqual(hidden.visibleProjects.map(project => project.id), subset);
+  assert.deepEqual(renderedCards(hidden.projectsHTML).map(card => card.id), subset);
+  assert.equal(hidden.projectCount, '02');
+  assert.ok(!hidden.projectsHTML.includes('Saved Mycelint title'));
+  assert.ok(!hidden.projectsHTML.includes('Saved translation title'));
+  assert.deepEqual(hidden.data.projects, baseline.data.projects);
+  assert.deepEqual(hidden.demos, baseline.demos);
+
+  const restoredIDs = [...subset, 'agent-hub', 'line-zh-th'];
+  const restored = await render({...copy, home: {
+    projectSelectionConfigured: true, projectOrder: restoredIDs.map(id => ({id}))
+  }});
+  const cards = renderedCards(restored.projectsHTML);
+  assert.deepEqual(restored.visibleProjects.map(project => project.id), restoredIDs);
+  assert.deepEqual(cards.map(card => card.id), restoredIDs);
+  assert.equal(restored.projectCount, '04');
+  assert.deepEqual(restored.data.projects, baseline.data.projects);
+  assert.deepEqual(restored.demos, baseline.demos);
+  const detailCard = cards.find(card => card.id === 'agent-hub');
+  assert.ok(detailCard.html.includes('<h3>Saved Mycelint title</h3>'));
+  assert.ok(detailCard.html.includes('data-project-detail="agent-hub"'));
+  assert.equal(restored.data.projects.find(project => project.id === 'agent-hub').details.why, 'Saved project reasoning');
+  const lineCard = cards.find(card => card.id === 'line-zh-th');
+  const lineProject = baseline.data.projects.find(project => project.id === 'line-zh-th');
+  assert.ok(lineCard.html.includes('<h3>Saved translation title</h3>'));
+  assert.ok(lineCard.html.includes(`href="${lineProject.url}"`));
+  assert.ok(lineCard.html.includes('data-qr="line-zh-th"'));
+  assert.ok(lineCard.html.includes('data-demo="line-zh-th"'));
+  assert.equal(restored.demos['line-zh-th'].title, 'Saved translation introduction');
 });
 
 test('editable JSON cannot replace project IDs, categories, links or other technical settings', async () => {

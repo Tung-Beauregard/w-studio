@@ -15,7 +15,7 @@
     if (isRecord(edited)) fields.forEach(key => { result[key] = contentText(edited[key], base[key]); });
     return result;
   }
-  // Editable JSON supplies copy and display order. Project identity and technical settings stay in code.
+  // Editable JSON supplies copy, visibility and order. Project identity and technical settings stay in code.
   const projectCopyFields = ['title', 'name', 'eyebrow', 'description', 'note', 'status', 'brand', 'position', 'linkLabel', 'lineId'];
   const data = {...defaults, projects: defaults.projects.map(project => {
     const edited = isRecord(content.projects) && Object.hasOwn(content.projects, project.id) ? content.projects[project.id] : null;
@@ -32,8 +32,11 @@
     }
     return result;
   })};
-  // Only known project IDs can affect order. Keep every project even if a list is incomplete.
-  const projectOrder = isRecord(content.home) ? content.home.projectOrder : null;
+  // Keep the complete project data for dialogs and restoration; select cards separately.
+  // CMS omits empty arrays, so the marker distinguishes clearing all cards from legacy data.
+  const homeConfig = isRecord(content.home) ? content.home : null;
+  const projectOrder = homeConfig?.projectOrder;
+  let visibleProjects = homeConfig && homeConfig.projectSelectionConfigured !== true ? data.projects : [];
   if (Array.isArray(projectOrder)) {
     const remaining = new Map(data.projects.map(project => [project.id, project]));
     const ordered = [];
@@ -42,7 +45,7 @@
       ordered.push(remaining.get(item.id));
       remaining.delete(item.id);
     });
-    data.projects = [...ordered, ...remaining.values()];
+    visibleProjects = ordered;
   }
   const $ = (s, parent = document) => parent.querySelector(s);
   const $$ = (s, parent = document) => [...parent.querySelectorAll(s)];
@@ -101,7 +104,7 @@
   const orderingDemoVisual = `<div class="visual-label">ORDERING SYSTEM / DEMO</div><span class="visual-note">介面概念示意</span>
     <div class="system-preview" aria-hidden="true"><div class="system-preview-top"><span>${icon('book')} 點餐系統</span><small>DEMO</small></div><div class="system-preview-tabs"><span>菜單</span><span>購物車</span><span>確認</span></div><div class="system-preview-body"><span class="system-preview-caption">示範餐點</span><div class="system-preview-row"><span>時蔬飯碗</span><small>NT$ 130</small><i>× 1</i></div><div class="system-preview-row"><span>冷泡茶</span><small>NT$ 45</small><i>× 1</i></div><div class="system-preview-note">${icon('check')} 模擬選餐，不成立訂單</div></div></div>`;
   const projectVisuals = { language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요'), 'agent-hub': mycelintVisual, 'lab-demo': labDemoVisual, 'ordering-demo': orderingDemoVisual };
-  $('#project-grid').innerHTML = data.projects.map(p => {
+  $('#project-grid').innerHTML = visibleProjects.map(p => {
     const repo = safeUrl(p.repo);
     const qrButton = p.qr ? `<button class="demo-link qr-link" data-qr="${escape(p.id)}" aria-label="掃碼加入 ${escape(p.name)}">⊞ 掃碼加入</button>` : '';
     const sourceLink = repo ? `<a href="${escape(repo)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(p.name)} GitHub 原始碼">${icon('github')} 原始碼</a>` : '';
@@ -130,10 +133,18 @@
       return `<article class="tool-row"><span class="tool-icon">${icon(t.icon)}</span><div class="tool-copy"><div class="tool-title-line"><h3>${escape(t.title)}</h3>${t.type ? `<span class="tool-type">${escape(t.type)}</span>` : ''}</div><p>${escape(t.description || '')}</p>${t.requirements ? `<p class="requirements">${escape(t.requirements)}</p>` : ''}${file ? `<p class="tool-file">${escape(file.fileName)}</p>` : ''}</div><div class="tool-actions">${intro}${action}</div></article>`;
     }).join('');
   }
-  $('.filter-button[data-filter="all"] span').textContent = String(data.projects.length).padStart(2,'0');
+  $('.filter-button[data-filter="all"] span').textContent = String(visibleProjects.length).padStart(2,'0');
+  function updateProjectEmptyState(filter = 'all') {
+    const emptyState = $('#project-empty');
+    emptyState.hidden = visibleProjects.some(project => filter === 'all' || project.category === filter);
+    emptyState.textContent = !homeConfig ? '專案清單暫時無法載入，請重新整理頁面。'
+      : filter === 'all' ? '目前沒有公開展示的專案。' : '這個分類目前沒有展示的專案。';
+  }
+  updateProjectEmptyState();
   $$('.filter-button').forEach(button => button.addEventListener('click', () => {
     $$('.filter-button').forEach(b => { b.classList.toggle('active', b === button); b.setAttribute('aria-pressed', b === button ? 'true' : 'false'); });
     $$('.project-card').forEach(card => card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter);
+    updateProjectEmptyState(button.dataset.filter);
   }));
   const menu = $('.menu-button');
   function closeMenu() { menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', '開啟選單'); $('#mobile-nav').hidden = true; }

@@ -1,5 +1,5 @@
 # W AI Studio — Pages CMS
-# Plain-text copy and project display order. Fixed objects preserve project settings.
+# Plain-text copy, project visibility and display order. Fixed objects preserve project settings.
 # https://pagescms.org/docs/configuration/
 content:
   - name: "home"
@@ -8,13 +8,18 @@ content:
     path: "content/home.json"
     format: "json"
     fields:
+      - name: "projectSelectionConfigured"
+        type: "boolean"
+        hidden: true
+        readonly: true
+        default: true
       - name: "projectOrder"
         label: "專案卡片順序"
         type: "object"
-        required: true
-        description: "拖曳每列左側的把手調整首頁順序，再按 Save／儲存。請保留全部 7 個專案；專案名稱請到「專案文案」修改。"
+        required: false
+        description: "拖曳把手調整順序；按 X 移除可隱藏首頁卡片，再按 Save／儲存。要恢復時按 Add／新增並選擇專案，請勿重複選取。原本文案會保留；全部移除代表不展示任何專案。"
         list:
-          min: 7
+          min: 0
           max: 7
           collapsible: false
         fields:
@@ -22,7 +27,6 @@ content:
             label: "專案"
             type: "select"
             required: true
-            readonly: true
             options:
               values:
                 - name: "language"
