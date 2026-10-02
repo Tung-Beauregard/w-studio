@@ -142,3 +142,8 @@ h2 > [data-copy$="titleLead"]{color:inherit}
 .section-heading>div{min-width:0}
 .section-heading .text-link{white-space:normal}
 @media(max-width:700px){.section-heading{flex-wrap:wrap}.hero-bottom{gap:12px}}
+
+/* Instrument education entry shares the studio identity. */
+.project-visual.instrument-principles{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 40% 50%,#62977924,transparent 72%),#101e18;padding:45px 24px 25px}.instrument-preview{display:flex;align-items:center;gap:8px;width:100%}.instrument-preview>img{width:58%;height:auto;min-width:0}.instrument-preview>div{display:flex;flex-direction:column;gap:10px}.instrument-preview strong{font-size:22px;color:#d7f3e0;font-weight:500}.instrument-preview span{font-size:10px;color:#a0beab}.instrument-preview small{font-size:9px;color:#aaa5bb}.project-visual.instrument-principles img{max-width:100%}
+@media(max-width:1050px){.instrument-preview{flex-direction:column;gap:0}.instrument-preview>img{width:75%;max-height:205px}.instrument-preview>div{align-items:center;gap:6px}.instrument-preview strong{font-size:21px}}
+@media(max-width:700px){.project-card-wide .project-visual.instrument-principles{height:340px;min-height:340px}.instrument-preview>img{max-height:210px}}

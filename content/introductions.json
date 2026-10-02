@@ -75,7 +75,7 @@
       {
         "label": "查看專案",
         "title": "看看我做了哪些東西。",
-        "description": "依分類瀏覽語言學習、LINE 翻譯、星語、系統 Demo 與研發中的 Mycelint。",
+        "description": "依分類瀏覽儀器原理、語言學習、LINE 翻譯、星語、系統 Demo 與研發中的 Mycelint。",
         "bullets": [
           "專案介紹與使用連結",
           "研發中的專案會標示狀態"
@@ -233,6 +233,40 @@
         "bullets": [
           "支援中文、英文、韓文翻譯",
           "W AI Studio 翻譯系列"
+        ]
+      }
+    ]
+  },
+  "instrument-principles": {
+    "title": "儀器原理互動教室",
+    "description": "用 3D 動畫與互動操作理解分析儀器，從構造、樣品路徑走到訊號。",
+    "visitLabel": "探索儀器 ↗",
+    "steps": [
+      {
+        "label": "選擇儀器",
+        "title": "從你想弄懂的儀器開始。",
+        "description": "離子阱質譜、GC-MS 與 UV-Vis 分光光度計教材已開放。",
+        "bullets": [
+          "離子阱質譜 / GC-MS",
+          "UV-Vis 分光光度計"
+        ]
+      },
+      {
+        "label": "跟著導覽",
+        "title": "沿著樣品的路徑走一趟。",
+        "description": "用分章動畫或導覽認識部件，理解分離、離子導引與偵測的過程。",
+        "bullets": [
+          "3D 儀器構造",
+          "繁體中文解說"
+        ]
+      },
+      {
+        "label": "親手操作",
+        "title": "調整參數，觀察圖譜變化。",
+        "description": "試著調整射頻振幅、升溫速率或光譜頻寬，把畫面變化與分析原理連起來。",
+        "bullets": [
+          "射頻振幅與離子排出",
+          "升溫速率、光譜頻寬與圖譜"
         ]
       }
     ]

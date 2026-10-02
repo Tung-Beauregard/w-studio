@@ -68,7 +68,7 @@ assets/
 | 表單 | 內容來源與編輯範圍 |
 | --- | --- |
 | 首頁文案 | `content/home.json`：專案卡片顯示與順序、導覽文字、首頁主標題與介紹、按鈕、特色標籤、專案／工具區塊說明與頁尾 |
-| 專案文案 | `content/projects.json`：七個既有專案的名稱、標語、簡介、標籤、提示、入口按鈕文字，以及 Mycelint 詳情 |
+| 專案文案 | `content/projects.json`：八個既有專案的名稱、標語、簡介、標籤、提示、入口按鈕文字，以及 Mycelint 詳情 |
 | 功能介紹 | `content/introductions.json`：網站與專案介紹彈窗的標題、說明、入口按鈕文字與三個步驟 |
 
 三份 JSON 是**線上可編輯文案的主要來源**。不要只改 `index.html`、`assets/site-data.js` 或 `assets/app.js` 內的同名舊文案：HTTP 網站成功載入 JSON 後，會以 JSON 文案覆蓋備援版本。根目錄 `.pages.yml` 的 `settings.content.merge: true` 保留表單未公開的資料；固定專案物件與清單長度用來維持現有結構。
@@ -105,7 +105,7 @@ python -m http.server 8000
 | `assets/app.js` | 互動功能、示意圖、專案及介紹文案合併、備援與渲染 |
 | `assets/styles.css` | 視覺樣式與響應式排版 |
 
-新增專案時，需同步更新 `assets/site-data.js` 的專案資料、`assets/app.js` 的示意圖及介紹、`content/projects.json` 與需要的 `content/introductions.json`，再將對應欄位加入 `.pages.yml`。分類按鈕在 `index.html` 設定。現有七個專案均具備介紹，全部專案數量由資料自動更新；沒有有效網址的專案不會顯示外部入口，未提供原始碼網址的專案不會顯示原始碼按鈕。
+新增專案時，需同步更新 `assets/site-data.js` 的專案資料、`assets/app.js` 的示意圖及介紹、`content/projects.json` 與需要的 `content/introductions.json`，再將對應欄位加入 `.pages.yml`。分類按鈕在 `index.html` 設定。現有八個專案均具備介紹，全部專案數量由資料自動更新；沒有有效網址的專案不會顯示外部入口，未提供原始碼網址的專案不會顯示原始碼按鈕。
 
 新增專案也需更新 `.pages.yml` 排序欄的選項與 `max` 數量（`min` 保持 0），要公開展示時再將固定 ID 加入 `content/home.json` 的 `projectOrder`。
 
@@ -192,3 +192,9 @@ tools: [
 `assets/visitors.js` 只在正式網址 `https://tung-beauregard.github.io/w-studio/`（含 `index.html`）啟用；本機或其他預覽位置顯示「預覽」，不載入計數服務。正式頁面載入時會連線至 `busuanzi.ibruce.info`，不需要帳號或金鑰。停用 JavaScript 時顯示破折號；服務失敗或超過 10 秒時顯示「暫時無法載入」，不以 0 冒充真實統計。
 
 此數字依服務的 UV 識別方式估算，不能視為精確、不重複的真人總數；跨裝置、瀏覽器與追蹤阻擋可能影響結果。不蒜子以站點彙總，若未來同網域的其他專案也接入這項服務，需重新評估是否應改用獨立統計。更換正式網址時，也需更新腳本的網址檢查與計數設定。
+
+## 儀器原理互動教室
+
+「科學教學」分類新增 [儀器原理入口](https://tung-beauregard.github.io/instrument-principles/)，與主頁互相連結。教材包含離子阱質譜、GC-MS，以及 UV-Vis 分光光度計。專案 ID 為 `instrument-principles`，卡片排序維持原有專案相對順序並放在實驗室管理 Demo 前。
+
+文案位於 `content/projects.json`、`content/introductions.json`；排序位於 `content/home.json`。三者已納入 `.pages.yml` 的既有中文編輯流程；新增專案不要只改 HTML 或 JavaScript 備援。原始網址與分類由 `assets/site-data.js` 維護，功能介紹仍為三步驟。新增教材後，記得同步更新此處卡片、介紹彈窗與教材數量。

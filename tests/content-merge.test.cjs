@@ -54,12 +54,12 @@ async function render(content, {reject = false} = {}) {
   };
 }
 
-test('published CMS copy preserves all seven project identities and three-step introductions', async () => {
+test('published CMS copy preserves all eight project identities and three-step introductions', async () => {
   const baseline = await render();
   const actual = await render({home: publishedHome, projects: publishedProjects, introductions: publishedIntroductions});
-  assert.equal(Object.keys(publishedProjects).length, 7);
-  assert.equal(Object.keys(publishedIntroductions).length, 7);
-  assert.equal(actual.data.projects.length, 7);
+  assert.equal(Object.keys(publishedProjects).length, 8);
+  assert.equal(Object.keys(publishedIntroductions).length, 8);
+  assert.equal(actual.data.projects.length, 8);
   assert.deepEqual(renderedCards(actual.projectsHTML).map(card => card.id), actual.visibleProjects.map(project => project.id));
   assert.equal(actual.projectCount, String(actual.visibleProjects.length).padStart(2, '0'));
   assert.deepEqual(actual.data.projects.map(project => project.id).sort(), baseline.data.projects.map(project => project.id).sort());
@@ -81,7 +81,7 @@ test('published CMS copy preserves all seven project identities and three-step i
 
 test('project order changes rendered card positions while keeping copy, links and actions with each ID', async () => {
   const baseline = await render();
-  const ids = ['agent-hub', 'line-zh-en-ko', 'ordering-demo', 'language', 'line-zh-th', 'lab-demo', 'astral'];
+  const ids = ['agent-hub', 'line-zh-en-ko', 'ordering-demo', 'language', 'line-zh-th', 'lab-demo', 'astral', 'instrument-principles'];
   const projects = Object.fromEntries(ids.map(id => [id, {
     title: `Title ${id}`, name: `Name ${id}`, description: `Description ${id}`
   }]));
@@ -93,7 +93,7 @@ test('project order changes rendered card positions while keeping copy, links an
   assert.deepEqual(actual.visibleProjects.map(project => project.id), ids);
   assert.deepEqual(actual.data.projects.map(project => project.id), baseline.data.projects.map(project => project.id));
   assert.deepEqual(cards.map(card => card.id), ids);
-  assert.equal(actual.projectCount, '07');
+  assert.equal(actual.projectCount, '08');
   assert.deepEqual(actual.demos, baseline.demos);
   for (const project of actual.data.projects) {
     const original = baseline.data.projects.find(item => item.id === project.id);
@@ -127,7 +127,7 @@ test('legacy home objects without configured selection preserve all cards when o
     assert.deepEqual(actual.data.projects, baseline.data.projects, JSON.stringify(home));
     assert.deepEqual(actual.visibleProjects, baseline.data.projects);
     assert.equal(actual.projectsHTML, baseline.projectsHTML);
-    assert.equal(actual.projectCount, '07');
+    assert.equal(actual.projectCount, '08');
   }
 });
 
@@ -180,8 +180,8 @@ test('unavailable or invalid home content does not bring hidden cards back', asy
     assert.deepEqual(actual.visibleProjects, []);
     assert.deepEqual(renderedCards(actual.projectsHTML), []);
     assert.equal(actual.projectCount, '00');
-    assert.equal(actual.data.projects.length, 7);
-    assert.equal(Object.keys(actual.demos).length, 7);
+    assert.equal(actual.data.projects.length, 8);
+    assert.equal(Object.keys(actual.demos).length, 8);
   }
   const offline = await render(undefined, {reject: true});
   assert.deepEqual(offline.visibleProjects, []);
@@ -243,7 +243,7 @@ test('editable JSON cannot replace project IDs, categories, links or other techn
   assert.equal(project.title, 'Edited title');
   for (const key of Object.keys(injected)) assert.equal(project[key], actual.defaults.projects[0][key], key);
   assert.equal(project.details, undefined);
-  assert.equal(actual.data.projects.length, 7);
+  assert.equal(actual.data.projects.length, 8);
 });
 
 test('project copy, tool empty states and introduction steps render HTML as text', async () => {

@@ -20,7 +20,7 @@ content:
         description: "拖曳把手調整順序；按 X 移除可隱藏首頁卡片，再按 Save／儲存。要恢復時按 Add／新增並選擇專案，請勿重複選取。原本文案會保留；全部移除代表不展示任何專案。"
         list:
           min: 0
-          max: 7
+          max: 8
           collapsible: false
         fields:
           - name: "id"
@@ -43,6 +43,8 @@ content:
                   label: "實驗室管理系統"
                 - name: "ordering-demo"
                   label: "點餐系統 Demo"
+                - name: "instrument-principles"
+                  label: "儀器原理互動教室"
       - name: "nav"
         label: "導覽列"
         type: "object"
@@ -754,6 +756,59 @@ content:
             required: true
             options:
               maxlength: 24
+      - name: "instrument-principles"
+        label: "儀器原理互動教室"
+        type: "object"
+        required: true
+        description: "編輯這個專案的純文字。專案識別、分類、圖片與實際網址由網站程式維護。"
+        fields:
+          - name: "name"
+            label: "專案名稱"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "title"
+            label: "專案標語"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "eyebrow"
+            label: "英文小字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 100
+          - name: "description"
+            label: "專案介紹"
+            type: "text"
+            required: true
+            options:
+              maxlength: 600
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "tags"
+            label: "三個專案標籤"
+            type: "string"
+            required: true
+            options:
+              maxlength: 32
+            list:
+              min: 3
+              max: 3
+            description: "固定 3 項，請保留排列順序並使用純文字。"
+          - name: "note"
+            label: "專案下方提示"
+            type: "string"
+            required: true
+            options:
+              maxlength: 140
+          - name: "linkLabel"
+            label: "使用入口按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
   - name: "introductions"
     label: "功能介紹"
     type: "file"
@@ -1152,6 +1207,71 @@ content:
                 description: "固定 2 項，請保留排列順序並使用純文字。"
       - name: "ordering-demo"
         label: "點餐系統 Demo"
+        type: "object"
+        required: true
+        fields:
+          - name: "title"
+            label: "介紹彈窗標題"
+            type: "string"
+            required: true
+            options:
+              maxlength: 60
+          - name: "description"
+            label: "介紹彈窗說明"
+            type: "text"
+            required: true
+            options:
+              maxlength: 500
+            description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+          - name: "visitLabel"
+            label: "前往專案按鈕文字"
+            type: "string"
+            required: true
+            options:
+              maxlength: 24
+          - name: "steps"
+            label: "三個介紹步驟"
+            type: "object"
+            required: true
+            description: "固定三個步驟，請保留順序，使文字與既有動畫對應。"
+            list:
+              min: 3
+              max: 3
+              collapsible:
+                collapsed: true
+                summary: "{index}. {fields.title}"
+            fields:
+              - name: "label"
+                label: "步驟短標籤"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 16
+              - name: "title"
+                label: "步驟標題"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 70
+              - name: "description"
+                label: "步驟說明"
+                type: "text"
+                required: true
+                options:
+                  maxlength: 350
+                description: "請填純文字，不支援 HTML 或 Markdown 語法。"
+              - name: "bullets"
+                label: "兩個功能重點"
+                type: "string"
+                required: true
+                options:
+                  maxlength: 60
+                list:
+                  min: 2
+                  max: 2
+                description: "固定 2 項，請保留排列順序並使用純文字。"
+      - name: "instrument-principles"
+        label: "儀器原理互動教室"
         type: "object"
         required: true
         fields:

@@ -111,5 +111,18 @@
     ],
     "note": "公開展示版 · 不會建立真實訂單或保留名額",
     "linkLabel": "開啟 Demo"
+  },
+  "instrument-principles": {
+    "name": "儀器原理互動教室",
+    "title": "把儀器打開，讓原理看得見。",
+    "eyebrow": "INTERACTIVE SCIENCE / INSTRUMENT PRINCIPLES",
+    "description": "沿著樣品的路徑，探索離子阱質譜、GC-MS 與 UV-Vis 的構造和原理。觀看 3D 導覽、調整參數，觀察圖譜如何改變。",
+    "tags": [
+      "3D 互動",
+      "儀器原理",
+      "科學教學"
+    ],
+    "note": "3 個教材已開放 · 建議使用電腦",
+    "linkLabel": "探索儀器"
   }
 }

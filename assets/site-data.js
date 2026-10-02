@@ -44,6 +44,25 @@ window.SITE_DATA = {
       tags: ['線上選餐', '購物車', '互動 Demo'],
       url: 'https://tung-beauregard.github.io/w-studio/demos/ordering/', linkLabel: '開啟 Demo',
       note: '公開展示版 · 不會建立真實訂單或保留名額', icon: 'book'
+    },
+    {
+      "id": "instrument-principles",
+      "category": "science",
+      "number": "08",
+      "eyebrow": "INTERACTIVE SCIENCE / INSTRUMENT PRINCIPLES",
+      "name": "儀器原理互動教室",
+      "title": "把儀器打開，讓原理看得見。",
+      "description": "沿著樣品的路徑，探索離子阱質譜、GC-MS 與 UV-Vis 的構造和原理。觀看 3D 導覽、調整參數，觀察圖譜如何改變。",
+      "tags": [
+        "3D 互動",
+        "儀器原理",
+        "科學教學"
+      ],
+      "url": "https://tung-beauregard.github.io/instrument-principles/",
+      "repo": "https://github.com/Tung-Beauregard/instrument-principles",
+      "linkLabel": "探索儀器",
+      "note": "3 個教材已開放 · 建議使用電腦",
+      "icon": "flask"
     }
   ],
   // 只加入你指定要公開的小工具，不會從 GitHub 專案自動產生下載。
