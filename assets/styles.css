@@ -112,6 +112,11 @@ dialog{padding:0;border:1px solid #425448;border-radius:15px;background:#131e17;
 .copyright{font-size:9px;line-height:1.7}
 .visitor-counter{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap;font-size:10px;flex-shrink:0}
 .visitor-counter strong{font:500 10px var(--mono);color:var(--mint);font-variant-numeric:tabular-nums}
+.visitor-retry{padding:3px 4px;border:0;background:none;color:var(--mint);font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.visitor-retry:disabled{opacity:.5;cursor:wait}
+.visitor-retry:focus-visible{outline:1px solid var(--mint);outline-offset:2px;border-radius:2px}
+.visitor-counter [hidden]{display:none}
+@media(max-width:600px){.footer-meta{flex-wrap:wrap;justify-content:flex-end}.footer-meta .copyright{flex-basis:100%}}
 @media(max-width:900px){.footer-meta{order:4;flex-basis:100%;padding-top:14px;border-top:1px solid #26352b}.site-footer{flex-wrap:wrap}.copyright{font-size:8px}.visitor-counter,.visitor-counter strong{font-size:9px}.footer-meta{gap:12px}}
 
 .brand-wordmark{white-space:nowrap}
