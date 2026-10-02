@@ -187,13 +187,15 @@ tools: [
 
 ## 累積到站人數
 
-頁尾使用[不蒜子官方服務](https://ibruce.info/2015/04/04/busuanzi/)的 `site_uv`，顯示估算訪客數，而非 `site_pv` 瀏覽次數。計數由共用服務保存，不是瀏覽器中的假累加器，也不含啟用前的流量。
+頁尾使用 [soxft/busuanzi](https://github.com/soxft/busuanzi) 的公開託管服務，顯示估算訪客數（UV），而非 `site_pv` 瀏覽次數。服務目前官方 `/js` 指定的 API 為 `https://bsz.iirose.cn/api`；本站直接以 CORS JSON 連線，不執行遠端 JSONP 腳本。[介面文件](https://github.com/soxft/busuanzi/wiki/api)、[計算方式](https://github.com/soxft/busuanzi/wiki/Usage)。
 
-`assets/visitors.js` 只在正式網址 `https://tung-beauregard.github.io/w-studio/`（含 `index.html`）啟用；本機或其他預覽位置顯示「預覽」，不載入計數服務。正式頁面直接呼叫 `busuanzi.ibruce.info/busuanzi` 的 JSONP 介面，沿用原服務、Referer 與 `site_uv`，不另開計數器、不需要帳號或金鑰。
+原先使用的 `busuanzi.ibruce.info` 在正式站出現反覆逾時，已於 2026-10-02 切換。切換前實際取得的舊站 UV 為 **12**，保存在 `assets/visitors.js` 的 `historicalVisitors`，作為有來源的歷史基準；顯示值是 12 加上新服務的 `site_uv`。這不是補猜遺失流量，也不是人工累加每次瀏覽。兩個服務的識別資料不能串接去重，因此切換前後的同一訪客可能重複計入；頁尾提示文字會說明這一點。往後不要任意修改歷史基準或為了測試而增加它。
+
+`assets/visitors.js` 只在正式網址 `https://tung-beauregard.github.io/w-studio/`（含 `index.html`）啟用；本機或其他預覽位置顯示「預覽」，不載入計數服務。每次正式頁面載入發送一次 POST，固定傳送公開 canonical URL，不附訪客網址中的查詢字串或 hash、不附跨站 Cookie。服務以 IP／瀏覽器資料估算 UV，並回傳匿名識別值供本機儲存與後續去重；無需在原始碼放帳號或金鑰。只讀 GET 不增加流量，可用於連線診斷。
 
 服務失敗或超過 12 秒時會提供「重試」，不會自動反覆請求。逾時後收到有效資料仍可恢復顯示；手動重試會移除舊請求，避免過期回應覆蓋新結果。瀏覽器只保存最近一次成功回傳的數字與時間，最多使用 24 小時。等待更新或無法連線時，備援數字會明確標「（上次）」，提示文字顯示統計時間；沒有有效快取時顯示「暫時無法載入」，不產生假數字或以 0 代替錯誤。停用 JavaScript 時顯示破折號。快取不是伺服器統計備份，也不會補計無法連線的訪問；外部服務故障或瀏覽器阻擋仍可能使最新數字無法取得。
 
-計數元件檢查：`node --test tests/visitors.test.cjs`，涵蓋正式網址限制、晚到回應、失敗重試、快取時效與數字驗證。
+計數元件檢查：`node --test tests/visitors.test.cjs`，涵蓋正式網址限制、晚到回應、失敗重試、快取時效、數字驗證、匿名識別更新及歷史基準只加一次。原 JSONP 來源的快取不會套用到新來源。
 
 此數字依服務的 UV 識別方式估算，不能視為精確、不重複的真人總數；跨裝置、瀏覽器與追蹤阻擋可能影響結果。不蒜子以站點彙總，若未來同網域的其他專案也接入這項服務，需重新評估是否應改用獨立統計。更換正式網址時，也需更新腳本的網址檢查與計數設定。
 

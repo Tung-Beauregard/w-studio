@@ -16,7 +16,14 @@
     return;
   }
 
-  const cacheKey = 'w-studio:busuanzi:site-uv:v1';
+  // Official soxft/busuanzi hosted endpoint, published by its /js client.
+  const endpoint = 'https://bsz.iirose.cn/api';
+  const canonicalUrl = 'https://tung-beauregard.github.io/w-studio/';
+  // Last confirmed original-provider UV on 2026-10-02 (real production response).
+  // Keep history separate: identities cannot be deduplicated across providers.
+  const historicalVisitors = 12;
+  const cacheKey = 'w-studio:visitors:soxft:v1';
+  const identityKey = 'w-studio:visitors:soxft:identity';
   const cacheMaxAge = 24 * 60 * 60 * 1000;
   const timeout = 12000;
   const format = new Intl.NumberFormat('zh-TW');
@@ -34,7 +41,6 @@
 
   let previous = readCache();
   let cancel = () => {};
-  let attempt = 0;
 
   function validCount(raw) {
     if (typeof raw !== 'number' && typeof raw !== 'string') return false;
@@ -46,7 +52,7 @@
     try {
       const cached = JSON.parse(localStorage.getItem(cacheKey));
       const age = Date.now() - cached?.updatedAt;
-      if (cached && validCount(cached.count) && Number.isSafeInteger(cached.updatedAt) &&
+      if (cached && validCount(cached.count) && Number(cached.count) >= historicalVisitors && Number.isSafeInteger(cached.updatedAt) &&
           age >= 0 && age < cacheMaxAge) return cached;
     } catch { /* Storage may be unavailable; the live request still works. */ }
     return null;
@@ -87,55 +93,68 @@
       counter.title = '載入訪客統計中。';
     }
 
-    // Use the original service's JSONP endpoint and site_uv metric directly.
-    // This avoids a second script download and handles API errors as well.
-    const callback = `WStudioVisitors_${Date.now()}_${++attempt}`;
-    const script = document.createElement('script');
+    // CORS JSON avoids executing a cross-origin JSONP script. Always send the
+    // canonical public URL, never a visitor's query string, hash or local URL.
+    const controller = new AbortController();
     let active = true;
-    let timer;
-    const cleanup = () => {
+    const timer = setTimeout(() => { if (active) fail(); }, timeout);
+    cancel = () => {
       active = false;
       clearTimeout(timer);
-      script.remove();
-      delete window[callback];
+      controller.abort();
     };
-    cancel = cleanup;
-
-    window[callback] = data => {
-      if (!active) return;
-      if (!data || !validCount(data.site_uv)) {
-        cleanup();
-        fail();
-        return;
+    const headers = {'x-bsz-referer': canonicalUrl};
+    try {
+      const identity = localStorage.getItem(identityKey);
+      if (identity && identity.length < 4096 && /^[A-Za-z0-9._~-]+$/.test(identity)) {
+        headers.Authorization = `Bearer ${identity}`;
       }
-      const count = Number(data.site_uv);
-      cleanup();
+    } catch { /* The provider can also estimate UV using IP and browser data. */ }
+
+    fetch(endpoint, {method: 'POST', headers, credentials: 'omit', cache: 'no-store', signal: controller.signal})
+    .then(async response => {
+      if (!active) return;
+      if (!response.ok) {
+        if (response.status === 401) {
+          try { localStorage.removeItem(identityKey); } catch { /* Optional storage. */ }
+        }
+        throw new Error('Counter request failed');
+      }
+      const result = await response.json();
+      if (!active) return;
+      if (result?.success !== true || !validCount(result.data?.site_uv)) {
+        throw new Error('Invalid visitor count');
+      }
+      const count = historicalVisitors + Number(result.data.site_uv);
+      if (!Number.isSafeInteger(count)) throw new Error('Visitor count out of range');
+      const identity = response.headers.get('Set-Bsz-Identity');
+      if (identity && identity.length < 4096 && /^[A-Za-z0-9._~-]+$/.test(identity)) {
+        try { localStorage.setItem(identityKey, identity); } catch { /* Optional storage. */ }
+      }
+      active = false;
+      clearTimeout(timer);
       previous = {count, updatedAt: Date.now()};
       try { localStorage.setItem(cacheKey, JSON.stringify(previous)); } catch { /* Optional cache. */ }
       value.textContent = format.format(count);
       unit.hidden = false;
       note.hidden = true;
       counter.dataset.state = 'live';
-      counter.title = '啟用後由不蒜子統計的估算訪客數（UV），不是瀏覽次數；跨裝置或瀏覽器可能重複計入。';
+      counter.title = '估算訪客數（UV）：2026/10/2 切換前已確認的 12 人，加上新來源統計。切換前後、跨裝置或瀏覽器可能重複計入；不是瀏覽次數。';
       // Keep keyboard focus on the counter when a focused retry button disappears.
       if (document.activeElement === retry) {
         counter.tabIndex = -1;
         counter.focus({preventScroll: true});
       }
       retry.hidden = true;
-    };
-    script.src = `https://busuanzi.ibruce.info/busuanzi?jsonpCallback=${callback}`;
-    script.async = true;
-    script.referrerPolicy = 'no-referrer-when-downgrade';
-    script.onerror = () => {
+    })
+    .catch(() => {
       if (!active) return;
-      cleanup();
+      active = false;
+      clearTimeout(timer);
       fail();
-    };
+    });
     // A timeout changes the display, but a late valid response can still recover.
     // Only a user-requested retry replaces the pending request; no retry loops.
-    timer = setTimeout(() => { if (active) fail(); }, timeout);
-    document.head.appendChild(script);
   }
 
   retry.addEventListener('click', load);
