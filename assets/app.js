@@ -52,6 +52,10 @@
   const escape = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl = (value) => { try { const u = new URL(value); return ['http:', 'https:'].includes(u.protocol) ? u.href : ''; } catch { return ''; } };
   const paths = {
+    leaf: '<path d="M20 3C7 3 3 10 5 16c6 2 13-2 15-13ZM4 21 16 9"/>',
+    compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-3 5-5 3 3-5Z"/>',
+    people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 4a3 3 0 0 1 0 6m1 4a5 5 0 0 1 3 4v3"/>',
+
     arrow: '<path d="M4 12h16m-6-6 6 6-6 6"/>',
     github: '<path d="M9 19c-4.3 1.3-4.3-2.5-6-3m12 6v-3.8c0-1 .1-1.6-.5-2.2 3-.3 6.1-1.5 6.1-6.8a5.3 5.3 0 0 0-1.4-3.7A5 5 0 0 0 19 1.9s-1.1-.4-3.8 1.4a13 13 0 0 0-6.8 0C5.7 1.5 4.6 1.9 4.6 1.9a5 5 0 0 0-.2 3.6A5.3 5.3 0 0 0 3 9.2c0 5.3 3.2 6.5 6.2 6.8-.5.5-.7 1.2-.7 2.2V22"/>',
     flask: '<path d="M9 3h6m-5 0v7l-5.6 8.5A2 2 0 0 0 6 22h12a2 2 0 0 0 1.6-3.5L14 10V3M7 16h10"/><path d="m9 19 .01 0m5-1 .01 0"/>',
@@ -75,36 +79,30 @@
   const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.globe}</svg>`;
   function fillIcons(parent = document) { $$('[data-icon]', parent).forEach(el => el.innerHTML = icon(el.dataset.icon)); }
   fillIcons();
-  const languageVisual = `<div class="visual-label"><i></i> A NEW LANGUAGE. A NEW WORLD.</div><span class="visual-note">功能概念示意</span><div class="language-cards" aria-hidden="true"><div class="flash-card"><small>01 / THAI</small><strong lang="th">ก</strong><span lang="th">สวัสดี</span><em>從字母開始，一點一點進步</em></div><div class="language-exchange">⇄</div><div class="flash-card"><small>02 / CHINESE</small><strong>你</strong><span>你好</span><em>從一句問候，認識另一種文化</em></div></div><div class="mini-float">${icon('language')} 兩種語言，更多可能。</div>`;
-  const astralVisual = `<div class="visual-label"><i></i> YOUR PERSONAL COSMOS.</div><span class="visual-note">功能概念示意</span><div class="astral-chart" aria-hidden="true"><svg viewBox="0 0 260 260" fill="none"><circle cx="130" cy="130" r="112"/><circle cx="130" cy="130" r="88"/><circle cx="130" cy="130" r="49"/><path class="astral-rays" d="M130 18v24M130 218v24M18 130h24M218 130h24M74 33l12 21M174 206l12 21M33 74l21 12M206 174l21 12M33 186l21-12M206 86l21-12M74 227l12-21M174 54l12-21"/><g class="astral-constellation"><path d="m80 56 128 93-149 32 71-137 65 151-115-139"/><circle cx="80" cy="56" r="4"/><circle cx="208" cy="149" r="4"/><circle cx="59" cy="181" r="4"/><circle cx="130" cy="44" r="4"/><circle cx="195" cy="195" r="4"/></g><path class="astral-center" d="m130 112 5 13 13 5-13 5-5 13-5-13-13-5 13-5Z"/></svg><span class="astral-sign sign-one">✦</span><span class="astral-sign sign-two">✧</span></div><div class="astral-caption" aria-hidden="true"><strong>星語</strong><span>ASTRAL NOTES</span><small>本命盤 / 雙人合盤 / 白話解讀</small></div>`;
-  const botVisual = (id, languages, greeting, translation) => `<div class="visual-label"><i></i> W AI STUDIO / TRANSLATE</div><span class="visual-note">品牌頭像 · 對話示意</span><div class="line-bot-art"><img class="line-bot-avatar" src="./assets/${id}-avatar.png?v=dialogue-1" alt="W AI Studio ${escape(languages)}翻譯機器人品牌頭像" loading="lazy" width="1024" height="1024"><div class="line-chat-preview" aria-hidden="true"><span class="line-chat-message outgoing">${escape(greeting)}</span><span class="line-chat-message incoming">${escape(translation)}</span></div></div><div class="line-bot-caption">${icon('chat')} <span>${escape(languages)}</span></div>`;
-  const mycelintVisual = `<div class="visual-label">MYCELINT / by W AI Studio</div><span class="visual-note">概念示意</span>
-    <svg class="mycelint-network" viewBox="0 0 460 320" fill="none" role="img" aria-label="菌絲意象：從一個開發核心分枝連接，長出不同工具節點">
-      <g class="mycelint-branches" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-        <path pathLength="1" d="M225 168C182 168 180 109 140 109S104 84 90 74"/>
-        <path pathLength="1" d="M225 168C256 165 251 108 286 108S315 77 330 64"/>
-        <path pathLength="1" d="M225 168C289 168 285 204 333 204S375 180 388 180"/>
-        <path pathLength="1" d="M225 168C190 179 215 230 172 230S133 252 118 266"/>
-        <path class="mycelint-twig" pathLength="1" d="M171 137Q161 156 137 153M277 110Q283 139 311 138M301 194Q306 169 321 159M190 227Q216 246 231 248"/>
-      </g>
-      <g class="mycelint-core"><circle cx="225" cy="168" r="41" stroke="currentColor" stroke-opacity=".16"/><circle cx="225" cy="168" r="29" fill="#19392d" stroke="currentColor"/><path d="m205 155 8 27 12-20 12 20 8-27" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></g>
-      <g class="mycelint-nodes" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <g><rect x="69" y="53" width="42" height="42" rx="12"/><path d="m84 67-7 7 7 7m12-14 7 7-7 7m-5-16-3 18"/></g>
-        <g><rect x="309" y="43" width="42" height="42" rx="12"/><rect x="319" y="54" width="22" height="20" rx="2"/><path d="M319 60h22m-14 0v14"/></g>
-        <g><rect x="367" y="159" width="42" height="42" rx="12"/><path d="M378 173h20m-20 7h14m-14 7h18"/></g>
-        <g><rect x="97" y="245" width="42" height="42" rx="12"/><path d="M108 273v-13l10-6 10 6v13l-10 6Zm0-13 10 6 10-6m-10 6v13"/></g>
-      </g>
-    </svg><div class="mycelint-caption"><strong>Mycelint</strong><span>AI 協作開發工作臺</span><small>從一個核心，長出更多可能。</small></div>`;
-  const labDemoVisual = `<div class="visual-label">LAB MANAGEMENT / DEMO</div><span class="visual-note">介面概念示意</span>
-    <div class="system-preview" aria-hidden="true"><div class="system-preview-top"><span>${icon('flask')} 實驗室管理</span><small>DEMO</small></div>
-      <div class="system-preview-tabs"><span>庫存</span><span>預約</span><span>借閱</span></div>
-      <div class="system-preview-body"><span class="system-preview-caption">展示庫存</span><div class="system-preview-row"><span>示範緩衝液</span><small>240 mL</small><i>充足</i></div><div class="system-preview-row"><span>示範濾紙組</span><small>8 盒</small><i class="low">待補充</i></div>
-      <div class="system-preview-note">${icon('check')} 虛構資料，可自由操作</div></div>
-    </div>`;
-  const orderingDemoVisual = `<div class="visual-label">ORDERING SYSTEM / DEMO</div><span class="visual-note">介面概念示意</span>
-    <div class="system-preview" aria-hidden="true"><div class="system-preview-top"><span>${icon('book')} 點餐系統</span><small>DEMO</small></div><div class="system-preview-tabs"><span>菜單</span><span>購物車</span><span>確認</span></div><div class="system-preview-body"><span class="system-preview-caption">示範餐點</span><div class="system-preview-row"><span>時蔬飯碗</span><small>NT$ 130</small><i>× 1</i></div><div class="system-preview-row"><span>冷泡茶</span><small>NT$ 45</small><i>× 1</i></div><div class="system-preview-note">${icon('check')} 模擬選餐，不成立訂單</div></div></div>`;
-  const instrumentsVisual = `<div class="visual-label">INSTRUMENT PRINCIPLES / 3D</div><span class="visual-note">結構概念示意</span><div class="instrument-preview"><img src="./assets/instrument-lcq.svg" alt="離子阱質譜儀結構示意" width="440" height="260"><div><strong>讓原理看得見。</strong><span>離子阱質譜 · GC-MS</span><small>UV-Vis 分光光度計</small></div></div>`;
-  const projectVisuals = { 'instrument-principles': instrumentsVisual, language: languageVisual, astral: astralVisual, 'line-zh-th': botVisual('line-zh-th','中文 × ไทย','你好','สวัสดี'), 'line-zh-en-ko': botVisual('line-zh-en-ko','中文 × English × 한국어','你好','Hello · 안녕하세요'), 'agent-hub': mycelintVisual, 'lab-demo': labDemoVisual, 'ordering-demo': orderingDemoVisual };
+  // Presentation assets stay separate from CMS copy and technical project identity.
+  const atlasAssets = {
+    'agent-hub': 'mycelint', astral: 'astral', 'instrument-principles': 'instrument',
+    'ordering-demo': 'ordering', language: 'language', 'lab-demo': 'lab'
+  };
+  const artwork = (id, loading = 'lazy') => `<img class="atlas-cover" src="./assets/atlas/${atlasAssets[id]}.webp" width="1536" height="1024" alt="" loading="${loading}" decoding="async">`;
+  const artLabel = (name) => `<div class="atlas-art-label"><span>視覺概念</span><strong>${escape(name)}</strong></div>`;
+  const translationVisual = (trilingual) => `<div class="atlas-translation ${trilingual ? 'atlas-trilingual' : ''}" aria-hidden="true"><svg viewBox="0 0 480 320" fill="none"><path d="${trilingual ? 'M240 70Q350 100 365 237Q240 300 114 237Q124 107 240 70Z' : 'M107 158C120 60 355 60 373 158S129 283 107 158Z'}"/><path class="translation-arrow" d="${trilingual ? 'm344 206 21 31-32-2m-207-24-12 26 29-3M263 80l-23-10 6 27' : 'M202 151h78m-9-6 9 6-9 6M280 175h-78m9-6-9 6 9 6'}"/></svg><span class="language-orb orb-chinese" lang="zh-Hant">中</span>${trilingual ? '<span class="language-orb orb-english" lang="en">EN</span><span class="language-orb orb-korean" lang="ko">한</span>' : '<span class="language-orb orb-thai" lang="th">ก</span><span class="translation-greeting greeting-chinese">你好！</span><span class="translation-greeting greeting-thai" lang="th">สวัสดีครับ</span>'}</div>${artLabel(trilingual ? 'CHINESE × ENGLISH × KOREAN' : 'CHINESE × THAI')}`;
+  const projectVisuals = Object.fromEntries(Object.keys(atlasAssets).map(id => [id,
+    artwork(id) + artLabel(id === 'agent-hub' ? 'MYCELINT' : id === 'astral' ? 'ASTRAL NOTES' : data.projects.find(p => p.id === id)?.eyebrow || '')
+  ]));
+  projectVisuals['line-zh-th'] = translationVisual(false);
+  projectVisuals['line-zh-en-ko'] = translationVisual(true);
+  projectVisuals.language = artwork('language') + '<div class="atlas-notebook-copy" aria-hidden="true"><span lang="th">สวัสดี</span><small>你好</small></div>' + artLabel('LANGUAGE & EXPLORATION');
+  projectVisuals['ordering-demo'] = artwork('ordering-demo') + '<span class="atlas-menu-title" aria-hidden="true">MENU</span>' + artLabel('ORDERING SYSTEM / DEMO');
+  // Hidden projects keep no named feature in the decorative atlas.
+  $$('[data-atlas-name]').forEach(label => {
+    const project = visibleProjects.find(p => p.id === label.dataset.atlasName);
+    if (project) label.textContent = project.name;
+  });
+  $$('[data-atlas-state]').forEach(label => {
+    const project = visibleProjects.find(p => p.id === label.dataset.atlasState);
+    label.textContent = project?.status || '';
+  });
   $('#project-grid').innerHTML = visibleProjects.map(p => {
     const repo = safeUrl(p.repo);
     const qrButton = p.qr ? `<button class="demo-link qr-link" data-qr="${escape(p.id)}" aria-label="掃碼加入 ${escape(p.name)}">⊞ 掃碼加入</button>` : '';
@@ -116,7 +114,7 @@
       : `<button class="demo-link" data-demo="${escape(p.id)}">▷ 功能介紹</button>`;
     const status = p.status ? `<span class="project-status">${escape(p.status)}</span>` : '';
     const brand = p.brand ? ` <span class="project-brand">${escape(p.brand)}</span>` : '';
-    return `<article class="project-card project-card-wide" data-project="${escape(p.id)}" data-category="${escape(p.category)}"><div class="project-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span>PROJECT / ${escape(p.number)}</span></div>${status}<h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}${brand}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions">${entrance}${qrButton}${introduction}${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
+    return `<article class="project-card project-card-wide" data-project="${escape(p.id)}" data-category="${escape(p.category)}"><div class="project-visual atlas-visual ${escape(p.id)}">${projectVisuals[p.id] || ''}</div><div class="project-content"><div class="project-meta"><span>${escape(p.eyebrow)}</span><span class="project-number">PROJECT / ${escape(p.number)}</span>${status}</div><h3>${escape(p.title)}</h3><p class="project-name">${escape(p.name)}${brand}</p><p class="project-description">${escape(p.description)}</p><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="project-actions">${entrance}${qrButton}${introduction}${sourceLink}</div><p class="project-access">${escape(p.note)}</p></div></article>`;
   }).join('');
   function renderTools() {
     const tools = Array.isArray(data.tools) ? data.tools : [];
@@ -165,7 +163,7 @@
     if (!project?.details || !projectDetailDialog) return;
     const detail = project.details;
     $('#project-detail-body').innerHTML = `
-      <div class="project-detail-intro"><span class="project-status">${escape(project.note)}</span><h2 id="project-detail-title" tabindex="-1">${escape(project.name)} <small>${escape(project.brand)}</small></h2><p id="project-detail-position">${escape(project.position)}</p><p class="project-detail-tagline">${escape(project.title)}</p></div>
+      <div class="project-detail-intro"><div class="project-detail-art">${artwork(project.id)}</div><div class="project-detail-intro-copy"><span class="project-status">${escape(project.note)}</span><h2 id="project-detail-title" tabindex="-1">${escape(project.name)} <small>${escape(project.brand)}</small></h2><p id="project-detail-position">${escape(project.position)}</p><p class="project-detail-tagline">${escape(project.title)}</p></div></div>
       <section class="project-detail-section"><h3>為什麼做這個專案</h3><p>${escape(detail.why)}</p></section>
       <section class="project-detail-section"><h3>希望如何運作</h3><p class="workflow-label">預期工作流程</p><p class="workflow-disclaimer">以下是設計方向，尚未全面實現。</p><ol class="project-workflow">${detail.workflow.map((step,i)=>`<li><span class="workflow-number" aria-hidden="true">0${i+1}</span><span>${escape(step)}</span></li>`).join('')}</ol><p class="workflow-return"><span aria-hidden="true">↶</span> 測試或審查發現問題 → 回到執行修改</p><p>${escape(detail.feedback)}</p></section>
       <section class="project-detail-section"><h3>名稱與生長意象</h3><p>${escape(detail.naming)}</p><dl class="project-growth">${detail.growth.map(([name,meaning])=>`<div><dt>${escape(name)}</dt><dd>${escape(meaning)}</dd></div>`).join('')}</dl><p>${escape(detail.vision)}</p></section>

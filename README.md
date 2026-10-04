@@ -6,6 +6,14 @@
 
 正式網站：[W AI Studio](https://tung-beauregard.github.io/w-studio/)
 
+## B 探索圖譜改版與回復
+
+2026-10-04 的 B 改版採用深墨綠、暖白及薄荷綠，首頁仍依「關於 → 精選專案 → 工具下載 → GitHub 邀請 → 頁尾」排列。桌機專案卡片為左圖右文，手機為單欄；原有分類、三類介紹視窗、LINE 官方 QR、暫停動畫、訪客統計與獨立管理入口均保留。
+
+`assets/atlas.css` 是改版的視覺樣式，`assets/atlas/*.webp` 是經壓縮的概念插圖。圖片不代表產品操作實錄；所有可編輯文字仍由 `content/*.json` 載入。B 改版沒有變更 CMS 設定、專案順序、使用者文案、工具下載清單或其他專案網站，也沒有加入聯絡表單。
+
+改版前的正式版為 `8034d2271a5e5f7a03c97b4304ab5af4b3d8dae1`，已另存於 [backup/pre-b-atlas-20261004-8034d22](https://github.com/Tung-Beauregard/w-studio/tree/backup/pre-b-atlas-20261004-8034d22)。要回復版面，對 B 改版提交執行 `git revert <改版提交 SHA>`，檢查後推送 `main`；GitHub Pages 會依現有流程重新部署。這會新增還原提交並保留歷史，無需強制推送。若之後另有文案更新，撤回 B 的視覺提交可保留那些文案更新，不必將整個儲存庫重設到舊版。
+
 網站儲存庫：[Tung-Beauregard/w-studio](https://github.com/Tung-Beauregard/w-studio)。由 `main` 分支根目錄發布，後續更新提交後會自動部署。
 
 ## 檔案
